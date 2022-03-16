@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.1.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"jpruby888.github.io","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta property="og:type" content="article">
+<meta property="og:title" content="一个[合格]的程序员必须具备的工具和插件">
+<meta property="og:url" content="https://jpruby888.github.io/post/c367e4c9.html">
+<meta property="og:site_name" content="jpruby">
+<meta property="og:locale">
+<meta property="og:image" content="https://jpruby888.github.io/gtx.jpg">
+<meta property="og:image" content="https://jpruby888.github.io/feh.png">
+<meta property="og:image" content="https://jpruby888.github.io/yh.png">
+<meta property="og:image" content="https://jpruby888.github.io/jb.png">
+<meta property="og:image" content="https://jpruby888.github.io/ypjl.png">
+<meta property="article:published_time" content="2019-07-14T13:38:04.000Z">
+<meta property="article:modified_time" content="2022-03-16T14:38:41.926Z">
+<meta property="article:author" content="jpruby">
+<meta property="article:tag" content="开发工具">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://jpruby888.github.io/gtx.jpg">
+
+<link rel="canonical" href="https://jpruby888.github.io/post/c367e4c9.html">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-Hans'
+  };
+</script>
+
+  <title>一个[合格]的程序员必须具备的工具和插件 | jpruby</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+<link rel="alternate" href="/atom.xml" title="jpruby" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">jpruby</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">安安静静写博客</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
+    <link itemprop="mainEntityOfPage" href="https://jpruby888.github.io/post/c367e4c9.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="jpruby">
+      <meta itemprop="description" content="宁静致远">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="jpruby">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          一个[合格]的程序员必须具备的工具和插件
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2019-07-14 21:38:04" itemprop="dateCreated datePublished" datetime="2019-07-14T21:38:04+08:00">2019-07-14</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2022-03-16 22:38:41" itemprop="dateModified" datetime="2022-03-16T22:38:41+08:00">2022-03-16</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%BC%80%E5%8F%91%E5%B7%A5%E5%85%B7/" itemprop="url" rel="index"><span itemprop="name">开发工具</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p><img src="/gtx.jpg" alt="封面"></p>
+<span id="more"></span>
+
+<h4 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h4><p><strong>如题… 是我标题党了，应该这样讲：“合格的程序员”不一定需要会使用哪些工具，但是会使用那些能够有效减少自己工作量的很酷的工具和插件的程序员一定会进步成一个“合格的程序员”。因为他们善于思考，并能够将繁杂的重复性工作交给工具去完成，将精力集中在核心的编码任务上。</strong></p>
+<h4 id="逐个介绍那些我自己常用的工具、插件或者网站"><a href="#逐个介绍那些我自己常用的工具、插件或者网站" class="headerlink" title="逐个介绍那些我自己常用的工具、插件或者网站"></a>逐个介绍那些我自己常用的工具、插件或者网站</h4><h5 id="Ghelper"><a href="#Ghelper" class="headerlink" title="Ghelper"></a><a target="_blank" rel="noopener" href="http://googlehelper.net/">Ghelper</a></h5><p>说到工具，不会翻墙用啥子工具。Ghelper是一个谷歌浏览器插件，直接下载安装到chrome扩展即可轻松访问谷歌等服务！注意，访问谷歌的相关服务是免费的哦！如果你有需求访问其他的例如YouTuBe、Twitter之类的，可以购买会员服务！这里还有一个谷歌访问助手破解版，我没有试过，有兴趣可以装一下看看：<a target="_blank" rel="noopener" href="https://github.com/haotian-wang/google-access-helper">GHelper破解版</a><br>这个工具可以说是以下大部分工具的基础。</p>
+<h5 id="FeHelper"><a href="#FeHelper" class="headerlink" title="FeHelper"></a><a target="_blank" rel="noopener" href="https://www.baidufe.com/fehelper/feedback.html">FeHelper</a></h5><p>FeHelper是一个在谷歌浏览器上我最常用的一个插件。功能如下，字符串编解码、JSON格式化、时间戳转换等等工具，在做web开发的时候查看某个JSON数据格式是否正确直接黏贴到这个框里就OK，简单暴力~</p>
+<p><img src="/feh.png" alt="FeHelper"></p>
+<h5 id="油猴儿"><a href="#油猴儿" class="headerlink" title="油猴儿"></a><a target="_blank" rel="noopener" href="https://chrome.google.com/webstore/detail/tampermonkey/dhdgffkkebhmkfjojejmpbldmpobfkfo">油猴儿</a></h5><p>大名鼎鼎的油猴儿想必很多程序员都了解以及用过吧(没用过别告诉我你是个程序员，死敲代码的)。</p>
+<p><img src="/yh.png" alt="油猴儿"></p>
+<p>如上图就是我的一些油猴儿插件的已安装的一部分脚本的截图。例如看各大视频网站，不想要买VIP去看，那么直接安装一个VIP视频破解脚本；或者百度网盘，拒绝启动客户端下载文件，安装个油猴脚本直接直链下载！</p>
+<p>油猴儿在我看来就是一个浏览器脚本的容器，网上极客众多，你可以找得到任何自己感兴趣的想要安装的插件去完成自己要做的事情。</p>
+<p>油猴儿的安装：<a target="_blank" rel="noopener" href="https://chrome.google.com/webstore/detail/tampermonkey/dhdgffkkebhmkfjojejmpbldmpobfkfo">谷歌应用商店 - 油猴儿</a>，安装完成之后你就可以找到任何你想要的脚本装在油猴儿里面啦！</p>
+<p>这边，我只告诉大家一个终极脚本：<a target="_blank" rel="noopener" href="https://greasyfork.org/zh-CN/scripts/24508-userscript-show-site-all-userjs">UserScript+</a>。为啥叫它终极脚本。。。因为安装上它之后，当你打开任何网站，他都会提示你这个网站可以安装的脚本有哪些，这样你就不用在茫茫大海中去寻找自己需要的那些脚本了。</p>
+<p><img src="/jb.png" alt="掘金油猴儿脚本"></p>
+<p>可以想象，有了这个之后，面向百度编程的程序员是不是不用再被眼花缭乱的广告所骚扰！喜欢使用掘金的程序员也可以设置自己喜欢的页面排版~ 经常水V2EX的程序员也可以在评论区盖楼了！！哈哈想想就刺激呢！</p>
+<h5 id="云盘精灵"><a href="#云盘精灵" class="headerlink" title="云盘精灵"></a><a target="_blank" rel="noopener" href="https://www.yunpanjingling.com/">云盘精灵</a></h5><p><img src="/ypjl.png" alt="云盘精灵"></p>
+<p>云盘精灵是一个下载百度网盘资源的神奇的网站，在这里你几乎可以找到任何您想要的资源去下载。然鹅，需要注册然后使用豆子购买。不过这也是理所应当的，毕竟知识付费的天下。但是需要付的并不多，而且你还可以将你自己的资源分享到云盘精灵，有人下载你也会赚取到相应的豆子。</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E5%BC%80%E5%8F%91%E5%B7%A5%E5%85%B7/" rel="tag"># 开发工具</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/post/fc722dde.html" rel="prev" title="将阿里Java编码规范敲成思维导图">
+      <i class="fa fa-chevron-left"></i> 将阿里Java编码规范敲成思维导图
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/post/85068484.html" rel="next" title="Synchronized使用时一个不起眼的注意点">
+      Synchronized使用时一个不起眼的注意点 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%89%8D%E8%A8%80"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%80%90%E4%B8%AA%E4%BB%8B%E7%BB%8D%E9%82%A3%E4%BA%9B%E6%88%91%E8%87%AA%E5%B7%B1%E5%B8%B8%E7%94%A8%E7%9A%84%E5%B7%A5%E5%85%B7%E3%80%81%E6%8F%92%E4%BB%B6%E6%88%96%E8%80%85%E7%BD%91%E7%AB%99"><span class="nav-number">2.</span> <span class="nav-text">逐个介绍那些我自己常用的工具、插件或者网站</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#Ghelper"><span class="nav-number">2.1.</span> <span class="nav-text">Ghelper</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#FeHelper"><span class="nav-number">2.2.</span> <span class="nav-text">FeHelper</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E6%B2%B9%E7%8C%B4%E5%84%BF"><span class="nav-number">2.3.</span> <span class="nav-text">油猴儿</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E4%BA%91%E7%9B%98%E7%B2%BE%E7%81%B5"><span class="nav-number">2.4.</span> <span class="nav-text">云盘精灵</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">jpruby</p>
+  <div class="site-description" itemprop="description">宁静致远</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">61</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+        <span class="site-state-item-count">23</span>
+        <span class="site-state-item-name">categories</span>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">77</span>
+        <span class="site-state-item-name">tags</span>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">jpruby</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

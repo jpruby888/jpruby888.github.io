@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.1.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"jpruby888.github.io","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="前言在layui的开发中，我们经常会用到表格数据展示。但是在数据库中我们通常保存的一些状态等数据，都是枚举值，而我们在前端展示的时候就不能使用这些枚举值了，而要展示枚举值对应的意义数据。比如状态status，1&#x3D;启用，0&#x3D;停用。那么在layui的数据表格中，我们要展示这样的数据，写法可以是： 1234567templet: function (d) &amp;#123;  if(d.s">
+<meta property="og:type" content="article">
+<meta property="og:title" content="layui结合freemarker+springboot进行前端数据表格字典转义">
+<meta property="og:url" content="https://jpruby888.github.io/post/4e4b12bd.html">
+<meta property="og:site_name" content="jpruby">
+<meta property="og:description" content="前言在layui的开发中，我们经常会用到表格数据展示。但是在数据库中我们通常保存的一些状态等数据，都是枚举值，而我们在前端展示的时候就不能使用这些枚举值了，而要展示枚举值对应的意义数据。比如状态status，1&#x3D;启用，0&#x3D;停用。那么在layui的数据表格中，我们要展示这样的数据，写法可以是： 1234567templet: function (d) &amp;#123;  if(d.s">
+<meta property="og:locale">
+<meta property="article:published_time" content="2019-03-16T11:51:53.000Z">
+<meta property="article:modified_time" content="2022-03-16T14:38:41.887Z">
+<meta property="article:author" content="jpruby">
+<meta property="article:tag" content="开发日记">
+<meta property="article:tag" content="springboot">
+<meta property="article:tag" content="freemarker">
+<meta property="article:tag" content="工厂模式">
+<meta property="article:tag" content="layui">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="https://jpruby888.github.io/post/4e4b12bd.html">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-Hans'
+  };
+</script>
+
+  <title>layui结合freemarker+springboot进行前端数据表格字典转义 | jpruby</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+<link rel="alternate" href="/atom.xml" title="jpruby" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">jpruby</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">安安静静写博客</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
+    <link itemprop="mainEntityOfPage" href="https://jpruby888.github.io/post/4e4b12bd.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="jpruby">
+      <meta itemprop="description" content="宁静致远">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="jpruby">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          layui结合freemarker+springboot进行前端数据表格字典转义
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2019-03-16 19:51:53" itemprop="dateCreated datePublished" datetime="2019-03-16T19:51:53+08:00">2019-03-16</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2022-03-16 22:38:41" itemprop="dateModified" datetime="2022-03-16T22:38:41+08:00">2022-03-16</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/springboot/" itemprop="url" rel="index"><span itemprop="name">springboot</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>在layui的开发中，我们经常会用到表格数据展示。但是在数据库中我们通常保存的一些状态等数据，都是枚举值，而我们在前端展示的时候就不能使用这些枚举值了，而要展示枚举值对应的意义数据。比如状态status，1&#x3D;启用，0&#x3D;停用。<br>那么在layui的数据表格中，我们要展示这样的数据，写法可以是：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">templet</span>: <span class="keyword">function</span> (<span class="params">d</span>) &#123;</span><br><span class="line">  <span class="keyword">if</span>(d.<span class="property">status</span> === <span class="number">1</span>)&#123;</span><br><span class="line">      <span class="keyword">return</span> <span class="string">&quot;启用&quot;</span>;</span><br><span class="line">  &#125; <span class="keyword">else</span> <span class="keyword">if</span>(d.<span class="property">status</span> === <span class="number">0</span>)&#123;</span><br><span class="line">      <span class="keyword">return</span> <span class="string">&quot;停用&quot;</span>;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>但是这样的写法很low啊，我们在数据库中定义多少枚举值在这里就要写多少代码，一旦有重复使用的情况，这种写法会让我们痛不欲生。<br>在考虑到后台使用freemarker的情况下，配置freemarker自定义标签就能很好地解决这个问题。<br>最后我们的写法就会简化成：<code>&lt;@th type=&quot;template&quot; nid=&quot;basics_sys_status&quot; objName=&quot;status&quot;&gt;&lt;/@th&gt;</code>，接下来看看如何在springboot中配置使用吧。</p>
+<span id="more"></span>
+<h3 id="freemarker自定义标签介绍及使用"><a href="#freemarker自定义标签介绍及使用" class="headerlink" title="freemarker自定义标签介绍及使用"></a>freemarker自定义标签介绍及使用</h3><p><code>TemplateDirectiveModel</code>接口是freemarker自定标签或者自定义指令的核心处理接口。当模板页面遇到用户自定义的标签指令时，<code>execute()</code>方法会被执行。<code>execute()</code>方法如下。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">execute</span><span class="params">(</span></span><br><span class="line"><span class="params">  Environment env, Map params, TemplateModel[] loopVars, TemplateDirectiveBody body</span></span><br><span class="line"><span class="params">)</span> <span class="keyword">throws</span> TemplateException, IOException;</span><br></pre></td></tr></table></figure>
+<p>我们在使用freemarker自定义标签的时候需要实现该接口并且重写execute方法。</p>
+<h4 id="execute-方法参数解释"><a href="#execute-方法参数解释" class="headerlink" title="execute()方法参数解释"></a><code>execute()</code>方法参数解释</h4><ul>
+<li><em>Environment env</em>：系统环境变量，通常用它来输出相关内容，如<code>Writer out = env.getOut();</code></li>
+<li><em>Map params</em>：自定义标签传过来的对象，就是从页面上获取的参数，其key&#x3D;自定义标签的参数名，value值是TemplateModel类型，而TemplateModel是一个接口类型，通常我们都使用TemplateScalarModel接口来替代它获取一个String 值，如TemplateScalarModel.getAsString();当然还有其它常用的替代接口，如TemplateNumberModel获取number，TemplateHashModel等。<br>在本例使用时，我们会将map转成我们自己的对象进行数据保存。</li>
+<li><em>TemplateModel[] loopVars</em>：循环替代变量</li>
+<li><em>TemplateDirectiveBody body</em>：标签中嵌套的内容，如<code>&lt;@tag&gt;body&lt;/@tag&gt;</code>，就是这个body</li>
+</ul>
+<h4 id="开始使用"><a href="#开始使用" class="headerlink" title="开始使用"></a>开始使用</h4><h6 id="定义接收页面参数的对象"><a href="#定义接收页面参数的对象" class="headerlink" title="定义接收页面参数的对象"></a>定义接收页面参数的对象</h6><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Getter</span></span><br><span class="line"><span class="meta">@Setter</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">TableThTag</span> &#123;</span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 对象属性名【需要进行对象属性获取】</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">private</span> String objName;</span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 字典标识</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">private</span> String nid;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 类型</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">private</span> String type;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h6 id="实现TemplateDirectiveModel接口并重写execute方法"><a href="#实现TemplateDirectiveModel接口并重写execute方法" class="headerlink" title="实现TemplateDirectiveModel接口并重写execute方法"></a>实现<code>TemplateDirectiveModel</code>接口并重写<code>execute</code>方法</h6><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Component</span></span><br><span class="line"><span class="meta">@org</span>.springframework.context.annotation.Configuration</span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">TableThDirective</span> <span class="keyword">implements</span> <span class="title class_">TemplateDirectiveModel</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="type">Logger</span> <span class="variable">logger</span> <span class="operator">=</span> LoggerFactory.getLogger(getClass().getName());</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * FreeMarker自定义指令</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">execute</span><span class="params">(Environment environment, Map map, TemplateModel[] templateModels,</span></span><br><span class="line"><span class="params">                        TemplateDirectiveBody templateDirectiveBody)</span> <span class="keyword">throws</span> TemplateException, IOException &#123;</span><br><span class="line">        <span class="type">TableThTag</span> <span class="variable">tableThTag</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">TableThTag</span>();</span><br><span class="line">        <span class="comment">//校验参数</span></span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            <span class="comment">//  用来将一些 key-value 的值（例如 hashmap）映射到 bean 中的属性</span></span><br><span class="line">            BeanUtils.populate(tableThTag, map);</span><br><span class="line">            <span class="keyword">if</span> (StringUtils.isEmpty(tableThTag.getNid()) || StringUtils.isEmpty(tableThTag.getType())) &#123;</span><br><span class="line">                <span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">IllegalArgumentException</span>(<span class="string">&quot;nid,type不能为空&quot;</span>);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">            logger.error(<span class="string">&quot;数据转化异常&quot;</span>, e);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="type">StringBuilder</span> <span class="variable">html</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">StringBuilder</span>();</span><br><span class="line">        <span class="comment">// 根据类型创建不同的HTML生成器</span></span><br><span class="line">        <span class="type">ThFormatterInterface</span> <span class="variable">thFormatterInterface</span> <span class="operator">=</span> ThFormatterFactory.createThFormatter(tableThTag.getType());</span><br><span class="line">        <span class="keyword">if</span> (thFormatterInterface != <span class="literal">null</span>) &#123;</span><br><span class="line">            <span class="type">String</span> <span class="variable">dictHtml</span> <span class="operator">=</span> thFormatterInterface.buildFormatterHtml(tableThTag.getNid(), tableThTag.getFieldName());</span><br><span class="line">            html.append(dictHtml);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">// 执行真正指令的执行部分:</span></span><br><span class="line">        <span class="type">Writer</span> <span class="variable">out</span> <span class="operator">=</span> environment.getOut();</span><br><span class="line">        out.write(html.toString());</span><br><span class="line">        <span class="keyword">if</span> (templateDirectiveBody != <span class="literal">null</span>) &#123;</span><br><span class="line">            templateDirectiveBody.render(environment.getOut());</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> BeansWrapper <span class="title function_">getBeansWrapper</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="type">BeansWrapper</span> <span class="variable">beansWrapper</span> <span class="operator">=</span></span><br><span class="line">                <span class="keyword">new</span> <span class="title class_">BeansWrapperBuilder</span>(Configuration.VERSION_2_3_21).build();</span><br><span class="line">        <span class="keyword">return</span> beansWrapper;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>大家可以看到，在这个方法中，我将页面上的参数转为<code>TableThTag </code>对象。然后再根据前端页面不同的type类型对应<br>实现了<code>ThFormatterInterface </code>的工厂对象，创建不同的html生成器。（这里考虑到扩展性，可能以后不光创建数据表格会用的到，比如下拉框什么的，也可以使用这种方式创建，所以在这里使用抽象工厂依据类型动态创建。）<br>下面就是创建html的具体工厂以及实现方法。</p>
+<h6 id="ThFormatterInterface-抽象工厂创建html生成器"><a href="#ThFormatterInterface-抽象工厂创建html生成器" class="headerlink" title="ThFormatterInterface 抽象工厂创建html生成器"></a><code>ThFormatterInterface </code>抽象工厂创建html生成器</h6><p>接口</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">interface</span> <span class="title class_">ThFormatterInterface</span> &#123;</span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 构造生成枚举html</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> nid</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span></span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    String <span class="title function_">buildFormatterHtml</span><span class="params">(String nid, String fieldName)</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>工厂</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">ThFormatterFactory</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="type">Logger</span> <span class="variable">logger</span> <span class="operator">=</span> LoggerFactory.getLogger(ThFormatterFactory.class);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> ThFormatterInterface <span class="title function_">createThFormatter</span><span class="params">(String type)</span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(StringUtils.isEmpty(type))&#123;</span><br><span class="line">            <span class="keyword">return</span>  <span class="keyword">new</span> <span class="title class_">ThFormatterTemplate</span>();</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">// 文件名 如果type传template 就需要有一个名为ThFormatterTemplate的文件</span></span><br><span class="line">        <span class="comment">// 并且实现了ThFormatterInterface以及重写生成html的方法</span></span><br><span class="line">        <span class="type">String</span> <span class="variable">fileName</span> <span class="operator">=</span> <span class="string">&quot;ThFormatter&quot;</span> + StringUtil.firstCharUpperCase(type);</span><br><span class="line">        <span class="comment">//类路径 通过反射去创建实现类</span></span><br><span class="line">        <span class="type">String</span> <span class="variable">className</span> <span class="operator">=</span> <span class="string">&quot;com.module.freemarker.impl.&quot;</span>+fileName;</span><br><span class="line">        <span class="comment">//生成表头格式实现类</span></span><br><span class="line">        <span class="type">ThFormatterInterface</span> <span class="variable">thFormatterInterface</span> <span class="operator">=</span> <span class="literal">null</span>;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            thFormatterInterface =(ThFormatterInterface) Class.forName(className).newInstance();</span><br><span class="line">        &#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">            logger.error(e.getMessage(),e);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> thFormatterInterface;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>实现类</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">ThFormatterTemplate</span> <span class="keyword">implements</span> <span class="title class_">ThFormatterInterface</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> String <span class="title function_">buildFormatterHtml</span><span class="params">(String nid, String fieldName)</span> &#123;</span><br><span class="line">        Assert.notEMPTY(nid, <span class="string">&quot;nid不能为空&quot;</span>);</span><br><span class="line">        Assert.notEMPTY(fieldName, <span class="string">&quot;objName不能为空&quot;</span>);</span><br><span class="line">        <span class="type">SysDictService</span> <span class="variable">sysDictService</span> <span class="operator">=</span> SpringContextHolder.getBean(SysDictService.class);</span><br><span class="line">        <span class="comment">// 通过nid查询字典类 这里不需要进行照抄 每个人都会有自己的实现方法</span></span><br><span class="line">        List&lt;SysDictBO&gt; sysDictModelList = sysDictService.findByPartnerNid(nid);</span><br><span class="line">        <span class="type">StringBuilder</span> <span class="variable">dictHtml</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">StringBuilder</span>();</span><br><span class="line">        <span class="comment">// 反正目的就是根据字典类生成对应的html就行了 需要生成的格式对照template原本应该有的写法就行了</span></span><br><span class="line">        dictHtml.append(<span class="string">&quot;templet: function(d)&#123; &quot;</span>);</span><br><span class="line">        <span class="keyword">for</span> (SysDictBO sysDict : sysDictModelList) &#123;</span><br><span class="line">            dictHtml.append(<span class="string">&quot;if(d.&quot;</span> + fieldName + <span class="string">&quot; == &#x27;&quot;</span> + sysDict.getValue() + <span class="string">&quot;&#x27;)&#123; return &#x27;&quot;</span> + sysDict.getName() + <span class="string">&quot;&#x27;;&#125;&quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        dictHtml.append(<span class="string">&quot;&#125;&quot;</span>);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> dictHtml.toString();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h6 id="最后将自定义标签注入到freemarker标签中去"><a href="#最后将自定义标签注入到freemarker标签中去" class="headerlink" title="最后将自定义标签注入到freemarker标签中去"></a>最后将自定义标签注入到freemarker标签中去</h6><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@org</span>.springframework.context.annotation.Configuration</span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">FreemarkerConfig</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Resource</span></span><br><span class="line">    <span class="keyword">private</span> Configuration configuration;</span><br><span class="line">    <span class="meta">@Resource</span></span><br><span class="line">    <span class="keyword">private</span> TableThDirective tableThDirective;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@PostConstruct</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">setSharedVariable</span><span class="params">()</span>&#123;</span><br><span class="line">        configuration.setSharedVariable(<span class="string">&quot;th&quot;</span>,tableThDirective);</span><br><span class="line">        configuration.setSharedVariable(<span class="string">&quot;shiro&quot;</span>,<span class="keyword">new</span> <span class="title class_">ShiroTags</span>());</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<hr>
+<p>这样就大功告成了。</p>
+<p>在页面上进行使用吧：<code>&lt;@th type=&quot;template&quot; nid=&quot;basics_sys_status&quot; objName=&quot;status&quot;&gt;&lt;/@th&gt;</code></p>
+<p>以后进行扩展什么的也方便，比如生成下拉框：<code>&lt;@th type=&quot;select&quot; nid=&quot;basics_sys_status&quot; objName=&quot;status&quot;&gt;&lt;/@th&gt;</code>这样然后自动生成html的时候查出来所有的字典，根据类型生成多个<option>出来就行了。</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E5%BC%80%E5%8F%91%E6%97%A5%E8%AE%B0/" rel="tag"># 开发日记</a>
+              <a href="/tags/springboot/" rel="tag"># springboot</a>
+              <a href="/tags/freemarker/" rel="tag"># freemarker</a>
+              <a href="/tags/%E5%B7%A5%E5%8E%82%E6%A8%A1%E5%BC%8F/" rel="tag"># 工厂模式</a>
+              <a href="/tags/layui/" rel="tag"># layui</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/post/cbe41a97.html" rel="prev" title="springboot+shiro解决session污染的问题">
+      <i class="fa fa-chevron-left"></i> springboot+shiro解决session污染的问题
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/post/8c928c66.html" rel="next" title="使用springboot进行国际化时自定义读取数据库配置">
+      使用springboot进行国际化时自定义读取数据库配置 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%89%8D%E8%A8%80"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#freemarker%E8%87%AA%E5%AE%9A%E4%B9%89%E6%A0%87%E7%AD%BE%E4%BB%8B%E7%BB%8D%E5%8F%8A%E4%BD%BF%E7%94%A8"><span class="nav-number">2.</span> <span class="nav-text">freemarker自定义标签介绍及使用</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#execute-%E6%96%B9%E6%B3%95%E5%8F%82%E6%95%B0%E8%A7%A3%E9%87%8A"><span class="nav-number">2.1.</span> <span class="nav-text">execute()方法参数解释</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%BC%80%E5%A7%8B%E4%BD%BF%E7%94%A8"><span class="nav-number">2.2.</span> <span class="nav-text">开始使用</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#%E5%AE%9A%E4%B9%89%E6%8E%A5%E6%94%B6%E9%A1%B5%E9%9D%A2%E5%8F%82%E6%95%B0%E7%9A%84%E5%AF%B9%E8%B1%A1"><span class="nav-number">2.2.0.1.</span> <span class="nav-text">定义接收页面参数的对象</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#%E5%AE%9E%E7%8E%B0TemplateDirectiveModel%E6%8E%A5%E5%8F%A3%E5%B9%B6%E9%87%8D%E5%86%99execute%E6%96%B9%E6%B3%95"><span class="nav-number">2.2.0.2.</span> <span class="nav-text">实现TemplateDirectiveModel接口并重写execute方法</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#ThFormatterInterface-%E6%8A%BD%E8%B1%A1%E5%B7%A5%E5%8E%82%E5%88%9B%E5%BB%BAhtml%E7%94%9F%E6%88%90%E5%99%A8"><span class="nav-number">2.2.0.3.</span> <span class="nav-text">ThFormatterInterface 抽象工厂创建html生成器</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#%E6%9C%80%E5%90%8E%E5%B0%86%E8%87%AA%E5%AE%9A%E4%B9%89%E6%A0%87%E7%AD%BE%E6%B3%A8%E5%85%A5%E5%88%B0freemarker%E6%A0%87%E7%AD%BE%E4%B8%AD%E5%8E%BB"><span class="nav-number">2.2.0.4.</span> <span class="nav-text">最后将自定义标签注入到freemarker标签中去</span></a></li></ol></li></ol></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">jpruby</p>
+  <div class="site-description" itemprop="description">宁静致远</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">61</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+        <span class="site-state-item-count">23</span>
+        <span class="site-state-item-name">categories</span>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">77</span>
+        <span class="site-state-item-name">tags</span>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">jpruby</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

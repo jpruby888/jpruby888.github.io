@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.1.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"jpruby888.github.io","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta property="og:type" content="article">
+<meta property="og:title" content="【设计模式】设计模式基本思想以及23种模式总结整理">
+<meta property="og:url" content="https://jpruby888.github.io/post/343686fd.html">
+<meta property="og:site_name" content="jpruby">
+<meta property="og:locale">
+<meta property="og:image" content="https://jpruby888.github.io/bz.png">
+<meta property="og:image" content="https://jpruby888.github.io/sjmo.png">
+<meta property="article:published_time" content="2019-08-12T03:47:54.000Z">
+<meta property="article:modified_time" content="2022-03-16T14:38:41.921Z">
+<meta property="article:author" content="jpruby">
+<meta property="article:tag" content="Java基础">
+<meta property="article:tag" content="设计模式基本思想">
+<meta property="article:tag" content="设计模式">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://jpruby888.github.io/bz.png">
+
+<link rel="canonical" href="https://jpruby888.github.io/post/343686fd.html">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-Hans'
+  };
+</script>
+
+  <title>【设计模式】设计模式基本思想以及23种模式总结整理 | jpruby</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+<link rel="alternate" href="/atom.xml" title="jpruby" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">jpruby</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">安安静静写博客</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
+    <link itemprop="mainEntityOfPage" href="https://jpruby888.github.io/post/343686fd.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="jpruby">
+      <meta itemprop="description" content="宁静致远">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="jpruby">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          【设计模式】设计模式基本思想以及23种模式总结整理
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2019-08-12 11:47:54" itemprop="dateCreated datePublished" datetime="2019-08-12T11:47:54+08:00">2019-08-12</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2022-03-16 22:38:41" itemprop="dateModified" datetime="2022-03-16T22:38:41+08:00">2022-03-16</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Java%E5%9F%BA%E7%A1%80/" itemprop="url" rel="index"><span itemprop="name">Java基础</span></a>
+                </span>
+                  , 
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Java%E5%9F%BA%E7%A1%80/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" itemprop="url" rel="index"><span itemprop="name">设计模式</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p><img src="/bz.png" alt="封面"></p>
+<span id="more"></span>
+
+<h3 id="设计模式主要思想"><a href="#设计模式主要思想" class="headerlink" title="设计模式主要思想"></a>设计模式主要思想</h3><p>设计模式是在长期应用开发过程中，众多开发者总结归纳出来的程序架构与设计思想。是经过实践证明的，可在实际背景下使用的一系列程序设计方案。设计模式产生的根本目的就是为了解决开发过程中重复的代码编写，以及让程序更易扩展复用。</p>
+<h4 id="设计模式的原则"><a href="#设计模式的原则" class="headerlink" title="设计模式的原则"></a>设计模式的原则</h4><ul>
+<li>单一职责：每个类都应该实现单一的功能，否则应该将类进行拆分</li>
+<li>里氏替换：即继承复用&#x2F;合成复用。尽量使用合成&#x2F;聚合的方式而不是继承。任何父类出现的地方，子类都可以出现。派生类可以在基类的基础上扩展自己的功能实现。是对“开闭原则”的一个补充。在里氏替换原则中，尽量不要对父类进行重载或者重写，因为父类代表一个定义好的结构，通过规范好的接口与外界进行交互，子类不应该随意破坏它，而是对其进行扩展。</li>
+<li>依赖倒置：“开闭原则”的基础。即面向接口编程。依赖于抽象而不是依赖于具体的实现，编程时遇到具体的类时，不与具体的类交互，而与抽象接口进行交互。便于增加新的具体类的时候代码可以复用。</li>
+<li>接口隔离：每个接口不应该存在子类用不到却必须实现的方法，否则就应该将接口拆分，将职责单一化。</li>
+<li>最少知道：即迪米特法则。一个类对于自己依赖的类知道的越少越好，无论被依赖的类多么复杂，都应该将逻辑封装在方法内部，通过一个共有的方法提供给依赖类使用，这样当被依赖类发生改变的时候，才会尽可能少的影响依赖类。</li>
+</ul>
+<h3 id="设计模式的分类"><a href="#设计模式的分类" class="headerlink" title="设计模式的分类"></a>设计模式的分类</h3><blockquote>
+<p>点击对应链接跳转到该设计模式的详细整理与代码示例</p>
+</blockquote>
+<table>
+<thead>
+<tr>
+<th>范围</th>
+<th>创建型模式</th>
+<th>结构型模式</th>
+<th>行为型模式</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>对象创建</td>
+<td><a target="_blank" rel="noopener" href="http://zhangjiaheng.cn/blog/20190607/%E6%B7%B1%E5%BA%A6%E5%88%86%E6%9E%90%E5%A6%82%E4%BD%95%E5%86%99%E5%87%BA%E4%B8%80%E4%B8%AA%E7%BA%BF%E7%A8%8B%E5%AE%89%E5%85%A8%E7%9A%84%E5%8D%95%E4%BE%8B/">Singleton（单例模式）</a><br/>Prototype(原型模式)<br/>Factory Method（工厂方法模式）<br/>Abstract Factory（抽象工厂模式）<br/>Builder（建造者模式）</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>接口适配</td>
+<td></td>
+<td>Adapter（适配器模式）<br/>Bridge（桥接模式）<br/>Facade（外观模式）</td>
+<td></td>
+</tr>
+<tr>
+<td>对象解耦</td>
+<td></td>
+<td></td>
+<td>Mediator（中介者模式）<br/>Observer（观察者模式）</td>
+</tr>
+<tr>
+<td>抽象集合</td>
+<td></td>
+<td>Composite（组合模式）</td>
+<td>Iterator（迭代器模式）</td>
+</tr>
+<tr>
+<td>行为扩展</td>
+<td></td>
+<td>Decorator（装饰模式）</td>
+<td>Visitor（访问者模式）<br/>Chain of Responsibility（职责链）</td>
+</tr>
+<tr>
+<td>算法封装</td>
+<td></td>
+<td></td>
+<td><a target="_blank" rel="noopener" href="http://zhangjiaheng.cn/blog/20190707/%E3%80%90%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E3%80%91%E6%A8%A1%E6%9D%BF%E6%96%B9%E6%B3%95%E6%A8%A1%E5%BC%8F/">Template（模板方法模式）</a><br/>Strategy（策略模式）</td>
+</tr>
+<tr>
+<td>性能与对象访问</td>
+<td></td>
+<td>Flyweight（享元模式）<br/>Proxy（代理模式）</td>
+<td></td>
+</tr>
+<tr>
+<td>对象状态</td>
+<td></td>
+<td></td>
+<td>Memento（备忘录模式）<br/>State（状态模式）</td>
+</tr>
+<tr>
+<td>其他</td>
+<td></td>
+<td></td>
+<td>Interpreter（解释器模式）</td>
+</tr>
+</tbody></table>
+<h4 id="总结下设计模式的归类"><a href="#总结下设计模式的归类" class="headerlink" title="总结下设计模式的归类"></a>总结下设计模式的归类</h4><p><img src="/sjmo.png" alt="设计模式分类 - 幕布"></p>
+<h4 id="创建型设计模式"><a href="#创建型设计模式" class="headerlink" title="创建型设计模式"></a>创建型设计模式</h4><p>创建型设计模式提供了一种在创建对象的同时隐藏创建逻辑的方式，使调用者无需new对象，在程序中针对给定业务场景去调用特定的对象创建方法，使程序更加灵活。</p>
+<h4 id="行为型设计模式"><a href="#行为型设计模式" class="headerlink" title="行为型设计模式"></a>行为型设计模式</h4><p>行为型设计模式主要关注对象之间的通信。</p>
+<h4 id="结构型设计模式"><a href="#结构型设计模式" class="headerlink" title="结构型设计模式"></a>结构型设计模式</h4><p>结构型设计模式关注类和对象的组合，继承的概念被用来组合接口和定义组合对象获得新功能的方式。</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Java%E5%9F%BA%E7%A1%80/" rel="tag"># Java基础</a>
+              <a href="/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E5%9F%BA%E6%9C%AC%E6%80%9D%E6%83%B3/" rel="tag"># 设计模式基本思想</a>
+              <a href="/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" rel="tag"># 设计模式</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/post/cd3a834.html" rel="prev" title="Leetcode - 52. N皇后 II 回溯算法求解">
+      <i class="fa fa-chevron-left"></i> Leetcode - 52. N皇后 II 回溯算法求解
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/post/19c6e00c.html" rel="next" title="并发编程学习(七)：Fork/Join框架原理及demo">
+      并发编程学习(七)：Fork/Join框架原理及demo <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E4%B8%BB%E8%A6%81%E6%80%9D%E6%83%B3"><span class="nav-number">1.</span> <span class="nav-text">设计模式主要思想</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E7%9A%84%E5%8E%9F%E5%88%99"><span class="nav-number">1.1.</span> <span class="nav-text">设计模式的原则</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E7%9A%84%E5%88%86%E7%B1%BB"><span class="nav-number">2.</span> <span class="nav-text">设计模式的分类</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%80%BB%E7%BB%93%E4%B8%8B%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E7%9A%84%E5%BD%92%E7%B1%BB"><span class="nav-number">2.1.</span> <span class="nav-text">总结下设计模式的归类</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%88%9B%E5%BB%BA%E5%9E%8B%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F"><span class="nav-number">2.2.</span> <span class="nav-text">创建型设计模式</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%A1%8C%E4%B8%BA%E5%9E%8B%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F"><span class="nav-number">2.3.</span> <span class="nav-text">行为型设计模式</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%BB%93%E6%9E%84%E5%9E%8B%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F"><span class="nav-number">2.4.</span> <span class="nav-text">结构型设计模式</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">jpruby</p>
+  <div class="site-description" itemprop="description">宁静致远</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">61</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+        <span class="site-state-item-count">23</span>
+        <span class="site-state-item-name">categories</span>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">77</span>
+        <span class="site-state-item-name">tags</span>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">jpruby</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

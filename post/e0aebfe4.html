@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.1.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"jpruby888.github.io","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="前言  通常的我们的项目开发中，经常会遇到那种在服务一启动就需要自动执行一些业务代码的情况。比如将数据库中的配置信息或者数据字典之类的缓存到redis，或者在服务启动的时候将一些配置化的定时任务开起来。关于spring mvc或者springboot如何在项目启动的时候就执行一些代码，方法其实有很多，我这边介绍一下我使用过的三种。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="如何在springboot服务启动之后执行一些代码(三种方式)">
+<meta property="og:url" content="https://jpruby888.github.io/post/e0aebfe4.html">
+<meta property="og:site_name" content="jpruby">
+<meta property="og:description" content="前言  通常的我们的项目开发中，经常会遇到那种在服务一启动就需要自动执行一些业务代码的情况。比如将数据库中的配置信息或者数据字典之类的缓存到redis，或者在服务启动的时候将一些配置化的定时任务开起来。关于spring mvc或者springboot如何在项目启动的时候就执行一些代码，方法其实有很多，我这边介绍一下我使用过的三种。">
+<meta property="og:locale">
+<meta property="article:published_time" content="2019-04-19T09:01:21.000Z">
+<meta property="article:modified_time" content="2022-03-16T14:38:41.968Z">
+<meta property="article:author" content="jpruby">
+<meta property="article:tag" content="springboot">
+<meta property="article:tag" content="spring">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="https://jpruby888.github.io/post/e0aebfe4.html">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-Hans'
+  };
+</script>
+
+  <title>如何在springboot服务启动之后执行一些代码(三种方式) | jpruby</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+<link rel="alternate" href="/atom.xml" title="jpruby" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">jpruby</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">安安静静写博客</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
+    <link itemprop="mainEntityOfPage" href="https://jpruby888.github.io/post/e0aebfe4.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="jpruby">
+      <meta itemprop="description" content="宁静致远">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="jpruby">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          如何在springboot服务启动之后执行一些代码(三种方式)
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2019-04-19 17:01:21" itemprop="dateCreated datePublished" datetime="2019-04-19T17:01:21+08:00">2019-04-19</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2022-03-16 22:38:41" itemprop="dateModified" datetime="2022-03-16T22:38:41+08:00">2022-03-16</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/springboot/" itemprop="url" rel="index"><span itemprop="name">springboot</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>  通常的我们的项目开发中，经常会遇到那种在服务一启动就需要自动执行一些业务代码的情况。比如将数据库中的配置信息或者数据字典之类的缓存到redis，或者在服务启动的时候将一些配置化的定时任务开起来。关于spring mvc或者springboot如何在项目启动的时候就执行一些代码，方法其实有很多，我这边介绍一下我使用过的三种。</p>
+  <span id="more"></span>
+<h4 id="1、-PostConstruct-注解"><a href="#1、-PostConstruct-注解" class="headerlink" title="1、@PostConstruct 注解"></a>1、<code>@PostConstruct</code> 注解</h4><p>从Java EE5规范开始，Servlet中增加了两个影响Servlet生命周期的注解，<code>@PostConstruct</code>和<code>@PreDestroy</code>，这两个注解被用来修饰一个非静态的void（）方法。<code>@PostConstruct</code>会在所在类的构造函数执行之后执行，在init()方法执行之前执行。(<code>@PreDestroy</code>注解的方法会在这个类的destory()方法执行之后执行。)</p>
+<ul>
+<li>使用示例：在Spring容器加载之后，我需要启动定时任务去做任务的处理（我的定时任务采用的是读取数据库配置的方式）。在这里我使用<code>@PostConstruct</code> 指定了需要启动的方法。<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Component</span> <span class="comment">// 注意 这里必须有</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">StartAllJobInit</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">protected</span> <span class="type">Logger</span> <span class="variable">logger</span> <span class="operator">=</span> LoggerFactory.getLogger(getClass().getName());</span><br><span class="line">    <span class="meta">@Autowired</span></span><br><span class="line">    JobInfoService jobInfoService;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Autowired</span></span><br><span class="line">    JobTaskUtil jobTaskUtil;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@PostConstruct</span> <span class="comment">// 构造函数之后执行</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">init</span><span class="params">()</span>&#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;容器启动后执行&quot;</span>);</span><br><span class="line">        startJob();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">startJob</span><span class="params">()</span> &#123;</span><br><span class="line">        List&lt;JobInfoBO&gt; list = jobInfoService.findList();</span><br><span class="line">        <span class="keyword">for</span> (JobInfoBO jobinfo :list) &#123;</span><br><span class="line">            <span class="keyword">try</span> &#123;</span><br><span class="line">                <span class="keyword">if</span>(<span class="string">&quot;0&quot;</span>.equals(jobinfo.getStartWithrun()))&#123;</span><br><span class="line">                    logger.info(<span class="string">&quot;任务&#123;&#125;未设置自动启动。&quot;</span>, jobinfo.getJobName());</span><br><span class="line">                    jobInfoService.updateJobStatus(jobinfo.getId(), BasicsConstantManual.BASICS_SYS_JOB_STATUS_STOP);</span><br><span class="line">                &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">                    logger.info(<span class="string">&quot;任务&#123;&#125;设置了自动启动。&quot;</span>, jobinfo.getJobName());</span><br><span class="line">                    jobTaskUtil.addOrUpdateJob(jobinfo);</span><br><span class="line">                    jobInfoService.updateJobStatus(jobinfo.getId(), BasicsConstantManual.BASICS_SYS_JOB_STATUS_STARTING);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125; <span class="keyword">catch</span> (SchedulerException e) &#123;</span><br><span class="line">                logger.error(<span class="string">&quot;执行定时任务出错，任务名称 &#123;&#125; &quot;</span>, jobinfo.getJobName());</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h4 id="2、实现CommandLineRunner接口并重写run-方法"><a href="#2、实现CommandLineRunner接口并重写run-方法" class="headerlink" title="2、实现CommandLineRunner接口并重写run()方法"></a>2、实现<code>CommandLineRunner</code>接口并重写run()方法</h4><p><code>CommandLineRunner</code>接口文档描述如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Interface used to indicate that a bean should &lt;em&gt;run&lt;/em&gt; when it is contained within</span></span><br><span class="line"><span class="comment"> * a &#123;<span class="doctag">@link</span> SpringApplication&#125;. Multiple &#123;<span class="doctag">@link</span> CommandLineRunner&#125; beans can be defined</span></span><br><span class="line"><span class="comment"> * within the same application context and can be ordered using the &#123;<span class="doctag">@link</span> Ordered&#125;</span></span><br><span class="line"><span class="comment"> * interface or &#123;<span class="doctag">@link</span> Order <span class="doctag">@Order</span>&#125; annotation.</span></span><br><span class="line"><span class="comment"> * &lt;p&gt;</span></span><br><span class="line"><span class="comment"> * If you need access to &#123;<span class="doctag">@link</span> ApplicationArguments&#125; instead of the raw String array</span></span><br><span class="line"><span class="comment"> * consider using &#123;<span class="doctag">@link</span> ApplicationRunner&#125;.</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> Dave Syer</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@see</span> ApplicationRunner</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">interface</span> <span class="title class_">CommandLineRunner</span> &#123;</span><br><span class="line"></span><br><span class="line">	<span class="comment">/**</span></span><br><span class="line"><span class="comment">	 * Callback used to run the bean.</span></span><br><span class="line"><span class="comment">	 * <span class="doctag">@param</span> args incoming main method arguments</span></span><br><span class="line"><span class="comment">	 * <span class="doctag">@throws</span> Exception on error</span></span><br><span class="line"><span class="comment">	 */</span></span><br><span class="line">	<span class="keyword">void</span> <span class="title function_">run</span><span class="params">(String... args)</span> <span class="keyword">throws</span> Exception;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>如上所说：接口被用作加入Spring容器中时执行run(String… args)方法，通过命令行传递参数。SpringBoot在项目启动后会遍历所有实现CommandLineRunner的实体类并执行run方法，多个实现类可以并存并且根据order注解排序顺序执行。这边还有个<code>ApplicationRunner</code>接口，但是接收参数是使用的<code>ApplicationArguments</code>。这边不再赘述。</p>
+<p><strong>同样是启动时执行定时任务，使用这种方式我的写法如下：</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Component</span> <span class="comment">// 注意 这里必须有</span></span><br><span class="line"><span class="comment">//@Order(2) 如果有多个类需要启动后执行 order注解中的值为启动的顺序</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">StartAllJobInit</span> <span class="keyword">implements</span> <span class="title class_">CommandLineRunner</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">protected</span> <span class="type">Logger</span> <span class="variable">logger</span> <span class="operator">=</span> LoggerFactory.getLogger(getClass().getName());</span><br><span class="line">    <span class="meta">@Autowired</span></span><br><span class="line">    JobInfoService jobInfoService;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Autowired</span></span><br><span class="line">    JobTaskUtil jobTaskUtil;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">run</span><span class="params">(String... args)</span> &#123;</span><br><span class="line">        List&lt;JobInfoBO&gt; list = jobInfoService.findList();</span><br><span class="line">        <span class="keyword">for</span> (JobInfoBO jobinfo :list) &#123;</span><br><span class="line">            <span class="keyword">try</span> &#123;</span><br><span class="line">                <span class="keyword">if</span>(<span class="string">&quot;0&quot;</span>.equals(jobinfo.getStartWithrun()))&#123;</span><br><span class="line">                    logger.info(<span class="string">&quot;任务&#123;&#125;未设置自动启动。&quot;</span>, jobinfo.getJobName());</span><br><span class="line">                    jobInfoService.updateJobStatus(jobinfo.getId(), BasicsConstantManual.BASICS_SYS_JOB_STATUS_STOP);</span><br><span class="line">                &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">                    logger.info(<span class="string">&quot;任务&#123;&#125;设置了自动启动。&quot;</span>, jobinfo.getJobName());</span><br><span class="line">                    jobTaskUtil.addOrUpdateJob(jobinfo);</span><br><span class="line">                    jobInfoService.updateJobStatus(jobinfo.getId(), BasicsConstantManual.BASICS_SYS_JOB_STATUS_STARTING);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125; <span class="keyword">catch</span> (SchedulerException e) &#123;</span><br><span class="line">                logger.error(<span class="string">&quot;执行定时任务出错，任务名称 &#123;&#125; &quot;</span>, jobinfo.getJobName());</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="3、使用ContextRefreshedEvent事件-上下文件刷新事件"><a href="#3、使用ContextRefreshedEvent事件-上下文件刷新事件" class="headerlink" title="3、使用ContextRefreshedEvent事件(上下文件刷新事件)"></a>3、使用<code>ContextRefreshedEvent</code>事件(上下文件刷新事件)</h4><blockquote>
+<p>ContextRefreshedEvent 官方在接口上的doc说明<br><br>Event raised when an {@code ApplicationContext} gets initialized or refreshed.</p>
+</blockquote>
+<p>ContextRefreshedEvent是Spring的ApplicationContextEvent一个实现，ContextRefreshedEvent 事件会在Spring容器初始化完成后以及刷新时触发。</p>
+<p><strong>在这里我需要在springboot程序启动之后加载配置信息和字典信息到Redis缓存中去，我可以这样写：</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Component</span> <span class="comment">// 注意 这个也是必须有的注解 三种都需要 使spring扫描到这个类并交给它管理</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">InitRedisCache</span> <span class="keyword">implements</span> <span class="title class_">ApplicationListener</span>&lt;ContextRefreshedEvent&gt; &#123;</span><br><span class="line">    <span class="keyword">static</span> <span class="keyword">final</span> <span class="type">Logger</span> <span class="variable">logger</span> <span class="operator">=</span> LoggerFactory</span><br><span class="line">            .getLogger(InitRedisCache.class);</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Autowired</span></span><br><span class="line">    <span class="keyword">private</span> SysConfigService sysConfigService;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Autowired</span></span><br><span class="line">    <span class="keyword">private</span> SysDictService sysDictService;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">onApplicationEvent</span><span class="params">(ContextRefreshedEvent contextRefreshedEvent)</span> &#123;</span><br><span class="line">        logger.info(<span class="string">&quot;-------加载配置信息 start-------&quot;</span>);</span><br><span class="line">        sysConfigService.loadConfigIntoRedis();</span><br><span class="line">        logger.info(<span class="string">&quot;-------加载配置信息 end-------&quot;</span>);</span><br><span class="line"></span><br><span class="line">        logger.info(<span class="string">&quot;-------加载字典信息 start-------&quot;</span>);</span><br><span class="line">        sysDictService.loadDictIntoRedis();</span><br><span class="line">        logger.info(<span class="string">&quot;-------加载字典信息 end-------&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">```java</span><br><span class="line">**注意**：这种方式在springmvc-spring的项目中使用的时候会出现执行两次的情况。这种是因为在加载spring和springmvc的时候会创建两个容器，都会触发这个事件的执行。这时候只需要在`onApplicationEvent`方法中判断是否有父容器即可。</span><br></pre></td></tr></table></figure>
+<p>@Override<br>  public void onApplicationEvent(ContextRefreshedEvent event) {<br>      if(event.getApplicationContext().getParent() &#x3D;&#x3D; null){&#x2F;&#x2F;root application context 没有parent，他就是老大.<br>           &#x2F;&#x2F;需要执行的逻辑代码，当spring容器初始化完成后就会执行该方法。<br>      }<br>  }  </p>
+<pre><code>#### 总结
+以上，就是我在实际开发中常用的三种，在项目启动时执行代码的方式，开发者可以根据不同的使用情况选择合适的方法去执行自己的业务逻辑。
+</code></pre>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/springboot/" rel="tag"># springboot</a>
+              <a href="/tags/spring/" rel="tag"># spring</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/post/e78ccdef.html" rel="prev" title="Java内存分配与垃圾回收的复习整理">
+      <i class="fa fa-chevron-left"></i> Java内存分配与垃圾回收的复习整理
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/post/d4829e47.html" rel="next" title="二叉搜索树与完全二叉树">
+      二叉搜索树与完全二叉树 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%89%8D%E8%A8%80"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1%E3%80%81-PostConstruct-%E6%B3%A8%E8%A7%A3"><span class="nav-number">1.1.</span> <span class="nav-text">1、@PostConstruct 注解</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2%E3%80%81%E5%AE%9E%E7%8E%B0CommandLineRunner%E6%8E%A5%E5%8F%A3%E5%B9%B6%E9%87%8D%E5%86%99run-%E6%96%B9%E6%B3%95"><span class="nav-number">1.2.</span> <span class="nav-text">2、实现CommandLineRunner接口并重写run()方法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3%E3%80%81%E4%BD%BF%E7%94%A8ContextRefreshedEvent%E4%BA%8B%E4%BB%B6-%E4%B8%8A%E4%B8%8B%E6%96%87%E4%BB%B6%E5%88%B7%E6%96%B0%E4%BA%8B%E4%BB%B6"><span class="nav-number">1.3.</span> <span class="nav-text">3、使用ContextRefreshedEvent事件(上下文件刷新事件)</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">jpruby</p>
+  <div class="site-description" itemprop="description">宁静致远</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">61</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+        <span class="site-state-item-count">23</span>
+        <span class="site-state-item-name">categories</span>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">77</span>
+        <span class="site-state-item-name">tags</span>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">jpruby</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

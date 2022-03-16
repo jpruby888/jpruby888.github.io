@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.1.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"jpruby888.github.io","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta property="og:type" content="article">
+<meta property="og:title" content="并发编程学习(七)：Fork&#x2F;Join框架原理及demo">
+<meta property="og:url" content="https://jpruby888.github.io/post/19c6e00c.html">
+<meta property="og:site_name" content="jpruby">
+<meta property="og:locale">
+<meta property="og:image" content="https://jpruby888.github.io/fm.jpg">
+<meta property="og:image" content="https://jpruby888.github.io/fj.png">
+<meta property="article:published_time" content="2019-08-14T08:48:56.000Z">
+<meta property="article:modified_time" content="2022-03-16T14:38:41.978Z">
+<meta property="article:author" content="jpruby">
+<meta property="article:tag" content="Java基础">
+<meta property="article:tag" content="并发编程">
+<meta property="article:tag" content="Fork&#x2F;Join框架">
+<meta property="article:tag" content="ForkJoinPool">
+<meta property="article:tag" content="线程池">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://jpruby888.github.io/fm.jpg">
+
+<link rel="canonical" href="https://jpruby888.github.io/post/19c6e00c.html">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-Hans'
+  };
+</script>
+
+  <title>并发编程学习(七)：Fork/Join框架原理及demo | jpruby</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+<link rel="alternate" href="/atom.xml" title="jpruby" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">jpruby</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">安安静静写博客</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
+    <link itemprop="mainEntityOfPage" href="https://jpruby888.github.io/post/19c6e00c.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="jpruby">
+      <meta itemprop="description" content="宁静致远">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="jpruby">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          并发编程学习(七)：Fork/Join框架原理及demo
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2019-08-14 16:48:56" itemprop="dateCreated datePublished" datetime="2019-08-14T16:48:56+08:00">2019-08-14</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2022-03-16 22:38:41" itemprop="dateModified" datetime="2022-03-16T22:38:41+08:00">2022-03-16</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Java%E5%9F%BA%E7%A1%80/" itemprop="url" rel="index"><span itemprop="name">Java基础</span></a>
+                </span>
+                  , 
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Java%E5%9F%BA%E7%A1%80/%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B/" itemprop="url" rel="index"><span itemprop="name">并发编程</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p><img src="/fm.jpg" alt="fm.jpg"></p>
+<span id="more"></span>
+
+<h3 id="概念"><a href="#概念" class="headerlink" title="概念"></a>概念</h3><p>Fork&#x2F;Join框架是jdk1.7引入的一个基于“分治”思想的多线程框架。它的功能是将一个大任务切分(<strong>fork</strong>)成多个相同逻辑的小任务，分而治之，当子任务全都执行完成之后，将结果合并(<strong>join</strong>)起来，最终成为整体任务的执行结果。原理可以抽象成下图表示：</p>
+<p><img src="/fj.png" alt="Fork/Join"></p>
+<h3 id="Fork-x2F-Join相关代码原理及思想"><a href="#Fork-x2F-Join相关代码原理及思想" class="headerlink" title="Fork&#x2F;Join相关代码原理及思想"></a>Fork&#x2F;Join相关代码原理及思想</h3><h6 id="Fork-x2F-Join执行步骤"><a href="#Fork-x2F-Join执行步骤" class="headerlink" title="Fork&#x2F;Join执行步骤"></a>Fork&#x2F;Join执行步骤</h6><ol>
+<li><p>进行任务分割：将任务分割成小任务，然后这个小任务有可能还需要继续分割，直到足够小。</p>
+</li>
+<li><p>执行并合并结果：分割的子任务分别放在双端队列里，然后几个启动线程分别从双端队列里获取任务执行。子任务执行完的结果都统一放在一个队列里，启动一个线程从队列里拿数据，然后合并这些数据。</p>
+</li>
+</ol>
+<p>Fork&#x2F;Join使用两个类完成以上步骤：</p>
+<ul>
+<li><strong>ForkJoinTask</strong>：<ul>
+<li>Fork&#x2F;Join提供了两个子类：RecursiveAction：用于没有返回结果的任务；RecursiveTask ：用于有返回结果的任务</li>
+</ul>
+</li>
+<li><strong>ForkJoinPool</strong> ：<code>public class ForkJoinPool extends AbstractExecutorService&#123; ... &#125;</code>ForkJoinTask需要通过ForkJoinPool来执行，任务分割出的子任务会添加到当前工作线程所维护的双端队列中，进入队列的头部。当一个工作线程的队列里暂时没有任务时，它会随机从其他工作线程的队列的尾部获取一个任务。这种算法成为<strong>工作窃取算法(work-stealing)</strong></li>
+</ul>
+<h6 id="工作窃取算法-work-stealing"><a href="#工作窃取算法-work-stealing" class="headerlink" title="工作窃取算法(work-stealing)"></a>工作窃取算法(work-stealing)</h6><ul>
+<li><p>Fork&#x2F;Join框架内部实现了一个类似于LinkedBlockingDeque的双端队列用作工作线程的任务队列<strong>WorkQueue</strong>。使用<code>ForkJoinWorkerThread</code>保存工作线程，<code>ForkJoinPool.WorkQueue</code>就在其内部。</p>
+</li>
+<li><p>Fork&#x2F;Join每个工作线程在运行中产生了新的任务(通常是调用fork方法)的时候，将任务加入WorkQueue尾部，并且工作线程每次取出任务执行也是从队尾取出执行，即LIFO</p>
+</li>
+<li><p>每个工作线程在处理自己的工作队列同时，会尝试窃取一个任务（或是来自于刚刚提交到 pool 的任务，或是来自于其他工作线程的工作队列），窃取的任务位于其他线程的工作队列的队首，也就是说工作线程在窃取其他工作线程的任务时，使用的是 FIFO 方式。</p>
+</li>
+<li><p>在遇到 join() 时，如果需要 join 的任务尚未完成，则会先处理其他任务，并等待其完成。</p>
+</li>
+<li><p>在既没有自己的任务，也没有可以窃取的任务时，进入休眠。</p>
+</li>
+</ul>
+<h3 id="Fork-x2F-Join-demo演示"><a href="#Fork-x2F-Join-demo演示" class="headerlink" title="Fork&#x2F;Join demo演示"></a>Fork&#x2F;Join demo演示</h3><blockquote>
+<p>使用Fork&#x2F;Join完成大量有序数字的加和</p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">MyCalculateTask</span> <span class="keyword">extends</span> <span class="title class_">RecursiveTask</span>&lt;Integer&gt; &#123;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="type">int</span> <span class="variable">THREADSHOLD</span> <span class="operator">=</span> <span class="number">50</span>;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">private</span> <span class="type">int</span> start;</span><br><span class="line">  <span class="keyword">private</span> <span class="type">int</span> end;</span><br><span class="line">  <span class="keyword">private</span> List&lt;String&gt; list;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">public</span> <span class="title function_">MyCalculateTask</span><span class="params">(<span class="type">int</span> start, <span class="type">int</span> end, List&lt;String&gt; list)</span> &#123;</span><br><span class="line">    <span class="built_in">this</span>.start = start;</span><br><span class="line">    <span class="built_in">this</span>.end = end;</span><br><span class="line">    <span class="built_in">this</span>.list = list;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="meta">@Override</span></span><br><span class="line">  <span class="keyword">protected</span> Integer <span class="title function_">compute</span><span class="params">()</span> &#123;</span><br><span class="line">    <span class="type">int</span> <span class="variable">sum</span> <span class="operator">=</span> <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">if</span> (end - start &lt; THREADSHOLD) &#123;</span><br><span class="line">      <span class="comment">// 当两数字之间差值小于指定值 就不再查分成小任务 </span></span><br><span class="line">      <span class="type">String</span> <span class="variable">so</span> <span class="operator">=</span> <span class="string">&quot;&quot;</span>;</span><br><span class="line">      <span class="keyword">for</span> (<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> start; i &lt; end; i++) &#123;</span><br><span class="line">        sum += i;</span><br><span class="line">        so += list.get(i) + <span class="string">&quot;,&quot;</span>;</span><br><span class="line">      &#125;</span><br><span class="line">      System.out.println(Thread.currentThread().getName() + <span class="string">&quot;处理 &quot;</span> + so + <span class="string">&quot; 的数据&quot;</span>);</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">      <span class="type">int</span> <span class="variable">mid</span> <span class="operator">=</span> (start + end) / <span class="number">2</span>;</span><br><span class="line">      <span class="comment">// 一分为二 拆分任务</span></span><br><span class="line">      <span class="keyword">final</span> <span class="type">MyCalculateTask</span> <span class="variable">left</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">MyCalculateTask</span>(start, mid, list);</span><br><span class="line">      <span class="keyword">final</span> <span class="type">MyCalculateTask</span> <span class="variable">right</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">MyCalculateTask</span>(mid, end, list);</span><br><span class="line">      left.fork();</span><br><span class="line">      right.fork();</span><br><span class="line">      sum += left.join();</span><br><span class="line">      sum += right.join();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> sum;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> InterruptedException, ExecutionException &#123;</span><br><span class="line">    <span class="type">int</span> <span class="variable">sum</span> <span class="operator">=</span> <span class="number">0</span>;</span><br><span class="line">    <span class="type">ForkJoinPool</span> <span class="variable">pool</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">ForkJoinPool</span>();</span><br><span class="line">    <span class="type">int</span> <span class="variable">count</span> <span class="operator">=</span> <span class="number">400</span>;</span><br><span class="line">    List&lt;String&gt; list = <span class="keyword">new</span> <span class="title class_">ArrayList</span>&lt;&gt;(count);</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> <span class="number">0</span>; i &lt; count; i++) &#123;</span><br><span class="line">      list.add(<span class="string">&quot;i-&quot;</span> + i);</span><br><span class="line">      sum += i;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="type">MyCalculateTask</span> <span class="variable">task</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">MyCalculateTask</span>(<span class="number">0</span>, count, list);</span><br><span class="line">    <span class="keyword">final</span> ForkJoinTask&lt;Integer&gt; submit = pool.submit(task);</span><br><span class="line">    System.out.println(<span class="string">&quot;sum = &quot;</span> + sum + <span class="string">&quot; --- submit.get() = &quot;</span> + submit.get());</span><br><span class="line">    pool.awaitTermination(<span class="number">5</span>, TimeUnit.SECONDS);</span><br><span class="line">    pool.shutdown();</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>Fork&#x2F;Join框架可以帮助我们完成很多这种大任务可以拆分成小任务执行的场景，不过上面的方法并不是最佳执行调用方式</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">left.fork();  </span><br><span class="line">right.fork();</span><br><span class="line">替换为</span><br><span class="line">invokeAll(left, right);</span><br></pre></td></tr></table></figure>
+
+<p>因为对于Fork&#x2F;Join模式，假如Pool里面线程数量是固定的，那么调用子任务的fork方法相当于A先分工给B，然后A当监工不干活，B去完成A交代的任务。所以上面的模式相当于浪费了一个线程。那么如果使用invokeAll相当于A分工给B后，A和B都去完成工作。这样可以更好的利用线程池，缩短执行的时间。</p>
+<blockquote>
+<p>参考：<a target="_blank" rel="noopener" href="http://ifeve.com/talk-concurrency-forkjoin/">http://ifeve.com/talk-concurrency-forkjoin/</a></p>
+</blockquote>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Java%E5%9F%BA%E7%A1%80/" rel="tag"># Java基础</a>
+              <a href="/tags/%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B/" rel="tag"># 并发编程</a>
+              <a href="/tags/Fork-Join%E6%A1%86%E6%9E%B6/" rel="tag"># Fork/Join框架</a>
+              <a href="/tags/ForkJoinPool/" rel="tag"># ForkJoinPool</a>
+              <a href="/tags/%E7%BA%BF%E7%A8%8B%E6%B1%A0/" rel="tag"># 线程池</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/post/343686fd.html" rel="prev" title="【设计模式】设计模式基本思想以及23种模式总结整理">
+      <i class="fa fa-chevron-left"></i> 【设计模式】设计模式基本思想以及23种模式总结整理
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/post/1339e588.html" rel="next" title="其实我不太想离开这里">
+      其实我不太想离开这里 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%A6%82%E5%BF%B5"><span class="nav-number">1.</span> <span class="nav-text">概念</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Fork-x2F-Join%E7%9B%B8%E5%85%B3%E4%BB%A3%E7%A0%81%E5%8E%9F%E7%90%86%E5%8F%8A%E6%80%9D%E6%83%B3"><span class="nav-number">2.</span> <span class="nav-text">Fork&#x2F;Join相关代码原理及思想</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#Fork-x2F-Join%E6%89%A7%E8%A1%8C%E6%AD%A5%E9%AA%A4"><span class="nav-number">2.0.0.1.</span> <span class="nav-text">Fork&#x2F;Join执行步骤</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#%E5%B7%A5%E4%BD%9C%E7%AA%83%E5%8F%96%E7%AE%97%E6%B3%95-work-stealing"><span class="nav-number">2.0.0.2.</span> <span class="nav-text">工作窃取算法(work-stealing)</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Fork-x2F-Join-demo%E6%BC%94%E7%A4%BA"><span class="nav-number">3.</span> <span class="nav-text">Fork&#x2F;Join demo演示</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%80%BB%E7%BB%93"><span class="nav-number">4.</span> <span class="nav-text">总结</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">jpruby</p>
+  <div class="site-description" itemprop="description">宁静致远</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">61</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+        <span class="site-state-item-count">23</span>
+        <span class="site-state-item-name">categories</span>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">77</span>
+        <span class="site-state-item-name">tags</span>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">jpruby</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

@@ -4,7 +4,22 @@
 
     <sitemap>
         <loc>https://jpruby888.github.io/post-sitemap.xml</loc>
-        <lastmod>2022-03-16T13:39:04.396Z</lastmod>
+        <lastmod>2022-03-16T14:38:42.365Z</lastmod>
+    </sitemap>
+
+    <sitemap>
+        <loc>https://jpruby888.github.io/page-sitemap.xml</loc>
+        <lastmod>2022-03-16T14:25:20.596Z</lastmod>
+    </sitemap>
+
+    <sitemap>
+        <loc>https://jpruby888.github.io/category-sitemap.xml</loc>
+        <lastmod>2022-03-16T14:38:42.365Z</lastmod>
+    </sitemap>
+
+    <sitemap>
+        <loc>https://jpruby888.github.io/tag-sitemap.xml</loc>
+        <lastmod>2022-03-16T14:38:42.365Z</lastmod>
     </sitemap>
 
 </sitemapindex>

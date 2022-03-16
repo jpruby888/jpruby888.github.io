@@ -1,0 +1,668 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.1.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"jpruby888.github.io","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="Scaffold-Cloud: SpringCloud微服务脚手架 [幕布](https:&#x2F;&#x2F;mubu.com&#x2F;doc&#x2F;6NZlNw3DIw) Scaffold-Cloud 是一个适用于开发者学习的 Spring-Cloud 微服务项目脚手架。项目期望集成大部分目前互联网公司使用的主流的Spring-Cloud微服务相关工具和服务。并结合一些实际的业务增加一些其他功能，如：分布式事务、定时任务、消">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Scaffold-Cloud —— SpringCloud微服务架构实践">
+<meta property="og:url" content="https://jpruby888.github.io/post/9cfc71b8.html">
+<meta property="og:site_name" content="jpruby">
+<meta property="og:description" content="Scaffold-Cloud: SpringCloud微服务脚手架 [幕布](https:&#x2F;&#x2F;mubu.com&#x2F;doc&#x2F;6NZlNw3DIw) Scaffold-Cloud 是一个适用于开发者学习的 Spring-Cloud 微服务项目脚手架。项目期望集成大部分目前互联网公司使用的主流的Spring-Cloud微服务相关工具和服务。并结合一些实际的业务增加一些其他功能，如：分布式事务、定时任务、消">
+<meta property="og:locale">
+<meta property="og:image" content="https://jpruby888.github.io/netflix.png">
+<meta property="og:image" content="https://jpruby888.github.io/microservice.webp">
+<meta property="article:published_time" content="2019-10-25T05:42:24.000Z">
+<meta property="article:modified_time" content="2022-03-16T14:38:41.912Z">
+<meta property="article:author" content="jpruby">
+<meta property="article:tag" content="SpringBoot">
+<meta property="article:tag" content="SpringCloud">
+<meta property="article:tag" content="微服务">
+<meta property="article:tag" content="分布式">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://jpruby888.github.io/netflix.png">
+
+<link rel="canonical" href="https://jpruby888.github.io/post/9cfc71b8.html">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-Hans'
+  };
+</script>
+
+  <title>Scaffold-Cloud —— SpringCloud微服务架构实践 | jpruby</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+<link rel="alternate" href="/atom.xml" title="jpruby" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">jpruby</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">安安静静写博客</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
+    <link itemprop="mainEntityOfPage" href="https://jpruby888.github.io/post/9cfc71b8.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="jpruby">
+      <meta itemprop="description" content="宁静致远">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="jpruby">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Scaffold-Cloud —— SpringCloud微服务架构实践
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2019-10-25 13:42:24" itemprop="dateCreated datePublished" datetime="2019-10-25T13:42:24+08:00">2019-10-25</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2022-03-16 22:38:41" itemprop="dateModified" datetime="2022-03-16T22:38:41+08:00">2022-03-16</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/SpringCloud/" itemprop="url" rel="index"><span itemprop="name">SpringCloud</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <center><u style="font-size=16px;"><a href="/">Scaffold-Cloud: SpringCloud微服务脚手架</a></u></center> [幕布](https://mubu.com/doc/6NZlNw3DIw)
+Scaffold-Cloud 是一个适用于开发者学习的 Spring-Cloud 微服务项目脚手架。项目期望集成大部分目前互联网公司使用的主流的Spring-Cloud微服务相关工具和服务。并结合一些实际的业务增加一些其他功能，如：分布式事务、定时任务、消息队列、日志分析等等，然后加入 CI/CD 并引入 docker 部署。
+
+<p>Scaffold-Cloud 基于 SpringCloud Netflix 全家桶进行微服务项目的构建，所以在这之前，使用 Scaffold-Cloud 需要先了解下 SpringCloud 以及 Netflix 工具全家桶。</p>
+<p><img src="/netflix.png"></p>
+<center><u style="font-size=6px; color:gray">Sorry, NetFlix is not available in your country yet.</u></center>
+<span id="more"></span>
+
+<h2 id="Spring-Cloud-介绍"><a href="#Spring-Cloud-介绍" class="headerlink" title="Spring Cloud 介绍"></a>Spring Cloud 介绍</h2><h4 id="从单体应用到微服务"><a href="#从单体应用到微服务" class="headerlink" title="从单体应用到微服务"></a>从单体应用到微服务</h4><p>在早期的企业中，项目基本上都是单体应用，将一个网站部署在一台单独的服务器上对用户提供服务。但是这样的服务最大的缺点就是，当服务器断电或者服务进程挂掉，用户直接就无法访问。后来演进出集群服务，将同样的服务在多台服务器分别部署，使用负载均衡等手段让服务对于用户来说看到的都是同一个，这样当一台服务器夯机至少还有其他的服务器提供相同的应用。</p>
+<p>但是，当企业级服务变得越来越复杂的时候，项目变得越来越庞大，有时甚至影响到了服务的部署，这个时候就应该将庞大的服务拆分成多个子系统，部署在不同的服务器上，这样的服务当遭遇高并发访问的时候也能够将请求压力分摊到多个服务器上，这就是分布式。</p>
+<p>而当企业需要开启一个新的项目时，为了避免重复造轮子，往往一些可复用的模块会被拆分出来作为一个微小的系统，它可以独立的开发、设计、运行和运维，只需要使用 ESB企业服务总线将所有服务整合并提供统一的访问入口，就能够复用，这就是 SOA。</p>
+<p>而微服务是对以上服务架构的最终演进结构：将服务切分成多个微小的应用，提供统一的服务访问协议HTTP(SpringCloud)&#x2F;TCP(Dubbo)，强调运行时的分散解耦，在业务上也有着高度的抽离。</p>
+<blockquote>
+<p><code>微服务架构风格</code><strong>是一种将<code>一个单一应用程序</code>开发为<code>一组小型服务</code>的方法，每个服务运行在自己的进程中，服务间通信采用轻量级通信机制</strong>(通常使用HTTP资源API)。这些<strong>服务围绕<code>业务能力</code>构建</strong>，并且可通过<strong>全自动部署机制独立部署</strong>。这些服务共用一个<strong>最小型的集中式的管理</strong>，服务可用不同的语言开发，使用不同的<strong>数据存储技术</strong>。<br><img src="/microservice.webp"><br>—— Martin Fowler</p>
+</blockquote>
+<p><strong>但是拆分成这么微小的微服务一定会碰到各种各样的问题——如何拆分？服务之间如何发现？如何授权？如何做负载均衡？如何管理多服务配置？如何跟踪调用链路？如何实时查看服务状态等等… … SpringCloud 就是以上一系列问题的 Solver。它提供了一整套的解决方案！</strong></p>
+<h4 id="SpringCloud"><a href="#SpringCloud" class="headerlink" title="SpringCloud"></a>SpringCloud</h4><p>首先，SpringCloud 并不是一个框架，而是一个微服务的规范，或者说是一个微服务工具集合。</p>
+<h5 id="SpringCloud特点："><a href="#SpringCloud特点：" class="headerlink" title="SpringCloud特点："></a>SpringCloud特点：</h5><ul>
+<li>约定大于配置，基于 SpringBoot</li>
+<li>开发部署于各种环境，AWS，阿里云，PC 等</li>
+<li>隐藏组件复杂性，声明式配置，无 xml</li>
+<li>开箱即用，快速启动</li>
+<li>丰富的轻量级组件</li>
+<li>灵活选型，如注册发现可用 eureka，zookeeper 或者 Redis</li>
+</ul>
+<h5 id="SpringCloud-各版本组件及版本兼容性"><a href="#SpringCloud-各版本组件及版本兼容性" class="headerlink" title="SpringCloud 各版本组件及版本兼容性"></a>SpringCloud 各版本组件及<a target="_blank" rel="noopener" href="https://spring.io/projects/spring-cloud">版本兼容性</a></h5><table>
+<thead>
+<tr>
+<th>Component</th>
+<th>Edgware.SR6</th>
+<th>Greenwich.SR2</th>
+<th>Greenwich.BUILD-SNAPSHOT</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>spring-cloud-aws</td>
+<td>1.2.4.RELEASE</td>
+<td>2.1.2.RELEASE</td>
+<td>2.1.3.BUILD-SNAPSHOT</td>
+</tr>
+<tr>
+<td>spring-cloud-bus</td>
+<td>1.3.4.RELEASE</td>
+<td>2.1.2.RELEASE</td>
+<td>2.1.3.BUILD-SNAPSHOT</td>
+</tr>
+<tr>
+<td>spring-cloud-cli</td>
+<td>1.4.1.RELEASE</td>
+<td>2.0.0.RELEASE</td>
+<td>2.0.1.BUILD-SNAPSHOT</td>
+</tr>
+<tr>
+<td>spring-cloud-commons</td>
+<td>1.3.6.RELEASE</td>
+<td>2.1.2.RELEASE</td>
+<td>2.1.3.BUILD-SNAPSHOT</td>
+</tr>
+<tr>
+<td>spring-cloud-contract</td>
+<td>1.2.7.RELEASE</td>
+<td>2.1.2.RELEASE</td>
+<td>2.1.3.BUILD-SNAPSHOT</td>
+</tr>
+<tr>
+<td>spring-cloud-config</td>
+<td>1.4.7.RELEASE</td>
+<td>2.1.3.RELEASE</td>
+<td>2.1.4.BUILD-SNAPSHOT</td>
+</tr>
+<tr>
+<td>spring-cloud-netflix</td>
+<td>1.4.7.RELEASE</td>
+<td>2.1.2.RELEASE</td>
+<td>2.1.3.BUILD-SNAPSHOT</td>
+</tr>
+<tr>
+<td>spring-cloud-security</td>
+<td>1.2.4.RELEASE</td>
+<td>2.1.3.RELEASE</td>
+<td>2.1.4.BUILD-SNAPSHOT</td>
+</tr>
+<tr>
+<td>spring-cloud-cloudfoundry</td>
+<td>1.1.3.RELEASE</td>
+<td>2.1.2.RELEASE</td>
+<td>2.1.3.BUILD-SNAPSHOT</td>
+</tr>
+<tr>
+<td>spring-cloud-consul</td>
+<td>1.3.6.RELEASE</td>
+<td>2.1.2.RELEASE</td>
+<td>2.1.3.BUILD-SNAPSHOT</td>
+</tr>
+<tr>
+<td>spring-cloud-sleuth</td>
+<td>1.3.6.RELEASE</td>
+<td>2.1.1.RELEASE</td>
+<td>2.1.2.BUILD-SNAPSHOT</td>
+</tr>
+<tr>
+<td>spring-cloud-stream</td>
+<td>Ditmars.SR5</td>
+<td>Fishtown.SR3</td>
+<td>Fishtown.BUILD-SNAPSHOT</td>
+</tr>
+<tr>
+<td>spring-cloud-zookeeper</td>
+<td>1.2.3.RELEASE</td>
+<td>2.1.2.RELEASE</td>
+<td>2.1.3.BUILD-SNAPSHOT</td>
+</tr>
+<tr>
+<td>spring-boot</td>
+<td>1.5.21.RELEASE</td>
+<td>2.1.5.RELEASE</td>
+<td>2.1.8.BUILD-SNAPSHOT</td>
+</tr>
+<tr>
+<td>spring-cloud-task</td>
+<td>1.2.4.RELEASE</td>
+<td>2.1.2.RELEASE</td>
+<td>2.1.3.BUILD-SNAPSHOT</td>
+</tr>
+<tr>
+<td>spring-cloud-vault</td>
+<td>1.1.3.RELEASE</td>
+<td>2.1.2.RELEASE</td>
+<td>2.1.3.BUILD-SNAPSHOT</td>
+</tr>
+<tr>
+<td>spring-cloud-gateway</td>
+<td>1.0.3.RELEASE</td>
+<td>2.1.2.RELEASE</td>
+<td>2.1.3.BUILD-SNAPSHOT</td>
+</tr>
+<tr>
+<td>spring-cloud-openfeign</td>
+<td></td>
+<td>2.1.2.RELEASE</td>
+<td>2.1.3.BUILD-SNAPSHOT</td>
+</tr>
+<tr>
+<td>spring-cloud-function</td>
+<td>1.0.2.RELEASE</td>
+<td>2.0.2.RELEASE</td>
+<td>2.0.3.BUILD-SNAPSHOT</td>
+</tr>
+</tbody></table>
+<h3 id="SpringCloud-全家桶"><a href="#SpringCloud-全家桶" class="headerlink" title="SpringCloud 全家桶"></a><a target="_blank" rel="noopener" href="https://spring.io/projects/spring-cloud">SpringCloud 全家桶</a></h3><h4 id="spring-cloud-netflix"><a href="#spring-cloud-netflix" class="headerlink" title="spring-cloud-netflix"></a>spring-cloud-netflix</h4><h5 id="eureka-原理："><a href="#eureka-原理：" class="headerlink" title="eureka 原理："></a>eureka 原理：</h5><ul>
+<li>服务启动时，调用 eureka 接口进行注册，Eureka Server 会存储这些信息，IP、端口、微服务名称等</li>
+<li>微服务启动之后，会周期性的发送心跳进行“续租”，默认 30 秒</li>
+<li>如果一定时间没有“续租”，默认 90 秒，就销毁微服务实例</li>
+<li>默认情况下，Eureka Server 也是一个 Eureka Client，集群下会互相复制服务注册表中的信息进行同步</li>
+<li>Eureka Client 会缓存注册表的信息，减少Eureka Server 的请求压力，以及容灾</li>
+</ul>
+<h4 id="spring-cloud-openfeign"><a href="#spring-cloud-openfeign" class="headerlink" title="spring-cloud-openfeign"></a>spring-cloud-openfeign</h4><h4 id="spring-cloud-zuul-微服务网关"><a href="#spring-cloud-zuul-微服务网关" class="headerlink" title="spring-cloud-zuul 微服务网关"></a>spring-cloud-zuul 微服务网关</h4><h4 id="spring-cloud-config-配置中心"><a href="#spring-cloud-config-配置中心" class="headerlink" title="spring-cloud-config 配置中心"></a>spring-cloud-config 配置中心</h4><h2 id="项目创建的目的？"><a href="#项目创建的目的？" class="headerlink" title="项目创建的目的？"></a>项目创建的目的？</h2><p>第一个目的是为了本人能够熟悉和学习 Spring-Cloud 相关知识，不过在做了一段时间之后还是希望能够分享出来让更多的同学一起学习和讨论。</p>
+<h2 id="项目结构如何？"><a href="#项目结构如何？" class="headerlink" title="项目结构如何？"></a>项目结构如何？</h2><ul>
+<li>scaffold-business <a href="#">业务服务提供者</a> 端口从8850 - 8860<ul>
+<li>scaffold-business-sys-service <a href="#">系统业务微服务-业务模块</a> 端口 8850</li>
+<li>scaffold-business-job-service <a href="#">定时任务微服务-业务模块</a> 端口 8851</li>
+<li>scaffold-business-thirdparty-service <a href="#">第三方业务微服务-业务模块</a> 端口 8852</li>
+</ul>
+</li>
+<li>scaffold-business-api <a href="#">业务API包 用于接口与实现分离</a><ul>
+<li>scaffold-business-sys-api <a href="#">系统资源、菜单、权限等API封装</a></li>
+<li>scaffold-business-job-api <a href="#">定时任务API封装</a></li>
+<li>scaffold-business-thirdparty-api <a href="#">第三方服务API封装</a></li>
+</ul>
+</li>
+<li>scaffold-core <a href="#">工具类以及各种公共代码</a><ul>
+<li>scaffold-core-code <a href="#">每个模块都会用到的公共代码，Bean，config等</a></li>
+<li>scaffold-core-common <a href="#">工具类模块，公共代码</a></li>
+<li>scaffold-core-plugin <a href="#">自动代码生成插件模块</a></li>
+</ul>
+</li>
+<li>scaffold-eureka <a href="#">注册中心Eureka</a> 端口 8761 - 8771</li>
+<li>scaffold-zuul <a href="#">网关服务</a> 端口 8861 - 8870</li>
+<li>scaffold-config-server <a href="#">配置服务端服务</a> 端口 8871 - 8881</li>
+<li>scaffold-config-client <a href="#">配置客户端服务</a> 端口 8880 - 8891</li>
+<li>scaffold-tx-manager <a href="#">分布式事务协调服务</a> 端口7970 </li>
+<li>scaffold-feign <a href="#">Feign模块</a><ul>
+<li>scaffold-feign-sys <a href="#">feign-sys模块</a></li>
+<li>scaffold-feign-job <a href="#">feign-job模块</a></li>
+<li>scaffold-feign-thirdparty <a href="#">feign-thirdparty模块</a></li>
+</ul>
+</li>
+<li>scaffold-route <a href="#">主业务消费者</a> 端口从8750 - 8760<ul>
+<li>scaffold-route-operate <a href="#">后台管理接口及页面</a> 端口 8750</li>
+<li>scaffold-route-app <a href="#">APP客户端接口</a> 端口 8751</li>
+</ul>
+</li>
+</ul>
+<h2 id="如何快速开始？"><a href="#如何快速开始？" class="headerlink" title="如何快速开始？"></a>如何快速开始？</h2><h3 id="1-本地直接启动"><a href="#1-本地直接启动" class="headerlink" title="1. 本地直接启动"></a>1. 本地直接启动</h3><ul>
+<li><p>下载&#x2F;克隆项目到本地 </p>
+  <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git clone https:<span class="comment">//github.com/Fatezhang/scaffold-cloud</span></span><br></pre></td></tr></table></figure></li>
+<li><p>安装MySql数据库并启动</p>
+</li>
+<li><p>创建数据库scaffold_cloud_base 和 tx_manager</p>
+</li>
+<li><p>修改 scaffold-cloud 中微服务的数据库链接配置，本地运行只需要修改application-local.yml</p>
+</li>
+<li><p>安装redis服务并启动，修改scaffold-core-code配置文件中的配置，同样只需要修改local中的</p>
+</li>
+<li><p>安装Rocket MQ服务，同样修改配置</p>
+</li>
+<li><p>如果有需要，注册阿里OSS，并修改配置中的配置</p>
+</li>
+<li><p>启动EurekaApplication注册中心</p>
+</li>
+<li><p>启动TxlcnApplication分布式事务协调服务</p>
+</li>
+<li><p>启动SysServiceApplication，加载数据库字典等配置到缓存、提供后台管理微服务（权限、操作员、角色、国际化配置等）</p>
+</li>
+<li><p>启动RouteOperateApplication服务，默认端口为8750</p>
+</li>
+<li><p>访问<a target="_blank" rel="noopener" href="http://localhost:8750/%C3%9F%C3%9F">http://localhost:8750/ßß</a></p>
+</li>
+<li><p>默认账号密码为admin&#x2F;admin123</p>
+</li>
+</ul>
+<h3 id="2-使用-docker-部署"><a href="#2-使用-docker-部署" class="headerlink" title="2. 使用 docker 部署"></a>2. 使用 docker 部署</h3><h4 id="docker-启动-Linux-或者-Mac-下使用如下脚本-Windows-环境自行按照脚本中的示例执行"><a href="#docker-启动-Linux-或者-Mac-下使用如下脚本-Windows-环境自行按照脚本中的示例执行" class="headerlink" title="docker 启动 : Linux 或者 Mac 下使用如下脚本, Windows 环境自行按照脚本中的示例执行"></a>docker 启动 : Linux 或者 Mac 下使用如下脚本, Windows 环境自行按照脚本中的示例执行</h4><h4 id="mvn-clean-package-docker-build-Pdocker"><a href="#mvn-clean-package-docker-build-Pdocker" class="headerlink" title="mvn clean package docker:build -Pdocker"></a><code>mvn clean package docker:build -Pdocker</code></h4><pre><code>1. 进入项目所在目录
+2. 执行 `./.scripts/recreate-docker-image.sh` 创建 docker 镜像
+3. 执行 `./.scripts/start-docker-service.sh` 即使用 docker-compose 启动
+</code></pre>
+<h2 id="项目未来还需要做什么？"><a href="#项目未来还需要做什么？" class="headerlink" title="项目未来还需要做什么？"></a>项目未来还需要做什么？</h2><ul>
+<li>更改项目注册发现中心，也许用 nacos 或者 zookeeper</li>
+<li>加入更多 spring-cloud 周边服务，包括各种监控平台等</li>
+<li>CI&#x2F;CD 使用 Jenkins 或者 BuildKite</li>
+<li>使用 docker 容器化部署</li>
+<li>ElasticSearch 日志收集</li>
+<li><a target="_blank" rel="noopener" href="https://github.com/xuxueli/xxl-job">xxl-job</a> 分布式定时任务 <a target="_blank" rel="noopener" href="https://www.xuxueli.com/xxl-job/">https://www.xuxueli.com/xxl-job/</a></li>
+<li>整合<a target="_blank" rel="noopener" href="https://github.com/justauth/JustAuth">第三方开源库</a>用以登录、支付等</li>
+<li>最后，实际开发一些业务功能</li>
+</ul>
+<hr>
+<h4 id="参考："><a href="#参考：" class="headerlink" title="参考："></a>参考：</h4><blockquote>
+<p><a target="_blank" rel="noopener" href="https://juejin.im/post/5c28f2fe51882565a15776fb">https://juejin.im/post/5c28f2fe51882565a15776fb</a></p>
+<p><a target="_blank" rel="noopener" href="https://juejin.im/post/5de740566fb9a0165721b744">https://juejin.im/post/5de740566fb9a0165721b744</a></p>
+<p><a target="_blank" rel="noopener" href="https://juejin.im/post/5dc220126fb9a04aa660dcfb">https://juejin.im/post/5dc220126fb9a04aa660dcfb</a></p>
+</blockquote>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/SpringBoot/" rel="tag"># SpringBoot</a>
+              <a href="/tags/SpringCloud/" rel="tag"># SpringCloud</a>
+              <a href="/tags/%E5%BE%AE%E6%9C%8D%E5%8A%A1/" rel="tag"># 微服务</a>
+              <a href="/tags/%E5%88%86%E5%B8%83%E5%BC%8F/" rel="tag"># 分布式</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/post/2b1638b7.html" rel="prev" title="The second day on the job in ThoughtWorks">
+      <i class="fa fa-chevron-left"></i> The second day on the job in ThoughtWorks
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/post/f7f71700.html" rel="next" title="Write a blog in English">
+      Write a blog in English <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Spring-Cloud-%E4%BB%8B%E7%BB%8D"><span class="nav-number">1.</span> <span class="nav-text">Spring Cloud 介绍</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BB%8E%E5%8D%95%E4%BD%93%E5%BA%94%E7%94%A8%E5%88%B0%E5%BE%AE%E6%9C%8D%E5%8A%A1"><span class="nav-number">1.0.1.</span> <span class="nav-text">从单体应用到微服务</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#SpringCloud"><span class="nav-number">1.0.2.</span> <span class="nav-text">SpringCloud</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#SpringCloud%E7%89%B9%E7%82%B9%EF%BC%9A"><span class="nav-number">1.0.2.1.</span> <span class="nav-text">SpringCloud特点：</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#SpringCloud-%E5%90%84%E7%89%88%E6%9C%AC%E7%BB%84%E4%BB%B6%E5%8F%8A%E7%89%88%E6%9C%AC%E5%85%BC%E5%AE%B9%E6%80%A7"><span class="nav-number">1.0.2.2.</span> <span class="nav-text">SpringCloud 各版本组件及版本兼容性</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#SpringCloud-%E5%85%A8%E5%AE%B6%E6%A1%B6"><span class="nav-number">1.1.</span> <span class="nav-text">SpringCloud 全家桶</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#spring-cloud-netflix"><span class="nav-number">1.1.1.</span> <span class="nav-text">spring-cloud-netflix</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#eureka-%E5%8E%9F%E7%90%86%EF%BC%9A"><span class="nav-number">1.1.1.1.</span> <span class="nav-text">eureka 原理：</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#spring-cloud-openfeign"><span class="nav-number">1.1.2.</span> <span class="nav-text">spring-cloud-openfeign</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#spring-cloud-zuul-%E5%BE%AE%E6%9C%8D%E5%8A%A1%E7%BD%91%E5%85%B3"><span class="nav-number">1.1.3.</span> <span class="nav-text">spring-cloud-zuul 微服务网关</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#spring-cloud-config-%E9%85%8D%E7%BD%AE%E4%B8%AD%E5%BF%83"><span class="nav-number">1.1.4.</span> <span class="nav-text">spring-cloud-config 配置中心</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%A1%B9%E7%9B%AE%E5%88%9B%E5%BB%BA%E7%9A%84%E7%9B%AE%E7%9A%84%EF%BC%9F"><span class="nav-number">2.</span> <span class="nav-text">项目创建的目的？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%A1%B9%E7%9B%AE%E7%BB%93%E6%9E%84%E5%A6%82%E4%BD%95%EF%BC%9F"><span class="nav-number">3.</span> <span class="nav-text">项目结构如何？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%A6%82%E4%BD%95%E5%BF%AB%E9%80%9F%E5%BC%80%E5%A7%8B%EF%BC%9F"><span class="nav-number">4.</span> <span class="nav-text">如何快速开始？</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-%E6%9C%AC%E5%9C%B0%E7%9B%B4%E6%8E%A5%E5%90%AF%E5%8A%A8"><span class="nav-number">4.1.</span> <span class="nav-text">1. 本地直接启动</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-%E4%BD%BF%E7%94%A8-docker-%E9%83%A8%E7%BD%B2"><span class="nav-number">4.2.</span> <span class="nav-text">2. 使用 docker 部署</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#docker-%E5%90%AF%E5%8A%A8-Linux-%E6%88%96%E8%80%85-Mac-%E4%B8%8B%E4%BD%BF%E7%94%A8%E5%A6%82%E4%B8%8B%E8%84%9A%E6%9C%AC-Windows-%E7%8E%AF%E5%A2%83%E8%87%AA%E8%A1%8C%E6%8C%89%E7%85%A7%E8%84%9A%E6%9C%AC%E4%B8%AD%E7%9A%84%E7%A4%BA%E4%BE%8B%E6%89%A7%E8%A1%8C"><span class="nav-number">4.2.1.</span> <span class="nav-text">docker 启动 : Linux 或者 Mac 下使用如下脚本, Windows 环境自行按照脚本中的示例执行</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#mvn-clean-package-docker-build-Pdocker"><span class="nav-number">4.2.2.</span> <span class="nav-text">mvn clean package docker:build -Pdocker</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%A1%B9%E7%9B%AE%E6%9C%AA%E6%9D%A5%E8%BF%98%E9%9C%80%E8%A6%81%E5%81%9A%E4%BB%80%E4%B9%88%EF%BC%9F"><span class="nav-number">5.</span> <span class="nav-text">项目未来还需要做什么？</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%8F%82%E8%80%83%EF%BC%9A"><span class="nav-number">5.0.1.</span> <span class="nav-text">参考：</span></a></li></ol></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">jpruby</p>
+  <div class="site-description" itemprop="description">宁静致远</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">61</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+        <span class="site-state-item-count">23</span>
+        <span class="site-state-item-name">categories</span>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">77</span>
+        <span class="site-state-item-name">tags</span>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">jpruby</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.1.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"jpruby888.github.io","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="前言springboot默认就支持国际化的，而且不需要你过多的做什么配置，只需要在resources&#x2F;下创建国际化配置文件即可，注意名称必须以messages开始。 messages.properties （默认的语言配置文件，当找不到其他语言的配置的时候，使用该文件进行展示）。 具体的关于springboot的国际化配置我这边就不再过多介绍(包括Locale的设置以及如何根据区域设置语言等)，关">
+<meta property="og:type" content="article">
+<meta property="og:title" content="使用springboot进行国际化时自定义读取数据库配置">
+<meta property="og:url" content="https://jpruby888.github.io/post/8c928c66.html">
+<meta property="og:site_name" content="jpruby">
+<meta property="og:description" content="前言springboot默认就支持国际化的，而且不需要你过多的做什么配置，只需要在resources&#x2F;下创建国际化配置文件即可，注意名称必须以messages开始。 messages.properties （默认的语言配置文件，当找不到其他语言的配置的时候，使用该文件进行展示）。 具体的关于springboot的国际化配置我这边就不再过多介绍(包括Locale的设置以及如何根据区域设置语言等)，关">
+<meta property="og:locale">
+<meta property="og:image" content="https://img-blog.csdn.net/20180116154941287?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvdTAxNDcyMTEzMQ==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
+<meta property="article:published_time" content="2019-03-20T11:27:02.000Z">
+<meta property="article:modified_time" content="2022-03-16T14:38:41.949Z">
+<meta property="article:author" content="jpruby">
+<meta property="article:tag" content="springboot">
+<meta property="article:tag" content="国际化">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://img-blog.csdn.net/20180116154941287?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvdTAxNDcyMTEzMQ==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
+
+<link rel="canonical" href="https://jpruby888.github.io/post/8c928c66.html">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-Hans'
+  };
+</script>
+
+  <title>使用springboot进行国际化时自定义读取数据库配置 | jpruby</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+<link rel="alternate" href="/atom.xml" title="jpruby" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">jpruby</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">安安静静写博客</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
+    <link itemprop="mainEntityOfPage" href="https://jpruby888.github.io/post/8c928c66.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="jpruby">
+      <meta itemprop="description" content="宁静致远">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="jpruby">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          使用springboot进行国际化时自定义读取数据库配置
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2019-03-20 19:27:02" itemprop="dateCreated datePublished" datetime="2019-03-20T19:27:02+08:00">2019-03-20</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2022-03-16 22:38:41" itemprop="dateModified" datetime="2022-03-16T22:38:41+08:00">2022-03-16</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/springboot/" itemprop="url" rel="index"><span itemprop="name">springboot</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>springboot默认就支持国际化的，而且不需要你过多的做什么配置，只需要在<code>resources/</code>下创建国际化配置文件即可，注意名称必须以messages开始。 messages.properties （默认的语言配置文件，当找不到其他语言的配置的时候，使用该文件进行展示）。 具体的关于springboot的国际化配置我这边就不再过多介绍(包括Locale的设置以及如何根据区域设置语言等)，关于页面上得使用可以参考：<a href="!https://www.baidu.com/s?word=springboot+%E5%9B%BD%E9%99%85%E5%8C%96">springboot国际化</a>。在这篇博客中，我要介绍的是一个很有用的功能并且绝大部分人也会用得到，就是<br><strong><font color=#0099ff size=5 face="黑体">不使用配置文件<code>messages.properties</code>储存国际化语言，而使用数据库进行动态配置，做到无需重启更改配置。</font></strong></p>
+<span id="more"></span>
+<h2 id="如何使用"><a href="#如何使用" class="headerlink" title="如何使用"></a>如何使用</h2><h4 id="MessageSource介绍"><a href="#MessageSource介绍" class="headerlink" title="MessageSource介绍"></a>MessageSource介绍</h4><p>Spring提供了一个接口MessageSource用于获取国际化信息，ReloadableResourceBundleMessageSource和ResourceBundleMessageSource都是继承了该接口的一个抽象实现类AbstractMessageSource，在spring官网有一段这样介绍messageSource的话：<br><img src="https://img-blog.csdn.net/20180116154941287?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvdTAxNDcyMTEzMQ==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="spring官网对于messageSource的介绍" title="spring官网对于messageSource的介绍"><br>图中红框画起来的意思就是，上下文加载的时候会查询messageSource的bean，如果没有就会创建一个名为<code>messageSource</code>放在上下文中… …等等。</p>
+<h4 id="在springboot中注入自定义messageSource"><a href="#在springboot中注入自定义messageSource" class="headerlink" title="在springboot中注入自定义messageSource"></a>在springboot中注入自定义messageSource</h4><p>通过上面的介绍，我们就可以自己定义自己的messageSource进行配置的读取了。<br> ** 我这边是把这个放在了业务层，大家用的时候也可以直接放在控制层(一般都放在控制层，要用到)，使用@Compnent(“messageSource”)注解声明下bean名称即可 **<br> <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// MyMessageSourceService是我自己的接口 你也可以不需要。使用@Compnent(&quot;messageSource&quot;)注解就行</span></span><br><span class="line"><span class="meta">@Service(&quot;messageSource&quot;)</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">MyMessageSource</span> <span class="keyword">extends</span> <span class="title class_">AbstractMessageSource</span> <span class="keyword">implements</span> <span class="title class_">ResourceLoaderAware</span>, MyMessageSourceService &#123;</span><br><span class="line"></span><br><span class="line">    ResourceLoader resourceLoader;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 这个是用来缓存数据库中获取到的配置的 数据库配置更改的时候可以调用reload方法重新加载</span></span><br><span class="line">    <span class="comment">// 当然 实际使用者也可以不使用这种缓存的方式</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> Map&lt;String, Map&lt;String, String&gt;&gt; LOCAL_CACHE = <span class="keyword">new</span> <span class="title class_">ConcurrentHashMap</span>&lt;&gt;(<span class="number">256</span>);</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Autowired</span></span><br><span class="line">    SysI18nService sysI18nService;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> <span class="type">Logger</span> <span class="variable">logger</span> <span class="operator">=</span> LoggerFactory.getLogger(MyMessageSource.class);</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 初始化</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="meta">@PostConstruct</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">init</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="built_in">this</span>.reload();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 重新将数据库中的国际化配置加载</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">reload</span><span class="params">()</span> &#123;</span><br><span class="line">        LOCAL_CACHE.clear();</span><br><span class="line">        LOCAL_CACHE.putAll(loadAllMessageResourcesFromDB());</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 从数据库中获取所有国际化配置 这边可以根据自己数据库表结构进行相应的业务实现</span></span><br><span class="line"><span class="comment">     * 对应的语言能够取出来对应的值就行了 无需一定要按照这个方法来</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">public</span> Map&lt;String, Map&lt;String, String&gt;&gt; <span class="title function_">loadAllMessageResourcesFromDB</span><span class="params">()</span> &#123;</span><br><span class="line">        List&lt;SysI18nBO&gt; list = sysI18nService.findList(<span class="keyword">new</span> <span class="title class_">SysI18nAO</span>());</span><br><span class="line">        <span class="keyword">if</span> (CollectionUtils.isNotEmpty(list)) &#123;</span><br><span class="line">            <span class="keyword">final</span> Map&lt;String, String&gt; zhCnMessageResources = <span class="keyword">new</span> <span class="title class_">HashMap</span>&lt;&gt;(list.size());</span><br><span class="line">            <span class="keyword">final</span> Map&lt;String, String&gt; enUsMessageResources = <span class="keyword">new</span> <span class="title class_">HashMap</span>&lt;&gt;(list.size());</span><br><span class="line">            <span class="keyword">final</span> Map&lt;String, String&gt; idIdMessageResources = <span class="keyword">new</span> <span class="title class_">HashMap</span>&lt;&gt;(list.size());</span><br><span class="line">            <span class="keyword">for</span> (SysI18nBO bo : list) &#123;</span><br><span class="line">                <span class="type">String</span> <span class="variable">name</span> <span class="operator">=</span> bo.getModel() + <span class="string">&quot;.&quot;</span> + bo.getName();</span><br><span class="line">                <span class="type">String</span> <span class="variable">zhText</span> <span class="operator">=</span> bo.getZhCn();</span><br><span class="line">                <span class="type">String</span> <span class="variable">enText</span> <span class="operator">=</span> bo.getEnUs();</span><br><span class="line">                <span class="type">String</span> <span class="variable">idText</span> <span class="operator">=</span> bo.getInId();</span><br><span class="line">                zhCnMessageResources.put(name, zhText);</span><br><span class="line">                enUsMessageResources.put(name, enText);</span><br><span class="line">                idIdMessageResources.put(name, idText);</span><br><span class="line">            &#125;</span><br><span class="line">            LOCAL_CACHE.put(<span class="string">&quot;zh&quot;</span>, zhCnMessageResources);</span><br><span class="line">            LOCAL_CACHE.put(<span class="string">&quot;en&quot;</span>, enUsMessageResources);</span><br><span class="line">            LOCAL_CACHE.put(<span class="string">&quot;in&quot;</span>, idIdMessageResources);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> MapUtils.EMPTY_MAP;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 从缓存中取出国际化配置对应的数据 或者从父级获取</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> code</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> locale</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span></span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">public</span> String <span class="title function_">getSourceFromCache</span><span class="params">(String code, Locale locale)</span> &#123;</span><br><span class="line">        <span class="type">String</span> <span class="variable">language</span> <span class="operator">=</span> locale.getLanguage();</span><br><span class="line">        Map&lt;String, String&gt; props = LOCAL_CACHE.get(language);</span><br><span class="line">        <span class="keyword">if</span> (<span class="literal">null</span> != props &amp;&amp; props.containsKey(code)) &#123;</span><br><span class="line">            <span class="keyword">return</span> props.get(code);</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="keyword">try</span> &#123;</span><br><span class="line">                <span class="keyword">if</span> (<span class="literal">null</span> != <span class="built_in">this</span>.getParentMessageSource()) &#123;</span><br><span class="line">                    <span class="keyword">return</span> <span class="built_in">this</span>.getParentMessageSource().getMessage(code, <span class="literal">null</span>, locale);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125; <span class="keyword">catch</span> (Exception ex) &#123;</span><br><span class="line">                logger.error(ex.getMessage(), ex);</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">return</span> code;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 下面三个重写的方法是比较重要的</span></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">setResourceLoader</span><span class="params">(ResourceLoader resourceLoader)</span> &#123;</span><br><span class="line">        <span class="built_in">this</span>.resourceLoader = (resourceLoader == <span class="literal">null</span> ? <span class="keyword">new</span> <span class="title class_">DefaultResourceLoader</span>() : resourceLoader);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">protected</span> MessageFormat <span class="title function_">resolveCode</span><span class="params">(String code, Locale locale)</span> &#123;</span><br><span class="line">        <span class="type">String</span> <span class="variable">msg</span> <span class="operator">=</span> getSourceFromCache(code, locale);</span><br><span class="line">        <span class="type">MessageFormat</span> <span class="variable">messageFormat</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">MessageFormat</span>(msg, locale);</span><br><span class="line">        <span class="keyword">return</span> messageFormat;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">protected</span> String <span class="title function_">resolveCodeWithoutArguments</span><span class="params">(String code, Locale locale)</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> getSourceFromCache(code, locale);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h4 id="最后"><a href="#最后" class="headerlink" title="最后"></a>最后</h4><p> 至此，自定义国际化配置读取数据库已经完成，只需要在更新数据库配置的时候调用一下reload重置一下缓存中的信息即可。</p>
+<blockquote>
+<p><a href="!https://blog.csdn.net/u014721131/article/details/79075802">参考博客：spring xml配置自定义读取数据库的messageSource</a></p>
+</blockquote>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/springboot/" rel="tag"># springboot</a>
+              <a href="/tags/%E5%9B%BD%E9%99%85%E5%8C%96/" rel="tag"># 国际化</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/post/4e4b12bd.html" rel="prev" title="layui结合freemarker+springboot进行前端数据表格字典转义">
+      <i class="fa fa-chevron-left"></i> layui结合freemarker+springboot进行前端数据表格字典转义
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/post/f38e6f1f.html" rel="next" title="事务传播机制和事务隔离级别">
+      事务传播机制和事务隔离级别 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%89%8D%E8%A8%80"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8"><span class="nav-number">2.</span> <span class="nav-text">如何使用</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#MessageSource%E4%BB%8B%E7%BB%8D"><span class="nav-number">2.0.1.</span> <span class="nav-text">MessageSource介绍</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%9C%A8springboot%E4%B8%AD%E6%B3%A8%E5%85%A5%E8%87%AA%E5%AE%9A%E4%B9%89messageSource"><span class="nav-number">2.0.2.</span> <span class="nav-text">在springboot中注入自定义messageSource</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%9C%80%E5%90%8E"><span class="nav-number">2.0.3.</span> <span class="nav-text">最后</span></a></li></ol></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">jpruby</p>
+  <div class="site-description" itemprop="description">宁静致远</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">61</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+        <span class="site-state-item-count">23</span>
+        <span class="site-state-item-name">categories</span>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">77</span>
+        <span class="site-state-item-name">tags</span>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">jpruby</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

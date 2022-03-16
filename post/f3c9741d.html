@@ -1,0 +1,482 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.1.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"jpruby888.github.io","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="Java序列化  在我们平时开发中，经常会遇到将对象转成可传输的字节流或者保存在某些文件中去使用的场景。这种将对象转成字节序列的过程称之为序列化。反之，将字节序列转成对象的过程我们称之为反序列化。序列化是保存与传输对象相关数据的一种方式，并不是保存类信息的一种方式。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Java序列化和transient关键字的理解与学习">
+<meta property="og:url" content="https://jpruby888.github.io/post/f3c9741d.html">
+<meta property="og:site_name" content="jpruby">
+<meta property="og:description" content="Java序列化  在我们平时开发中，经常会遇到将对象转成可传输的字节流或者保存在某些文件中去使用的场景。这种将对象转成字节序列的过程称之为序列化。反之，将字节序列转成对象的过程我们称之为反序列化。序列化是保存与传输对象相关数据的一种方式，并不是保存类信息的一种方式。">
+<meta property="og:locale">
+<meta property="og:image" content="https://jpruby888.github.io/xuliehua.png">
+<meta property="article:published_time" content="2019-05-11T12:44:31.000Z">
+<meta property="article:modified_time" content="2022-03-16T14:38:41.882Z">
+<meta property="article:author" content="jpruby">
+<meta property="article:tag" content="Java基础">
+<meta property="article:tag" content="序列化">
+<meta property="article:tag" content="transient关键字">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://jpruby888.github.io/xuliehua.png">
+
+<link rel="canonical" href="https://jpruby888.github.io/post/f3c9741d.html">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-Hans'
+  };
+</script>
+
+  <title>Java序列化和transient关键字的理解与学习 | jpruby</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+<link rel="alternate" href="/atom.xml" title="jpruby" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">jpruby</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">安安静静写博客</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
+    <link itemprop="mainEntityOfPage" href="https://jpruby888.github.io/post/f3c9741d.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="jpruby">
+      <meta itemprop="description" content="宁静致远">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="jpruby">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Java序列化和transient关键字的理解与学习
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2019-05-11 20:44:31" itemprop="dateCreated datePublished" datetime="2019-05-11T20:44:31+08:00">2019-05-11</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2022-03-16 22:38:41" itemprop="dateModified" datetime="2022-03-16T22:38:41+08:00">2022-03-16</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Java%E5%9F%BA%E7%A1%80/" itemprop="url" rel="index"><span itemprop="name">Java基础</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h4 id="Java序列化"><a href="#Java序列化" class="headerlink" title="Java序列化"></a>Java序列化</h4><p><img src="/xuliehua.png" alt="Java序列化过程"></p>
+<blockquote>
+<p>在我们平时开发中，经常会遇到将对象转成可传输的字节流或者保存在某些文件中去使用的场景。这种将对象转成字节序列的过程称之为序列化。反之，将字节序列转成对象的过程我们称之为反序列化。序列化是保存与传输对象相关数据的一种方式，并不是保存类信息的一种方式。</p>
+</blockquote>
+<span id="more"></span>
+
+<h5 id="Java中如何进行序列化与反序列化"><a href="#Java中如何进行序列化与反序列化" class="headerlink" title="Java中如何进行序列化与反序列化"></a>Java中如何进行序列化与反序列化</h5><ul>
+<li>在Java中，对象一般是无法进行序列化与反序列化的。而使得对象能够被序列化的方式也很简单，即实现接口 <code>Serializable</code> 。如下代码即将对象序列化以及反序列化的过程。</li>
+</ul>
+  <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">TestSerializable</span> <span class="keyword">implements</span> <span class="title class_">Serializable</span> &#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="type">long</span> <span class="variable">serialVersionUID</span> <span class="operator">=</span> <span class="number">1L</span>;</span><br><span class="line">    <span class="keyword">private</span> Integer age;</span><br><span class="line">    <span class="keyword">private</span> String name;</span><br><span class="line">    TestSerializable() &#123;</span><br><span class="line">        age = <span class="number">20</span>;</span><br><span class="line">        name = <span class="string">&quot;aachuanpu&quot;</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> IOException, ClassNotFoundException &#123;</span><br><span class="line">        <span class="type">TestSerializable</span> <span class="variable">test</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">TestSerializable</span>();</span><br><span class="line">        <span class="type">File</span> <span class="variable">file</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">File</span>(<span class="string">&quot;e:/test.txt&quot;</span>);</span><br><span class="line">        <span class="type">ObjectOutputStream</span> <span class="variable">out</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">ObjectOutputStream</span>(<span class="keyword">new</span> <span class="title class_">FileOutputStream</span>(file));</span><br><span class="line">        out.writeObject(test);</span><br><span class="line">        <span class="type">ObjectInputStream</span> <span class="variable">in</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">ObjectInputStream</span>(<span class="keyword">new</span> <span class="title class_">FileInputStream</span>(file));</span><br><span class="line">        <span class="type">TestSerializable</span> <span class="variable">newTest</span> <span class="operator">=</span> (TestSerializable) in.readObject();</span><br><span class="line">        System.out.println(newTest.name);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h5 id="serialVersionUID的作用"><a href="#serialVersionUID的作用" class="headerlink" title="serialVersionUID的作用"></a>serialVersionUID的作用</h5><ul>
+<li>serialVersionUID作为实现序列化接口的一个非必须非必须声明的静态常量经常不被开发者所重视，忘记声明。其实serialVersionUID的作用是为了保证序列化之前和之后的对象是同一对象。我们知道JVM判断对象是否相同是根据对象的类路径全限定名确定的，而虚拟机决定一个对象是否允许序列化和反序列化成这个类还取决于其serialVersionUID是否一致。不一致的话会导致<code>java.io.InvalidClassException的异常</code>，也可以不指定serialVersionUID，如果不指定的话java会根据class计算serialVersionUID。</li>
+<li>对于两个相同的类及拥有相同的serialVersionUID，如果两个类字段不一致也会序列化和反序列化成功。这时Java会在反序列化的时候忽略掉不一致的字段。</li>
+</ul>
+<h5 id="静态变量的序列化"><a href="#静态变量的序列化" class="headerlink" title="静态变量的序列化"></a>静态变量的序列化</h5><ul>
+<li><p>在序列化的时候，静态变量能够被序列化成功吗？</p>
+  <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">TestSerializable</span> <span class="keyword">implements</span> <span class="title class_">Serializable</span> &#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="type">long</span> <span class="variable">serialVersionUID</span> <span class="operator">=</span> <span class="number">1L</span>;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> String staticName;</span><br><span class="line">    <span class="keyword">private</span> Integer age;</span><br><span class="line">    <span class="keyword">private</span> String name;</span><br><span class="line">    TestSerializable() &#123;</span><br><span class="line">        age = <span class="number">20</span>;</span><br><span class="line">        name = <span class="string">&quot;aachuanpu&quot;</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> IOException, ClassNotFoundException &#123;</span><br><span class="line">        <span class="type">TestSerializable</span> <span class="variable">test</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">TestSerializable</span>();</span><br><span class="line">        TestSerializable.staticName = <span class="string">&quot;name11111&quot;</span>;</span><br><span class="line">        <span class="type">File</span> <span class="variable">file</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">File</span>(<span class="string">&quot;e:/test.txt&quot;</span>);</span><br><span class="line">        <span class="type">ObjectOutputStream</span> <span class="variable">out</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">ObjectOutputStream</span>(<span class="keyword">new</span> <span class="title class_">FileOutputStream</span>(file));</span><br><span class="line">        out.writeObject(test);</span><br><span class="line">        TestSerializable.staticName = <span class="string">&quot;name222&quot;</span>;</span><br><span class="line">        <span class="type">ObjectInputStream</span> <span class="variable">in</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">ObjectInputStream</span>(<span class="keyword">new</span> <span class="title class_">FileInputStream</span>(file));</span><br><span class="line">        <span class="type">TestSerializable</span> <span class="variable">newTest</span> <span class="operator">=</span> (TestSerializable) in.readObject();</span><br><span class="line">        System.out.println(newTest.name);</span><br><span class="line">        System.out.println(TestSerializable.staticName);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>以上代码会输出什么？</p>
+</li>
+</ul>
+  <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">aachuanpu</span><br><span class="line">name222</span><br><span class="line"></span><br><span class="line">Process finished with exit code 0</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>如上所见：将对象序列化之后，修改静态变量的值，再将对象反序列化，输出的静态变量的值是修改之后的。即序列化保存的是对象的状态，静态变量属于类，因此序列化并不保存静态变量。</li>
+</ul>
+<h5 id="transient关键字与自定义序列化"><a href="#transient关键字与自定义序列化" class="headerlink" title="transient关键字与自定义序列化"></a>transient关键字与自定义序列化</h5><ul>
+<li>对象的序列化是将对象中的数据写入本地文件或者用于网络传输的过程，但是很多时候会有一些数据无需进行序列化保存起来或者传输出去。我们可以使用<code>transient</code>关键字修饰成员变量。那么在Java序列化的时候就<strong>不会使用Java本身的序列化方式对其进行序列化</strong>。但是我们依然可以自定义自己的序列化行为对其进行序列化！</li>
+</ul>
+<p>  <strong>自定义序列化：</strong> 定义自己的<code>writeObject</code>和<code>readObject</code>方法</p>
+<ul>
+<li><p>对于使用transient修饰的成员变量，可以编写<code>writeObject</code>和<code>readObject</code>方法实现对于该成员变量(不仅仅只是针对该成员变量)的自定义序列化。在编写<code>writeObject</code>和<code>readObject</code>方法的时候需要注意的地方在于：这俩方法没有在Object中定义，也没有在<code>Serializable</code>接口中声明，JVM是如何调用到这俩方法的呢？答案是通过反射，去根据方法名和参数寻找到相应的方法，找到之后会被ObjectOutputStream调用，没有这俩方法就调用默认的序列化呗。还有就是因为ObjectOutputStream使用getPrivateMethod，所以这些方法不得不被声明为priate以至于供ObjectOutputStream来使用。</p>
+</li>
+<li><p>通过这种方法，我们实现自己的序列化与反序列化可以实现很多场景下的需求。比如网络传输的时候对于特殊字段进行加密等等。</p>
+</li>
+<li><p>如下，你会发现我在这俩方法中调用了defaultWriteObject()和defaultReadObject()用于处理未被transient修饰的成员变量。</p>
+</li>
+</ul>
+  <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">TestSerializable</span> <span class="keyword">implements</span> <span class="title class_">Serializable</span> &#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="type">long</span> <span class="variable">serialVersionUID</span> <span class="operator">=</span> <span class="number">1L</span>;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> String staticName;</span><br><span class="line">    <span class="keyword">private</span> Integer age;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">transient</span> String name;</span><br><span class="line">    TestSerializable() &#123;</span><br><span class="line">        age = <span class="number">20</span>;</span><br><span class="line">        name = <span class="string">&quot;aachuanpu&quot;</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> IOException, ClassNotFoundException &#123;</span><br><span class="line">        <span class="type">TestSerializable</span> <span class="variable">test</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">TestSerializable</span>();</span><br><span class="line">        TestSerializable.staticName = <span class="string">&quot;name11111&quot;</span>;</span><br><span class="line">        <span class="type">File</span> <span class="variable">file</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">File</span>(<span class="string">&quot;e:/test.txt&quot;</span>);</span><br><span class="line">        <span class="type">ObjectOutputStream</span> <span class="variable">out</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">ObjectOutputStream</span>(<span class="keyword">new</span> <span class="title class_">FileOutputStream</span>(file));</span><br><span class="line">        out.writeObject(test);</span><br><span class="line">        TestSerializable.staticName = <span class="string">&quot;name222&quot;</span>;</span><br><span class="line">        <span class="type">ObjectInputStream</span> <span class="variable">in</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">ObjectInputStream</span>(<span class="keyword">new</span> <span class="title class_">FileInputStream</span>(file));</span><br><span class="line">        <span class="type">TestSerializable</span> <span class="variable">newTest</span> <span class="operator">=</span> (TestSerializable) in.readObject();</span><br><span class="line">        System.out.println(newTest.name);</span><br><span class="line">        System.out.println(TestSerializable.staticName);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">void</span> <span class="title function_">writeObject</span><span class="params">(ObjectOutputStream oos)</span> <span class="keyword">throws</span> IOException &#123;</span><br><span class="line">        oos.defaultWriteObject();</span><br><span class="line">        name = <span class="string">&quot;自定义名称&quot;</span>;</span><br><span class="line">        oos.writeObject(name);</span><br><span class="line">        System.out.println(<span class="string">&quot;调用writeObject&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">void</span> <span class="title function_">readObject</span><span class="params">(ObjectInputStream ois)</span> <span class="keyword">throws</span> IOException, ClassNotFoundException &#123;</span><br><span class="line">        ois.defaultReadObject();</span><br><span class="line">        <span class="type">String</span> <span class="variable">name</span> <span class="operator">=</span> (String) ois.readObject();</span><br><span class="line">        <span class="built_in">this</span>.name = name;</span><br><span class="line">        System.out.println(<span class="string">&quot;读出的name=&quot;</span> + name);</span><br><span class="line">        System.out.println(<span class="string">&quot;调用readObject&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>  输出如下：<br>  <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">调用writeObject</span><br><span class="line">读出的name=自定义名称</span><br><span class="line">调用readObject</span><br><span class="line">自定义名称</span><br><span class="line">name222</span><br><span class="line"></span><br><span class="line">Process finished with exit code 0</span><br></pre></td></tr></table></figure></p>
+<h5 id="父类的序列化"><a href="#父类的序列化" class="headerlink" title="父类的序列化"></a>父类的序列化</h5><ul>
+<li>一个子类实现了 Serializable 接口，它的父类都没有实现 Serializable 接口，序列化该子类对象，然后反序列化后输出父类定义的某变量的数值，该变量数值与序列化时的数值不同。要想将父类对象也序列化，就需要让父类也实现Serializable 接口。如果父类不实现的话的，就需要有默认的无参的构造函数。 在父类没有实现 Serializable 接口时，虚拟机是不会序列化父对象的，而一个 Java 对象的构造必须先有父对象，才有子对象，反序列化也不例外。所以反序列化时，为了构造父对象，只能调用父类的无参构造函数作为默认的父对象。因此当我们取 父对象的变量值时，它的值是调用父类无参构造函数后的值。如果你考虑到这种序列化的情况，在父类无参构造函数中对变量进行初始化，否则的话，父类变量值都 是默认声明的值。</li>
+</ul>
+<h5 id="常问：ArrayList中数组使用transient修饰为何还能被序列化"><a href="#常问：ArrayList中数组使用transient修饰为何还能被序列化" class="headerlink" title="常问：ArrayList中数组使用transient修饰为何还能被序列化"></a>常问：ArrayList中数组使用transient修饰为何还能被序列化</h5><p>  <strong>ArrayList源码：</strong><br>  <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * The array buffer into which the elements of the ArrayList are stored.</span></span><br><span class="line"><span class="comment"> * The capacity of the ArrayList is the length of this array buffer. Any</span></span><br><span class="line"><span class="comment"> * empty ArrayList with elementData == DEFAULTCAPACITY_EMPTY_ELEMENTDATA</span></span><br><span class="line"><span class="comment"> * will be expanded to DEFAULT_CAPACITY when the first element is added.</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">transient</span> Object[] elementData; <span class="comment">// non-private to simplify nested class access</span></span><br></pre></td></tr></table></figure><br>  transient用来表示一个域不是该对象序行化的一部分，当一个对象被序行化的时候，transient修饰的变量的值是不包括在序行化的表示中的。但是ArrayList又是可序行化的类，elementData是ArrayList具体存放元素的成员，用transient来修饰elementData，需要实现自己的序列化方式去处理。即对于数组中多余的空间不去进行序列化。如下：<br>  <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Save the state of the &lt;tt&gt;ArrayList&lt;/tt&gt; instance to a stream (that</span></span><br><span class="line"><span class="comment"> * is, serialize it).</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@serialData</span> The length of the array backing the &lt;tt&gt;ArrayList&lt;/tt&gt;</span></span><br><span class="line"><span class="comment"> *             instance is emitted (int), followed by all of its elements</span></span><br><span class="line"><span class="comment"> *             (each an &lt;tt&gt;Object&lt;/tt&gt;) in the proper order.</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title function_">writeObject</span><span class="params">(java.io.ObjectOutputStream s)</span></span><br><span class="line">    <span class="keyword">throws</span> java.io.IOException&#123;</span><br><span class="line">    <span class="comment">// Write out element count, and any hidden stuff</span></span><br><span class="line">    <span class="type">int</span> <span class="variable">expectedModCount</span> <span class="operator">=</span> modCount;</span><br><span class="line">    s.defaultWriteObject();</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Write out size as capacity for behavioural compatibility with clone()</span></span><br><span class="line">    s.writeInt(size);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Write out all elements in the proper order.</span></span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i=<span class="number">0</span>; i&lt;size; i++) &#123;</span><br><span class="line">        s.writeObject(elementData[i]);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (modCount != expectedModCount) &#123;</span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">ConcurrentModificationException</span>();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Reconstitute the &lt;tt&gt;ArrayList&lt;/tt&gt; instance from a stream (that is,</span></span><br><span class="line"><span class="comment"> * deserialize it).</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title function_">readObject</span><span class="params">(java.io.ObjectInputStream s)</span></span><br><span class="line">    <span class="keyword">throws</span> java.io.IOException, ClassNotFoundException &#123;</span><br><span class="line">    elementData = EMPTY_ELEMENTDATA;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Read in size, and any hidden stuff</span></span><br><span class="line">    s.defaultReadObject();</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Read in capacity</span></span><br><span class="line">    s.readInt(); <span class="comment">// ignored</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (size &gt; <span class="number">0</span>) &#123;</span><br><span class="line">        <span class="comment">// be like clone(), allocate array based upon size not capacity</span></span><br><span class="line">        ensureCapacityInternal(size);</span><br><span class="line"></span><br><span class="line">        Object[] a = elementData;</span><br><span class="line">        <span class="comment">// Read in all elements in the proper order.</span></span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> i=<span class="number">0</span>; i&lt;size; i++) &#123;</span><br><span class="line">            a[i] = s.readObject();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><br>  <strong>elementData是一个缓存数组，它通常会预留一些容量，等容量不足时再扩充容量，那么有些空间可能就没有实际存储元素，采用上诉的方式来实现序列化时，就可以保证只序列化实际存储的那些元素，而不是整个数组，从而节省空间和时间。</strong></p>
+<h5 id="其余补充"><a href="#其余补充" class="headerlink" title="其余补充"></a>其余补充</h5><p><a target="_blank" rel="noopener" href="https://bluepopopo.iteye.com/blog/486548">来自文章</a> ← 点击链接查看参考博客</p>
+<blockquote>
+<p>1.Write的顺序和read的顺序需要对应，譬如有多个字段都用wirteInt一一写入流中，那么readInt需要按照顺序将其赋值;</p>
+</blockquote>
+<blockquote>
+<p>2.Externalizable,该接口是继承于Serializable ,所以实现序列化有两种方式。区别在于Externalizable多声明了两个方法readExternal和writeExternal，子类必须实现二者。Serializable是内建支持的也就是直接implement即可，但Externalizable的实现类必须提供readExternal和writeExternal实现。对于Serializable来说，Java自己建立对象图和字段进行对象序列化，可能会占用更多空间。而Externalizable则完全需要程序员自己控制如何写&#x2F;读，麻烦但可以有效控制序列化的存储的内容。</p>
+</blockquote>
+<blockquote>
+<p>3.正如Effectvie Java中提到的，序列化就如同另外一个构造函数，只不过是有由stream进行创建的。如果字段有一些条件限制的，特别是非可变的类定义了可变的字段会反序列化可能会有问题。可以在readObject方法中添加条件限制，也可以在readResolve中做。参考56条“保护性的编写readObject”和“提供一个readResolve方法”。</p>
+</blockquote>
+<blockquote>
+<p>4.当有非常复杂的对象需要提供deep clone时，可以考虑将其声明为可序列化，不过缺点也显而易见，性能开销。</p>
+</blockquote>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Java%E5%9F%BA%E7%A1%80/" rel="tag"># Java基础</a>
+              <a href="/tags/%E5%BA%8F%E5%88%97%E5%8C%96/" rel="tag"># 序列化</a>
+              <a href="/tags/transient%E5%85%B3%E9%94%AE%E5%AD%97/" rel="tag"># transient关键字</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/post/6fd0f6c8.html" rel="prev" title="你的内心比拳头更强大">
+      <i class="fa fa-chevron-left"></i> 你的内心比拳头更强大
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/post/4cd9164b.html" rel="next" title="无重复字符的最长子串">
+      无重复字符的最长子串 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#Java%E5%BA%8F%E5%88%97%E5%8C%96"><span class="nav-number">1.</span> <span class="nav-text">Java序列化</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#Java%E4%B8%AD%E5%A6%82%E4%BD%95%E8%BF%9B%E8%A1%8C%E5%BA%8F%E5%88%97%E5%8C%96%E4%B8%8E%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96"><span class="nav-number">1.1.</span> <span class="nav-text">Java中如何进行序列化与反序列化</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#serialVersionUID%E7%9A%84%E4%BD%9C%E7%94%A8"><span class="nav-number">1.2.</span> <span class="nav-text">serialVersionUID的作用</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E9%9D%99%E6%80%81%E5%8F%98%E9%87%8F%E7%9A%84%E5%BA%8F%E5%88%97%E5%8C%96"><span class="nav-number">1.3.</span> <span class="nav-text">静态变量的序列化</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#transient%E5%85%B3%E9%94%AE%E5%AD%97%E4%B8%8E%E8%87%AA%E5%AE%9A%E4%B9%89%E5%BA%8F%E5%88%97%E5%8C%96"><span class="nav-number">1.4.</span> <span class="nav-text">transient关键字与自定义序列化</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E7%88%B6%E7%B1%BB%E7%9A%84%E5%BA%8F%E5%88%97%E5%8C%96"><span class="nav-number">1.5.</span> <span class="nav-text">父类的序列化</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%B8%B8%E9%97%AE%EF%BC%9AArrayList%E4%B8%AD%E6%95%B0%E7%BB%84%E4%BD%BF%E7%94%A8transient%E4%BF%AE%E9%A5%B0%E4%B8%BA%E4%BD%95%E8%BF%98%E8%83%BD%E8%A2%AB%E5%BA%8F%E5%88%97%E5%8C%96"><span class="nav-number">1.6.</span> <span class="nav-text">常问：ArrayList中数组使用transient修饰为何还能被序列化</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%85%B6%E4%BD%99%E8%A1%A5%E5%85%85"><span class="nav-number">1.7.</span> <span class="nav-text">其余补充</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">jpruby</p>
+  <div class="site-description" itemprop="description">宁静致远</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">61</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+        <span class="site-state-item-count">23</span>
+        <span class="site-state-item-name">categories</span>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">77</span>
+        <span class="site-state-item-name">tags</span>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">jpruby</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

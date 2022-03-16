@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.1.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"jpruby888.github.io","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="关于IDEA再从git或者svn上导入项目时不能加载字模块的问题 最近入职新公司，很多东西也都算是要从头学起。在之前公司用的都是eclipse，这边要求用IDEA，其实很早就知道这是一个非常强大的编译器，但平时没有机会使用，现在有机会用这个还是挺开心的。  由于公司使用gitlab，在注册好账号导入代码的时候遇到一个情况，就是直接用IDEA的git工具导入的话会出现，maven项目的子模块无法被识">
+<meta property="og:type" content="article">
+<meta property="og:title" content="关于IDEA再从git或者svn上导入项目时不能加载字模块的问题">
+<meta property="og:url" content="https://jpruby888.github.io/post/3160863d.html">
+<meta property="og:site_name" content="jpruby">
+<meta property="og:description" content="关于IDEA再从git或者svn上导入项目时不能加载字模块的问题 最近入职新公司，很多东西也都算是要从头学起。在之前公司用的都是eclipse，这边要求用IDEA，其实很早就知道这是一个非常强大的编译器，但平时没有机会使用，现在有机会用这个还是挺开心的。  由于公司使用gitlab，在注册好账号导入代码的时候遇到一个情况，就是直接用IDEA的git工具导入的话会出现，maven项目的子模块无法被识">
+<meta property="og:locale">
+<meta property="og:image" content="https://s1.ax2x.com/2018/07/08/oLFwe.png">
+<meta property="og:image" content="https://s1.ax2x.com/2018/07/08/oLTGd.png">
+<meta property="og:image" content="https://s1.ax2x.com/2018/07/08/oLXER.md.png">
+<meta property="og:image" content="https://s1.ax2x.com/2018/07/08/oLm7r.md.png">
+<meta property="article:published_time" content="2018-07-08T15:26:49.000Z">
+<meta property="article:modified_time" content="2022-03-16T14:38:41.961Z">
+<meta property="article:author" content="jpruby">
+<meta property="article:tag" content="开发日记">
+<meta property="article:tag" content="IDEA">
+<meta property="article:tag" content="git">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://s1.ax2x.com/2018/07/08/oLFwe.png">
+
+<link rel="canonical" href="https://jpruby888.github.io/post/3160863d.html">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-Hans'
+  };
+</script>
+
+  <title>关于IDEA再从git或者svn上导入项目时不能加载字模块的问题 | jpruby</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+<link rel="alternate" href="/atom.xml" title="jpruby" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">jpruby</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">安安静静写博客</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
+    <link itemprop="mainEntityOfPage" href="https://jpruby888.github.io/post/3160863d.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="jpruby">
+      <meta itemprop="description" content="宁静致远">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="jpruby">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          关于IDEA再从git或者svn上导入项目时不能加载字模块的问题
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2018-07-08 23:26:49" itemprop="dateCreated datePublished" datetime="2018-07-08T23:26:49+08:00">2018-07-08</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2022-03-16 22:38:41" itemprop="dateModified" datetime="2022-03-16T22:38:41+08:00">2022-03-16</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%BC%80%E5%8F%91%E5%B7%A5%E5%85%B7/" itemprop="url" rel="index"><span itemprop="name">开发工具</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h3 id="关于IDEA再从git或者svn上导入项目时不能加载字模块的问题"><a href="#关于IDEA再从git或者svn上导入项目时不能加载字模块的问题" class="headerlink" title="关于IDEA再从git或者svn上导入项目时不能加载字模块的问题"></a>关于IDEA再从git或者svn上导入项目时不能加载字模块的问题</h3><blockquote>
+<p>最近入职新公司，很多东西也都算是要从头学起。在之前公司用的都是eclipse，这边要求用IDEA，其实很早就知道这是一个非常强大的编译器，但平时没有机会使用，现在有机会用这个还是挺开心的。</p>
+</blockquote>
+<p>由于公司使用gitlab，在注册好账号导入代码的时候遇到一个情况，就是直接用IDEA的git工具导入的话会出现，maven项目的子模块无法被识别以及被管理的情况。事实上eclipse也有同样的问题。现在只说下使用IDEA遇到这个情况的解决办法。</p>
+<span id="more"></span>
+
+<h4 id="有两种解决方式。"><a href="#有两种解决方式。" class="headerlink" title="有两种解决方式。"></a>有两种解决方式。</h4><h5 id="1、手动将module添加到项目管理："><a href="#1、手动将module添加到项目管理：" class="headerlink" title="1、手动将module添加到项目管理："></a>1、手动将module添加到项目管理：</h5><ul>
+<li>打开文件选项中的项目结构（快捷键ctrl+alt+shift+s）<br><a target="_blank" rel="noopener" href="https://simimg.com/i/oLFwe"><img src="https://s1.ax2x.com/2018/07/08/oLFwe.png" alt="oLFwe.png"></a></li>
+<li>选择 模块-加号-导入module，手动将自己需要的模块一一导入进去<br><a target="_blank" rel="noopener" href="https://simimg.com/i/oLTGd"><img src="https://s1.ax2x.com/2018/07/08/oLTGd.png" alt="oLTGd.png"></a><h5 id="2、先将项目通过命令行导入到本机，然后通过IDEA的New-Project-from-Existing-Sources导入本地项目进来，这个直接就能够对所有模块进行代码管理了"><a href="#2、先将项目通过命令行导入到本机，然后通过IDEA的New-Project-from-Existing-Sources导入本地项目进来，这个直接就能够对所有模块进行代码管理了" class="headerlink" title="2、先将项目通过命令行导入到本机，然后通过IDEA的New Project from Existing Sources导入本地项目进来，这个直接就能够对所有模块进行代码管理了"></a>2、先将项目通过命令行导入到本机，然后通过IDEA的New Project from Existing Sources导入本地项目进来，这个直接就能够对所有模块进行代码管理了</h5><a target="_blank" rel="noopener" href="https://simimg.com/i/oLXER"><img src="https://s1.ax2x.com/2018/07/08/oLXER.md.png" alt="oLXER.md.png"></a><br><a target="_blank" rel="noopener" href="https://simimg.com/i/oLm7r"><img src="https://s1.ax2x.com/2018/07/08/oLm7r.md.png" alt="oLm7r.md.png"></a></li>
+</ul>
+<blockquote>
+<p>从eclipse转到IDEA前几天是最艰难的，因为很多习惯不是说改就能改掉的，工具的使用总得需要一个学习的时间，但是等这段时间过去，后面一定会体会到IDEA的强大。</p>
+</blockquote>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E5%BC%80%E5%8F%91%E6%97%A5%E8%AE%B0/" rel="tag"># 开发日记</a>
+              <a href="/tags/IDEA/" rel="tag"># IDEA</a>
+              <a href="/tags/git/" rel="tag"># git</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/post/10df5a8d.html" rel="prev" title="纪念即将结束的第一份工作">
+      <i class="fa fa-chevron-left"></i> 纪念即将结束的第一份工作
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/post/7b5d2fb9.html" rel="next" title="dubbo获取注册中心的实例bean">
+      dubbo获取注册中心的实例bean <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%85%B3%E4%BA%8EIDEA%E5%86%8D%E4%BB%8Egit%E6%88%96%E8%80%85svn%E4%B8%8A%E5%AF%BC%E5%85%A5%E9%A1%B9%E7%9B%AE%E6%97%B6%E4%B8%8D%E8%83%BD%E5%8A%A0%E8%BD%BD%E5%AD%97%E6%A8%A1%E5%9D%97%E7%9A%84%E9%97%AE%E9%A2%98"><span class="nav-number">1.</span> <span class="nav-text">关于IDEA再从git或者svn上导入项目时不能加载字模块的问题</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%9C%89%E4%B8%A4%E7%A7%8D%E8%A7%A3%E5%86%B3%E6%96%B9%E5%BC%8F%E3%80%82"><span class="nav-number">1.1.</span> <span class="nav-text">有两种解决方式。</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#1%E3%80%81%E6%89%8B%E5%8A%A8%E5%B0%86module%E6%B7%BB%E5%8A%A0%E5%88%B0%E9%A1%B9%E7%9B%AE%E7%AE%A1%E7%90%86%EF%BC%9A"><span class="nav-number">1.1.1.</span> <span class="nav-text">1、手动将module添加到项目管理：</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2%E3%80%81%E5%85%88%E5%B0%86%E9%A1%B9%E7%9B%AE%E9%80%9A%E8%BF%87%E5%91%BD%E4%BB%A4%E8%A1%8C%E5%AF%BC%E5%85%A5%E5%88%B0%E6%9C%AC%E6%9C%BA%EF%BC%8C%E7%84%B6%E5%90%8E%E9%80%9A%E8%BF%87IDEA%E7%9A%84New-Project-from-Existing-Sources%E5%AF%BC%E5%85%A5%E6%9C%AC%E5%9C%B0%E9%A1%B9%E7%9B%AE%E8%BF%9B%E6%9D%A5%EF%BC%8C%E8%BF%99%E4%B8%AA%E7%9B%B4%E6%8E%A5%E5%B0%B1%E8%83%BD%E5%A4%9F%E5%AF%B9%E6%89%80%E6%9C%89%E6%A8%A1%E5%9D%97%E8%BF%9B%E8%A1%8C%E4%BB%A3%E7%A0%81%E7%AE%A1%E7%90%86%E4%BA%86"><span class="nav-number">1.1.2.</span> <span class="nav-text">2、先将项目通过命令行导入到本机，然后通过IDEA的New Project from Existing Sources导入本地项目进来，这个直接就能够对所有模块进行代码管理了</span></a></li></ol></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">jpruby</p>
+  <div class="site-description" itemprop="description">宁静致远</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">61</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+        <span class="site-state-item-count">23</span>
+        <span class="site-state-item-name">categories</span>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">77</span>
+        <span class="site-state-item-name">tags</span>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">jpruby</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>
