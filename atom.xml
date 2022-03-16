@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
-  <title>jpruby</title>
+  <title>jpruby的blog</title>
   
   <subtitle>安安静静写博客</subtitle>
   <link href="https://jpruby888.github.io/atom.xml" rel="self"/>
@@ -537,9 +537,9 @@ Scaffold-Cloud 是一个适用于开发者学习的 Spring-Cloud 微服务项目
     
     <category term="Java基础" scheme="https://jpruby888.github.io/tags/Java%E5%9F%BA%E7%A1%80/"/>
     
-    <category term="设计模式基本思想" scheme="https://jpruby888.github.io/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E5%9F%BA%E6%9C%AC%E6%80%9D%E6%83%B3/"/>
-    
     <category term="设计模式" scheme="https://jpruby888.github.io/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/"/>
+    
+    <category term="设计模式基本思想" scheme="https://jpruby888.github.io/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E5%9F%BA%E6%9C%AC%E6%80%9D%E6%83%B3/"/>
     
   </entry>
   

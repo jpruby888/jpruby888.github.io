@@ -1,1179 +1,270 @@
-<!DOCTYPE html>
-<html lang="zh-Hans">
-<head>
-  <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
-<meta name="theme-color" content="#222">
-<meta name="generator" content="Hexo 6.1.0">
-  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
-  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
-  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
-  <link rel="mask-icon" href="/images/logo.svg" color="#222">
-
-<link rel="stylesheet" href="/css/main.css">
-
-
-<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
-
-<script id="hexo-configurations">
-    var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"jpruby888.github.io","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
-  </script>
-
-  <meta name="description" content="宁静致远">
+<!DOCTYPE html><html lang="zh-Hans" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"><title>jpruby的blog - 安安静静写博客</title><meta name="author" content="jpruby"><meta name="copyright" content="jpruby"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="宁静致远">
 <meta property="og:type" content="website">
-<meta property="og:title" content="jpruby">
+<meta property="og:title" content="jpruby的blog">
 <meta property="og:url" content="https://jpruby888.github.io/index.html">
-<meta property="og:site_name" content="jpruby">
+<meta property="og:site_name" content="jpruby的blog">
 <meta property="og:description" content="宁静致远">
 <meta property="og:locale">
+<meta property="og:image" content="https://jpruby888.github.io/images/favicon.png">
 <meta property="article:author" content="jpruby">
 <meta name="twitter:card" content="summary">
-
-<link rel="canonical" href="https://jpruby888.github.io/">
-
-
-<script id="page-configurations">
-  // https://hexo.io/docs/variables.html
-  CONFIG.page = {
-    sidebar: "",
-    isHome : true,
-    isPost : false,
-    lang   : 'zh-Hans'
-  };
-</script>
-
-  <title>jpruby</title>
-  
-
-
-
-
-
-
-  <noscript>
-  <style>
-  .use-motion .brand,
-  .use-motion .menu-item,
-  .sidebar-inner,
-  .use-motion .post-block,
-  .use-motion .pagination,
-  .use-motion .comments,
-  .use-motion .post-header,
-  .use-motion .post-body,
-  .use-motion .collection-header { opacity: initial; }
-
-  .use-motion .site-title,
-  .use-motion .site-subtitle {
-    opacity: initial;
-    top: initial;
+<meta name="twitter:image" content="https://jpruby888.github.io/images/favicon.png"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://jpruby888.github.io/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: 'Copy successfully',
+    error: 'Copy error',
+    noSupport: 'The browser does not support'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  date_suffix: {
+    just: 'Just',
+    min: 'minutes ago',
+    hour: 'hours ago',
+    day: 'days ago',
+    month: 'months ago'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery@2/dist/fjGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery@2/dist/fjGallery.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'jpruby的blog',
+  isPost: false,
+  isHome: true,
+  isHighlightShrink: false,
+  isToc: false,
+  postUpdate: '2022-03-17 01:01:34'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
   }
 
-  .use-motion .logo-line-before i { left: initial; }
-  .use-motion .logo-line-after i { right: initial; }
-  </style>
-</noscript>
-
-<link rel="alternate" href="/atom.xml" title="jpruby" type="application/atom+xml">
-</head>
-
-<body itemscope itemtype="http://schema.org/WebPage">
-  <div class="container use-motion">
-    <div class="headband"></div>
-
-    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
-      <div class="header-inner"><div class="site-brand-container">
-  <div class="site-nav-toggle">
-    <div class="toggle" aria-label="Toggle navigation bar">
-      <span class="toggle-line toggle-line-first"></span>
-      <span class="toggle-line toggle-line-middle"></span>
-      <span class="toggle-line toggle-line-last"></span>
-    </div>
-  </div>
-
-  <div class="site-meta">
-
-    <a href="/" class="brand" rel="start">
-      <span class="logo-line-before"><i></i></span>
-      <h1 class="site-title">jpruby</h1>
-      <span class="logo-line-after"><i></i></span>
-    </a>
-      <p class="site-subtitle" itemprop="description">安安静静写博客</p>
-  </div>
-
-  <div class="site-nav-right">
-    <div class="toggle popup-trigger">
-    </div>
-  </div>
-</div>
-
-
-
-
-<nav class="site-nav">
-  <ul id="menu" class="main-menu menu">
-        <li class="menu-item menu-item-home">
-
-    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
-
-  </li>
-        <li class="menu-item menu-item-about">
-
-    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a>
-
-  </li>
-        <li class="menu-item menu-item-tags">
-
-    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
-
-  </li>
-        <li class="menu-item menu-item-categories">
-
-    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
-
-  </li>
-        <li class="menu-item menu-item-archives">
-
-    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
-
-  </li>
-  </ul>
-</nav>
-
-
-
-
-</div>
-    </header>
-
-    
-  <div class="back-to-top">
-    <i class="fa fa-arrow-up"></i>
-    <span>0%</span>
-  </div>
-
-
-    <main class="main">
-      <div class="main-inner">
-        <div class="content-wrap">
-          
-
-          <div class="content index posts-expand">
-            
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
-    <link itemprop="mainEntityOfPage" href="https://jpruby888.github.io/post/891bfe8a.html">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="jpruby">
-      <meta itemprop="description" content="宁静致远">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="jpruby">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/post/891bfe8a.html" class="post-title-link" itemprop="url">编写自定义的 SpringBoot starter 实现自动装配</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2021-07-30 16:47:15" itemprop="dateCreated datePublished" datetime="2021-07-30T16:47:15+08:00">2021-07-30</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2022-03-16 22:38:41" itemprop="dateModified" datetime="2022-03-16T22:38:41+08:00">2022-03-16</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/SpringBoot/" itemprop="url" rel="index"><span itemprop="name">SpringBoot</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p><em>记得几年前我在刚开始接触 SpringBoot&#x2F;SpringCloud，就对SpringBoot 如何实现自动装配产生了很大的好奇。但是当时技术能力尚浅，没能对这一方面了解的很透彻，只是在想如果有朝一日我也能写一个 Starter 提供给别人用就好了。最近我准备写一个 Starter。所以这篇博客就来总结一下，什么是 SpringBoot 自动装配以及如何实现自己的 Starter。</em></p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/post/891bfe8a.html#more" rel="contents">
-                Read more &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
-    <link itemprop="mainEntityOfPage" href="https://jpruby888.github.io/post/c7f9efd1.html">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="jpruby">
-      <meta itemprop="description" content="宁静致远">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="jpruby">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/post/c7f9efd1.html" class="post-title-link" itemprop="url">我的无奈的来源，正是他</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2021-07-26 20:06:19" itemprop="dateCreated datePublished" datetime="2021-07-26T20:06:19+08:00">2021-07-26</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2022-03-16 22:38:42" itemprop="dateModified" datetime="2022-03-16T22:38:42+08:00">2022-03-16</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E9%9A%8F%E7%AC%94/" itemprop="url" rel="index"><span itemprop="name">随笔</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>多年以前，我遇到了这么一个人。在长期的相处于磨合中，我渐渐的了解他，又渐渐的开始厌恶他。</p>
-<p>在我看来他存在懒惰、不上进等诸多问题。我厌恶他的没有担当，面对一切事物只会去逃避。</p>
-<p>我厌恶他做事情犹豫不决，不愿意向自己渴望的东西迈出脚步，痴望着上天能够怜悯他，将他喜欢的事物和人送到他手中。</p>
-<p>性格上的懦弱、怯惧，以至于平平挫折，却自视为被生活沉重打击。</p>
-<p>他把年华用以虚度的拙劣手段，对于青春与未来的人生所持有消极的态度，也曾令我屡屡失望、但同时我也是怜悯他的，我经历过他不被重视时的落寞，不被需要时的孤独，这种体验很糟糕，清楚的提醒着我，他正在难过。</p>
-<p>他很脆弱，对于旁人的冷笑和嘲讽极度敏感。</p>
-<p>我来到这个世界并无多么重大的意义，生活赋予我的第一要务就是要照顾好他。</p>
-<p>于是我必须细心的感知他的大脑波动，替他整理悲苦、负面的情绪害怕他迷失，害怕他放弃只能一遍又一遍的安慰，一遍又一遍的强调。</p>
-<p>在明知无望的情况下，还是想他能够逐渐的快乐起来。</p>
-<p>但是我好无奈。</p>
-<p>我无奈的来源于：我正是他。</p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
-    <link itemprop="mainEntityOfPage" href="https://jpruby888.github.io/post/1e5ae654.html">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="jpruby">
-      <meta itemprop="description" content="宁静致远">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="jpruby">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/post/1e5ae654.html" class="post-title-link" itemprop="url">写博客有什么用？</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2021-07-21 23:11:21" itemprop="dateCreated datePublished" datetime="2021-07-21T23:11:21+08:00">2021-07-21</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2022-03-16 22:38:41" itemprop="dateModified" datetime="2022-03-16T22:38:41+08:00">2022-03-16</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E9%9A%8F%E7%AC%94/" itemprop="url" rel="index"><span itemprop="name">随笔</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>好久没写过一篇正经的技术博客了，也好久没有静下心来敲几行工作之外的代码了。</p>
-<p>今天打开自己的博客看了一眼，突然有些反胃！😫我好像对自己的博客审美疲劳了。</p>
-<p>产生的影响就是自己越来越不想写博客，没有整理笔记的欲望了。但是看了几个朋友分享的一些不错主题的他人博客，觉得也许换一种博客主题可能写博客的热情会高一点。</p>
-<p>但是一想到换个主题，自己又要再新主题上魔改无数，又头大了。谢特！我真纠结。</p>
-<p>说到写博客，突然想问自己一句，写了有人看吗？真的有人会看别人的博客吗？</p>
-<p>或者换个问题，写了是给自己看的还是希望分享给别人？其实整理笔记、写博客都是巩固自己学习内容的方式吧，想要 develop others，属实想多了。</p>
-<p>最近逛技术论坛，例如掘金，得到一个结论：当前国内互联网公司压榨下的搬砖码农，根本没时间好好看看别人写的东西，看了也不会思考。看完别人写的博客，在博客底下评论一句：“学到了”、“收藏了”。没有一个人站出来讨论一下，更不用说指出博客中的错误了。好像大家都一起进入了一个夸夸群。</p>
-<p>我觉得对于我来说，没有经过自己验证的理论，我是永远持怀疑态度的。我永远都不会直接接受别人的想法，也许嘴上同意，心里也不会这样想！我甚至很反感那些莫名其妙就想要强加给你一个自己觉得对的理论的人，没有说服我的理由，只会让我更加讨厌。</p>
-<p>一想到在网络上或者生活中看到别人很轻易地就能对别人说的东西去附和，我就觉得这个世界不适合我。每个人都活的太虚伪。</p>
-<p>你要是说什么就是什么，那我的存在岂不是很没有意义？</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/post/1e5ae654.html#more" rel="contents">
-                Read more &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
-    <link itemprop="mainEntityOfPage" href="https://jpruby888.github.io/post/bb2f6bb7.html">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="jpruby">
-      <meta itemprop="description" content="宁静致远">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="jpruby">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/post/bb2f6bb7.html" class="post-title-link" itemprop="url">为什么并不是所有人都有自由意志？</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2021-06-20 14:41:15" itemprop="dateCreated datePublished" datetime="2021-06-20T14:41:15+08:00">2021-06-20</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2022-03-16 22:38:41" itemprop="dateModified" datetime="2022-03-16T22:38:41+08:00">2022-03-16</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E9%9A%8F%E7%AC%94/" itemprop="url" rel="index"><span itemprop="name">随笔</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <div style="width: 100%">
-  <iframe src="//player.bilibili.com/player.html?aid=461048579&bvid=BV1Z5411M7hG&cid=351951244&page=1" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true" width="100%" height="350px"> </iframe>
-</div>
-
-<center> <p style="font-size: 11px; color: gray"><u>Loki - About free will</u></p> </center>
-
-
-
-<p>这两天看了一个新的美剧——《Loki》。是漫威系列的多元宇宙时间线背景的科幻加奇幻片。一开始是抱着看爆米花剧的心态再加上自己一直以来都对漫威的电影很感兴趣，所以翻墙找了资源🤫。剧情虽然离谱但是很对我的胃口，故事大致讲的是在复仇者联盟穿越回 2012 年寻找宇宙魔方（空间宝石）的时候，Loki 偷走了空间宝石。而因为扰乱了漫威宇宙的神圣时间线，被时间管理局逮捕。</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/post/bb2f6bb7.html#more" rel="contents">
-                Read more &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
-    <link itemprop="mainEntityOfPage" href="https://jpruby888.github.io/post/b2405a89.html">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="jpruby">
-      <meta itemprop="description" content="宁静致远">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="jpruby">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/post/b2405a89.html" class="post-title-link" itemprop="url">由 SpringBoot 升级到 2.4.2 引发的 Jackson 的 JsonFormat 问题排查</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2021-01-20 19:37:43" itemprop="dateCreated datePublished" datetime="2021-01-20T19:37:43+08:00">2021-01-20</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2022-03-16 22:38:41" itemprop="dateModified" datetime="2022-03-16T22:38:41+08:00">2022-03-16</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/springboot/" itemprop="url" rel="index"><span itemprop="name">springboot</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p><img src="https://cdn.jsdelivr.net/gh/Fatezhang/FigureCloud@master/uPic/3hmYwN.jpg" alt="3hmYwN"></p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/post/b2405a89.html#more" rel="contents">
-                Read more &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
-    <link itemprop="mainEntityOfPage" href="https://jpruby888.github.io/post/ad141fe0.html">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="jpruby">
-      <meta itemprop="description" content="宁静致远">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="jpruby">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/post/ad141fe0.html" class="post-title-link" itemprop="url">使用 UPic & GitHub 做个自己的图床</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2021-01-13 21:42:28" itemprop="dateCreated datePublished" datetime="2021-01-13T21:42:28+08:00">2021-01-13</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2022-03-16 22:38:41" itemprop="dateModified" datetime="2022-03-16T22:38:41+08:00">2022-03-16</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E5%BC%80%E5%8F%91%E5%B7%A5%E5%85%B7/" itemprop="url" rel="index"><span itemprop="name">开发工具</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p><img src="https://cdn.jsdelivr.net/gh/Fatezhang/FigureCloud@master/uPic/spider1.jpg" alt="spider1"></p>
-<center>
-
-<p>有写过一个小小的创建步骤，不过是英文版的(在练习写英文博客)，有兴趣的可以点开看下，步骤也比较简单。</p>
-<p><a target="_blank" rel="noopener" href="https://chennianfenglou.github.io/#/blogs/upicGithub?id=create-your-image-service-by-upic-amp-github">点击跳转到文章</a></p>
-</center>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
-    <link itemprop="mainEntityOfPage" href="https://jpruby888.github.io/post/5fc7d97a.html">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="jpruby">
-      <meta itemprop="description" content="宁静致远">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="jpruby">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/post/5fc7d97a.html" class="post-title-link" itemprop="url">使用localstack 搭建 AWS 本地开发环境</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2020-12-27 14:45:59" itemprop="dateCreated datePublished" datetime="2020-12-27T14:45:59+08:00">2020-12-27</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2022-03-16 22:38:41" itemprop="dateModified" datetime="2022-03-16T22:38:41+08:00">2022-03-16</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/AWS/" itemprop="url" rel="index"><span itemprop="name">AWS</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p><img src="https://cdn.jsdelivr.net/gh/Fatezhang/FigureCloud@master/uPic/DBhQX3.jpg" alt="DBhQX3"></p>
-<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>相信有很多同学公司项目都有用到 AWS 或者有同学在学习 AWS，我们知道像 AWS 这样的云服务，我们不太能很方便的去在本地开发的时候连接云上的服务，更何况 staging&#x2F;production 环境还会有安全方面的考虑。那么当我们创建好一个项目的时候，我们如何去搭建其本地开发环境方便我们在本地开发调试呢？没错！使用 localstack！</p>
-<p><strong><a target="_blank" rel="noopener" href="https://github.com/localstack/localstack">LocalStack - A fully functional local AWS cloud stack</a></strong></p>
-<blockquote>
-<p><em><strong>LocalStack provides an easy-to-use test&#x2F;mocking framework for developing Cloud applications.</strong></em></p>
-<p><em><strong>Currently, the focus is primarily on supporting the AWS cloud stack.</strong></em></p>
-</blockquote>
-<p>LocalStack 是提供给开发者一个方便去测试和 mock 服务的框架， 目前主要提供 AWS 云服务。</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/post/5fc7d97a.html#more" rel="contents">
-                Read more &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
-    <link itemprop="mainEntityOfPage" href="https://jpruby888.github.io/post/15d4b5dc.html">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="jpruby">
-      <meta itemprop="description" content="宁静致远">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="jpruby">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/post/15d4b5dc.html" class="post-title-link" itemprop="url">让一切被中断的重新启动</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2020-07-05 15:35:33" itemprop="dateCreated datePublished" datetime="2020-07-05T15:35:33+08:00">2020-07-05</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2022-03-16 22:38:41" itemprop="dateModified" datetime="2022-03-16T22:38:41+08:00">2022-03-16</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E7%A8%8B%E5%BA%8F%E4%BA%BA%E7%94%9F/" itemprop="url" rel="index"><span itemprop="name">程序人生</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p><img src="https://cdn.jsdelivr.net/gh/Fatezhang/FigureCloud@master/uPic/cxlyp3.jpg" alt="cxlyp3"></p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/post/15d4b5dc.html#more" rel="contents">
-                Read more &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
-    <link itemprop="mainEntityOfPage" href="https://jpruby888.github.io/post/5f40a740.html">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="jpruby">
-      <meta itemprop="description" content="宁静致远">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="jpruby">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/post/5f40a740.html" class="post-title-link" itemprop="url">Java 并发编程的一些总结</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2020-01-29 22:06:28" itemprop="dateCreated datePublished" datetime="2020-01-29T22:06:28+08:00">2020-01-29</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2022-03-16 22:38:41" itemprop="dateModified" datetime="2022-03-16T22:38:41+08:00">2022-03-16</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Java%E5%9F%BA%E7%A1%80/" itemprop="url" rel="index"><span itemprop="name">Java基础</span></a>
-                </span>
-                  , 
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Java%E5%9F%BA%E7%A1%80/%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B/" itemprop="url" rel="index"><span itemprop="name">并发编程</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <blockquote>
-<h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3></blockquote>
-<p>关于JAVA 并发编程的学习，我已零散的并不系统地积累了一些学习博客，如下：</p>
-<p><a href="/blog/20190517/%E7%BC%96%E5%86%99%E4%B8%80%E4%B8%AA%E7%AE%80%E6%98%93%E7%9A%84%E5%8F%AF%E9%87%8D%E5%85%A5%E9%94%81-%E4%B8%80/">并发编程学习(一)：编写一个简易的可重入锁</a></p>
-<p><a href="/blog/20190525/%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B%E5%AD%A6%E4%B9%A0-%E4%BA%8C-%EF%BC%9A%E4%BD%BF%E7%94%A8AQS%E7%BC%96%E5%86%99%E5%8F%AF%E9%87%8D%E5%85%A5%E9%94%81/">并发编程学习(二)：使用AQS编写可重入锁</a></p>
-<p><a href="/blog/20190602/%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B%E5%AD%A6%E4%B9%A0-%E4%B8%89-%EF%BC%9ACountDownLatch%E7%9A%84%E5%AE%9E%E7%8E%B0%E5%8E%9F%E7%90%86%E5%8F%8A%E4%BD%BF%E7%94%A8/">并发编程学习(三)：CountDownLatch的实现原理及使用</a></p>
-<p><a href="/blog/20190617/%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B%E5%AD%A6%E4%B9%A0-%E5%9B%9B-%EF%BC%9A%E7%90%86%E8%A7%A3ThreadPoolExecutor%E7%BA%BF%E7%A8%8B%E6%B1%A0/">并发编程学习(四)：理解ThreadPoolExecutor线程池</a></p>
-<p><a href="/blog/20190623/%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B%E5%AD%A6%E4%B9%A0-%E4%BA%94-%EF%BC%9ASemaphore%E6%BA%90%E7%A0%81%E5%AD%A6%E4%B9%A0%E5%8F%8A%E4%BD%BF%E7%94%A8%E6%A1%88%E4%BE%8B/">并发编程学习(五)：Semaphore源码学习及使用案例</a></p>
-<p><a href="/blog/20190701/%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B%E5%AD%A6%E4%B9%A0-%E5%85%AD-%EF%BC%9AExchanger%E7%9A%84%E5%AD%A6%E4%B9%A0%E5%8F%8A%E4%BD%BF%E7%94%A8%E5%9C%BA%E6%99%AF/">并发编程学习(六)：Exchanger的学习及使用场景</a></p>
-<p><a href="/blog/20190814/%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B%E5%AD%A6%E4%B9%A0-%E4%B8%83-%EF%BC%9AFork-Join%E6%A1%86%E6%9E%B6%E5%8E%9F%E7%90%86%E5%8F%8Ademo/">并发编程学习(七)：Fork&#x2F;Join框架原理及demo</a></p>
-<p><a href="/blog/20190716/Synchronized%E4%BD%BF%E7%94%A8%E6%97%B6%E4%B8%80%E4%B8%AA%E4%B8%8D%E8%B5%B7%E7%9C%BC%E7%9A%84%E6%B3%A8%E6%84%8F%E7%82%B9/">Synchronized使用时一个不起眼的注意点</a></p>
-<p>这篇博客，制作了一个 Slide，来针对 Java 并发编程做一些小小的总结：</p>
-<p><a href="/ppt/java-concurrent-knowledge.html">&gt; 点击查看 Slide</a></p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
-    <link itemprop="mainEntityOfPage" href="https://jpruby888.github.io/post/a9e45d03.html">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="jpruby">
-      <meta itemprop="description" content="宁静致远">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="jpruby">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/post/a9e45d03.html" class="post-title-link" itemprop="url">How to use Junit5 to test you java application elegantly</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2020-01-15 14:25:14" itemprop="dateCreated datePublished" datetime="2020-01-15T14:25:14+08:00">2020-01-15</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2022-03-16 22:38:41" itemprop="dateModified" datetime="2022-03-16T22:38:41+08:00">2022-03-16</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Junit5/" itemprop="url" rel="index"><span itemprop="name">Junit5</span></a>
-                </span>
-                  , 
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Junit5/Unit-Test/" itemprop="url" rel="index"><span itemprop="name">Unit Test</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h1 align="center">Junit5 的一些实际开发中常用的功能【 TDD 向 】</h1>
-
-<p><img src="/junit5.png" alt="Junit"></p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/post/a9e45d03.html#more" rel="contents">
-                Read more &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-
-  
-  <nav class="pagination">
-    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><span class="space">&hellip;</span><a class="page-number" href="/page/7/">7</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
-  </nav>
-
-
-
-          </div>
-          
-
-<script>
-  window.addEventListener('tabs:register', () => {
-    let { activeClass } = CONFIG.comments;
-    if (CONFIG.comments.storage) {
-      activeClass = localStorage.getItem('comments_active') || activeClass;
-    }
-    if (activeClass) {
-      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
-      if (activeTab) {
-        activeTab.click();
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
       }
     }
-  });
-  if (CONFIG.comments.storage) {
-    window.addEventListener('tabs:click', event => {
-      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
-      let commentClass = event.target.classList[1];
-      localStorage.setItem('comments_active', commentClass);
-    });
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><meta name="generator" content="Hexo 6.1.0"><link rel="alternate" href="/atom.xml" title="jpruby的blog" type="application/atom+xml">
+</head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="/images/favicon.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data is-center"><div class="data-item"><a href="/archives/"><div class="headline">Articles</div><div class="length-num">61</div></a></div><div class="data-item"><a href="/tags/"><div class="headline">Tags</div><div class="length-num">77</div></a></div><div class="data-item"><a href="/categories/"><div class="headline">Categories</div><div class="length-num">23</div></a></div></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div class="page" id="body-wrap"><header class="full_page" id="page-header" style="background-image: url('/images/fileImage/top1.jpg')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">jpruby的blog</a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="site-info"><h1 id="site-title">jpruby的blog</h1><div id="site-subtitle"><span id="subtitle"></span></div></div><div id="scroll-down"><i class="fas fa-angle-down scroll-down-effects"></i></div></header><main class="layout" id="content-inner"><div class="recent-posts" id="recent-posts"><div class="recent-post-item"><div class="post_cover left"><a href="/post/891bfe8a.html" title="编写自定义的 SpringBoot starter 实现自动装配"><img class="post_bg" src="/images/fileImage/top1.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="编写自定义的 SpringBoot starter 实现自动装配"></a></div><div class="recent-post-info"><a class="article-title" href="/post/891bfe8a.html" title="编写自定义的 SpringBoot starter 实现自动装配">编写自定义的 SpringBoot starter 实现自动装配</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">Created</span><time datetime="2021-07-30T08:47:15.000Z" title="Created 2021-07-30 16:47:15">2021-07-30</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/SpringBoot/">SpringBoot</a></span></div><div class="content">前言记得几年前我在刚开始接触 SpringBoot&#x2F;SpringCloud，就对SpringBoot 如何实现自动装配产生了很大的好奇。但是当时技术能力尚浅，没能对这一方面了解的很透彻，只是在想如果有朝一日我也能写一个 Starter 提供给别人用就好了。最近我准备写一个 Starter。所以这篇博客就来总结一下，什么是 SpringBoot 自动装配以及如何实现自己的 Starter。
+
+
+什么是 Spring Boot 的 AutoConfiguration什么是 SpringBoot 的自动装配实际上是类似于 SPI(Java Service Provider Interface) 机制， SpringBoot 在启动的时候会扫描 classpath下面的这个文件 META-INF/spring.factories， 包括所有依赖中的该文件都能够被 SpringBoot 扫描到。然后将文件中配置的类加载到 Spring 容器中，并执行类中定义的操作，比如按需创建更多的 Bean。如下，这是spring-boot/spring-boot-project/spring-bo ...</div></div></div><div class="recent-post-item"><div class="post_cover right"><a href="/post/c7f9efd1.html" title="我的无奈的来源，正是他"><img class="post_bg" src="/images/fileImage/top1.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="我的无奈的来源，正是他"></a></div><div class="recent-post-info"><a class="article-title" href="/post/c7f9efd1.html" title="我的无奈的来源，正是他">我的无奈的来源，正是他</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">Created</span><time datetime="2021-07-26T12:06:19.000Z" title="Created 2021-07-26 20:06:19">2021-07-26</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/%E9%9A%8F%E7%AC%94/">随笔</a></span></div><div class="content">多年以前，我遇到了这么一个人。在长期的相处于磨合中，我渐渐的了解他，又渐渐的开始厌恶他。
+在我看来他存在懒惰、不上进等诸多问题。我厌恶他的没有担当，面对一切事物只会去逃避。
+我厌恶他做事情犹豫不决，不愿意向自己渴望的东西迈出脚步，痴望着上天能够怜悯他，将他喜欢的事物和人送到他手中。
+性格上的懦弱、怯惧，以至于平平挫折，却自视为被生活沉重打击。
+他把年华用以虚度的拙劣手段，对于青春与未来的人生所持有消极的态度，也曾令我屡屡失望、但同时我也是怜悯他的，我经历过他不被重视时的落寞，不被需要时的孤独，这种体验很糟糕，清楚的提醒着我，他正在难过。
+他很脆弱，对于旁人的冷笑和嘲讽极度敏感。
+我来到这个世界并无多么重大的意义，生活赋予我的第一要务就是要照顾好他。
+于是我必须细心的感知他的大脑波动，替他整理悲苦、负面的情绪害怕他迷失，害怕他放弃只能一遍又一遍的安慰，一遍又一遍的强调。
+在明知无望的情况下，还是想他能够逐渐的快乐起来。
+但是我好无奈。
+我无奈的来源于：我正是他。
+</div></div></div><div class="recent-post-item"><div class="post_cover left"><a href="/post/1e5ae654.html" title="写博客有什么用？"><img class="post_bg" src="/images/fileImage/top1.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="写博客有什么用？"></a></div><div class="recent-post-info"><a class="article-title" href="/post/1e5ae654.html" title="写博客有什么用？">写博客有什么用？</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">Created</span><time datetime="2021-07-21T15:11:21.000Z" title="Created 2021-07-21 23:11:21">2021-07-21</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/%E9%9A%8F%E7%AC%94/">随笔</a></span></div><div class="content">好久没写过一篇正经的技术博客了，也好久没有静下心来敲几行工作之外的代码了。
+今天打开自己的博客看了一眼，突然有些反胃！😫我好像对自己的博客审美疲劳了。
+产生的影响就是自己越来越不想写博客，没有整理笔记的欲望了。但是看了几个朋友分享的一些不错主题的他人博客，觉得也许换一种博客主题可能写博客的热情会高一点。
+但是一想到换个主题，自己又要再新主题上魔改无数，又头大了。谢特！我真纠结。
+说到写博客，突然想问自己一句，写了有人看吗？真的有人会看别人的博客吗？
+或者换个问题，写了是给自己看的还是希望分享给别人？其实整理笔记、写博客都是巩固自己学习内容的方式吧，想要 develop others，属实想多了。
+最近逛技术论坛，例如掘金，得到一个结论：当前国内互联网公司压榨下的搬砖码农，根本没时间好好看看别人写的东西，看了也不会思考。看完别人写的博客，在博客底下评论一句：“学到了”、“收藏了”。没有一个人站出来讨论一下，更不用说指出博客中的错误了。好像大家都一起进入了一个夸夸群。
+我觉得对于我来说，没有经过自己验证的理论，我是永远持怀疑态度的。我永远都不会直接接受别人的想法，也许嘴上同意，心里也不会 ...</div></div></div><div class="recent-post-item"><div class="post_cover right"><a href="/post/bb2f6bb7.html" title="为什么并不是所有人都有自由意志？"><img class="post_bg" src="/images/fileImage/top1.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="为什么并不是所有人都有自由意志？"></a></div><div class="recent-post-info"><a class="article-title" href="/post/bb2f6bb7.html" title="为什么并不是所有人都有自由意志？">为什么并不是所有人都有自由意志？</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">Created</span><time datetime="2021-06-20T06:41:15.000Z" title="Created 2021-06-20 14:41:15">2021-06-20</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/%E9%9A%8F%E7%AC%94/">随笔</a></span></div><div class="content">
+   
+
+
+ Loki - About free will 
+
+
+
+这两天看了一个新的美剧——《Loki》。是漫威系列的多元宇宙时间线背景的科幻加奇幻片。一开始是抱着看爆米花剧的心态再加上自己一直以来都对漫威的电影很感兴趣，所以翻墙找了资源🤫。剧情虽然离谱但是很对我的胃口，故事大致讲的是在复仇者联盟穿越回 2012 年寻找宇宙魔方（空间宝石）的时候，Loki 偷走了空间宝石。而因为扰乱了漫威宇宙的神圣时间线，被时间管理局逮捕。
+
+
+剧中的时间管理局的工作者可以说是三位神圣的时间守护者创造出来管理时间线的没有生命的机器人。他们无法自由的出现在神圣时间线中，也就是无法干涉现实的人类生活，否则会扰乱神圣时间线从而导致出现时间线分支，衍生出多元宇宙。只能够待在时间管理局这样一个超脱时间存在的地方，日复一日的工作。
+而 Loki，阿斯加德的诡计之神，一个不会听命于所有人，想要统治整个宇宙，自己建立规则的自由的神，在剧中与这位时间管理局的分析师——莫比乌斯，有了一段上述视频中的对话。只是一段小的插曲，却让我反复看了好几遍。
+莫比乌斯收藏了一份摩托艇杂志，和洛基谈起来的时候神采飞扬像是非常了解摩 ...</div></div></div><div class="recent-post-item"><div class="post_cover left"><a href="/post/b2405a89.html" title="由 SpringBoot 升级到 2.4.2 引发的 Jackson 的 JsonFormat 问题排查"><img class="post_bg" src="/images/fileImage/top1.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="由 SpringBoot 升级到 2.4.2 引发的 Jackson 的 JsonFormat 问题排查"></a></div><div class="recent-post-info"><a class="article-title" href="/post/b2405a89.html" title="由 SpringBoot 升级到 2.4.2 引发的 Jackson 的 JsonFormat 问题排查">由 SpringBoot 升级到 2.4.2 引发的 Jackson 的 JsonFormat 问题排查</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">Created</span><time datetime="2021-01-20T11:37:43.000Z" title="Created 2021-01-20 19:37:43">2021-01-20</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/springboot/">springboot</a></span></div><div class="content">
+
+
+
+
+事情是这样的在不久的以前，我们项目的 Tech Lead 决定在git repo中引入 DependaBot 来对项目中的依赖做检查并升级。我们的一个使用 SpringBoot 的服务也就这样成了待升级依赖的一份子。我们待升级的依赖包括但不限于：
+
+Bump newrelic-agent from 5.8.0 to 6.3.0 …
+Bump guava from 28.0-jre to 30.1-jre …
+Bump spring-hateoas from 1.1.0.RELEASE to 1.2.3 …
+Bump postgresql from 42.2.8 to 42.2.18 …
+Bump cloudwatch from 2.13.41 to 2.15.66 …
+Bump json-schema-validator from 4.2.0 to 4.3.3 …
+Bump org.springframework.boot from 2.2.5.RELEASE to 2.4.2 …
+Bump io.spring.dependency-management …
+Bump io. ...</div></div></div><div class="recent-post-item"><div class="post_cover right"><a href="/post/ad141fe0.html" title="使用 UPic &amp; GitHub 做个自己的图床"><img class="post_bg" src="/images/fileImage/top1.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="使用 UPic &amp; GitHub 做个自己的图床"></a></div><div class="recent-post-info"><a class="article-title" href="/post/ad141fe0.html" title="使用 UPic &amp; GitHub 做个自己的图床">使用 UPic &amp; GitHub 做个自己的图床</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">Created</span><time datetime="2021-01-13T13:42:28.000Z" title="Created 2021-01-13 21:42:28">2021-01-13</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/%E5%BC%80%E5%8F%91%E5%B7%A5%E5%85%B7/">开发工具</a></span></div><div class="content">
+
+
+有写过一个小小的创建步骤，不过是英文版的(在练习写英文博客)，有兴趣的可以点开看下，步骤也比较简单。
+点击跳转到文章
+
+</div></div></div><div class="recent-post-item"><div class="post_cover left"><a href="/post/5fc7d97a.html" title="使用localstack 搭建 AWS 本地开发环境"><img class="post_bg" src="/images/fileImage/top1.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="使用localstack 搭建 AWS 本地开发环境"></a></div><div class="recent-post-info"><a class="article-title" href="/post/5fc7d97a.html" title="使用localstack 搭建 AWS 本地开发环境">使用localstack 搭建 AWS 本地开发环境</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">Created</span><time datetime="2020-12-27T06:45:59.000Z" title="Created 2020-12-27 14:45:59">2020-12-27</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/AWS/">AWS</a></span></div><div class="content">
+前言相信有很多同学公司项目都有用到 AWS 或者有同学在学习 AWS，我们知道像 AWS 这样的云服务，我们不太能很方便的去在本地开发的时候连接云上的服务，更何况 staging&#x2F;production 环境还会有安全方面的考虑。那么当我们创建好一个项目的时候，我们如何去搭建其本地开发环境方便我们在本地开发调试呢？没错！使用 localstack！
+LocalStack - A fully functional local AWS cloud stack
+
+LocalStack provides an easy-to-use test&#x2F;mocking framework for developing Cloud applications.
+Currently, the focus is primarily on supporting the AWS cloud stack.
+
+LocalStack 是提供给开发者一个方便去测试和 mock 服务的框架， 目前主要提供 AWS 云服务。
+
+
+
+
+如何使用？例：使用 LocalStack 创建一个 SNS服务想像我们有这 ...</div></div></div><div class="recent-post-item"><div class="post_cover right"><a href="/post/15d4b5dc.html" title="让一切被中断的重新启动"><img class="post_bg" src="/images/fileImage/top1.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="让一切被中断的重新启动"></a></div><div class="recent-post-info"><a class="article-title" href="/post/15d4b5dc.html" title="让一切被中断的重新启动">让一切被中断的重新启动</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">Created</span><time datetime="2020-07-05T07:35:33.000Z" title="Created 2020-07-05 15:35:33">2020-07-05</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/%E7%A8%8B%E5%BA%8F%E4%BA%BA%E7%94%9F/">程序人生</a></span></div><div class="content">
+
+
+2020年因为疫情原因导致自己浑浑噩噩地度过了半年时间，博客一直都没有更新，甚至都不知道自己每天在干什么。相比于 2019 年每天都拍一点视频记录一下自己干了些什么之外（其实每天也是一样枯燥无聊），2020 年这大半年好像是突然就消失掉了。
+想要做的事情还有很多，所以今天打算整理一下思绪，三省一下吾身🧐。在 新公司工作 8 个月以来，好像失去了斗志，在这里每天做着一些简单的貌似无法提升自己的工作，其实有一些倦了。哎不过提升不提升都是看自己，也许是我现在太浮躁了。
+从杭州回来之前想着每天工作轻松了可以做一些副业或者其他，比如视频剪辑，继续学习 POPPIN 之类的事情，但是现实是每天回到家就躺尸。西安的夏天每天8点才日落，真的感觉好浪费时间啊，大好的光阴都被自己挥霍掉了。20 年的后半年立一些F🚩L🇨🇳A🏳️‍🌈G吧，例如，多剪辑一些有趣的 VLOG（这个需要灵感），存一下钱（还好股票已经回本了），多去西安周边走一走（有驾照就方便了），谈个女朋友（这个对我来说其实是最难的，因为我发现自己其实是一个很闷的人，有时候就想一个人呆着不想和别人说话，和别人相处真的好累），还有健 ...</div></div></div><div class="recent-post-item"><div class="post_cover left"><a href="/post/5f40a740.html" title="Java 并发编程的一些总结"><img class="post_bg" src="/images/fileImage/top1.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Java 并发编程的一些总结"></a></div><div class="recent-post-info"><a class="article-title" href="/post/5f40a740.html" title="Java 并发编程的一些总结">Java 并发编程的一些总结</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">Created</span><time datetime="2020-01-29T14:06:28.000Z" title="Created 2020-01-29 22:06:28">2020-01-29</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/Java%E5%9F%BA%E7%A1%80/">Java基础</a><i class="fas fa-angle-right article-meta-link"></i><a class="article-meta__categories" href="/categories/Java%E5%9F%BA%E7%A1%80/%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B/">并发编程</a></span></div><div class="content">
+前言
+关于JAVA 并发编程的学习，我已零散的并不系统地积累了一些学习博客，如下：
+并发编程学习(一)：编写一个简易的可重入锁
+并发编程学习(二)：使用AQS编写可重入锁
+并发编程学习(三)：CountDownLatch的实现原理及使用
+并发编程学习(四)：理解ThreadPoolExecutor线程池
+并发编程学习(五)：Semaphore源码学习及使用案例
+并发编程学习(六)：Exchanger的学习及使用场景
+并发编程学习(七)：Fork&#x2F;Join框架原理及demo
+Synchronized使用时一个不起眼的注意点
+这篇博客，制作了一个 Slide，来针对 Java 并发编程做一些小小的总结：
+&gt; 点击查看 Slide
+</div></div></div><div class="recent-post-item"><div class="post_cover right"><a href="/post/a9e45d03.html" title="How to use Junit5 to test you java application elegantly"><img class="post_bg" src="/images/fileImage/top1.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="How to use Junit5 to test you java application elegantly"></a></div><div class="recent-post-info"><a class="article-title" href="/post/a9e45d03.html" title="How to use Junit5 to test you java application elegantly">How to use Junit5 to test you java application elegantly</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">Created</span><time datetime="2020-01-15T06:25:14.000Z" title="Created 2020-01-15 14:25:14">2020-01-15</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/Junit5/">Junit5</a><i class="fas fa-angle-right article-meta-link"></i><a class="article-meta__categories" href="/categories/Junit5/Unit-Test/">Unit Test</a></span></div><div class="content">Junit5 的一些实际开发中常用的功能【 TDD 向 】
+
+
+
+
+
+这篇博客本来应该写于鼠年过年之前，谁想到犯了个懒，现在怀着沉重的心情写下这篇博客~
+因为中国现在正在受着新型冠状病毒疫情的危害，大过年的门都出不去，都躲在家里生怕被感染。无聊的我只能学习学习来打发一下枯燥的假期生活哈哈~
+
+Junit5说到 JUNIT5 可能很多人都不陌生，就是一个测试框架而已。但是相信大部分的程序员都没有用过，感觉国内好多公司都没有写测试的习惯，也许是产品催需求催的太紧ε&#x3D;(´ο｀*)))。我就不在这里介绍 Junit5 了，没有前置知识的话需要看一下：Junit5，我只在这篇博客介绍一下我在工作中是如何使用 Junit5 的。
+基本的测试代码首先 gradle需要引入 Junit5 以及其他相关的依赖：
+12345678testImplementation &#x27;org.mockito:mockito-core:2.24.0&#x27;testImplementation &#x27;org.junit.jupiter:junit-jupiter-api:5.2.0&#x27;t ...</div></div></div><nav id="pagination"><div class="pagination"><span class="page-number current">1</span><a class="page-number" href="/page/2/#content-inner">2</a><span class="space">&hellip;</span><a class="page-number" href="/page/7/#content-inner">7</a><a class="extend next" rel="next" href="/page/2/#content-inner"><i class="fas fa-chevron-right fa-fw"></i></a></div></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="/images/favicon.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">jpruby</div><div class="author-info__description">宁静致远</div></div><div class="card-info-data is-center"><div class="card-info-data-item"><a href="/archives/"><div class="headline">Articles</div><div class="length-num">61</div></a></div><div class="card-info-data-item"><a href="/tags/"><div class="headline">Tags</div><div class="length-num">77</div></a></div><div class="card-info-data-item"><a href="/categories/"><div class="headline">Categories</div><div class="length-num">23</div></a></div></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/xxxxxx"><i class="fab fa-github"></i><span>Follow Me</span></a></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>Announcement</span></div><div class="announcement_content">This is my Blog</div></div><div class="sticky_layout"><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>Recent Post</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/post/891bfe8a.html" title="编写自定义的 SpringBoot starter 实现自动装配"><img src="/images/fileImage/top1.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="编写自定义的 SpringBoot starter 实现自动装配"/></a><div class="content"><a class="title" href="/post/891bfe8a.html" title="编写自定义的 SpringBoot starter 实现自动装配">编写自定义的 SpringBoot starter 实现自动装配</a><time datetime="2021-07-30T08:47:15.000Z" title="Created 2021-07-30 16:47:15">2021-07-30</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/post/c7f9efd1.html" title="我的无奈的来源，正是他"><img src="/images/fileImage/top1.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="我的无奈的来源，正是他"/></a><div class="content"><a class="title" href="/post/c7f9efd1.html" title="我的无奈的来源，正是他">我的无奈的来源，正是他</a><time datetime="2021-07-26T12:06:19.000Z" title="Created 2021-07-26 20:06:19">2021-07-26</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/post/1e5ae654.html" title="写博客有什么用？"><img src="/images/fileImage/top1.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="写博客有什么用？"/></a><div class="content"><a class="title" href="/post/1e5ae654.html" title="写博客有什么用？">写博客有什么用？</a><time datetime="2021-07-21T15:11:21.000Z" title="Created 2021-07-21 23:11:21">2021-07-21</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/post/bb2f6bb7.html" title="为什么并不是所有人都有自由意志？"><img src="/images/fileImage/top1.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="为什么并不是所有人都有自由意志？"/></a><div class="content"><a class="title" href="/post/bb2f6bb7.html" title="为什么并不是所有人都有自由意志？">为什么并不是所有人都有自由意志？</a><time datetime="2021-06-20T06:41:15.000Z" title="Created 2021-06-20 14:41:15">2021-06-20</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/post/b2405a89.html" title="由 SpringBoot 升级到 2.4.2 引发的 Jackson 的 JsonFormat 问题排查"><img src="/images/fileImage/top1.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="由 SpringBoot 升级到 2.4.2 引发的 Jackson 的 JsonFormat 问题排查"/></a><div class="content"><a class="title" href="/post/b2405a89.html" title="由 SpringBoot 升级到 2.4.2 引发的 Jackson 的 JsonFormat 问题排查">由 SpringBoot 升级到 2.4.2 引发的 Jackson 的 JsonFormat 问题排查</a><time datetime="2021-01-20T11:37:43.000Z" title="Created 2021-01-20 19:37:43">2021-01-20</time></div></div></div></div><div class="card-widget card-categories"><div class="item-headline">
+            <i class="fas fa-folder-open"></i>
+            <span>Categories</span>
+            <a class="card-more-btn" href="/categories/" title="More">
+    <i class="fas fa-angle-right"></i></a>
+            </div>
+            <ul class="card-category-list" id="aside-cat-list">
+            <li class="card-category-list-item "><a class="card-category-list-link" href="/categories/AWS/"><span class="card-category-list-name">AWS</span><span class="card-category-list-count">1</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/English-study/"><span class="card-category-list-name">English study</span><span class="card-category-list-count">1</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/Git/"><span class="card-category-list-name">Git</span><span class="card-category-list-count">1</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/Java%E5%9F%BA%E7%A1%80/"><span class="card-category-list-name">Java基础</span><span class="card-category-list-count">16</span></a><ul class="card-category-list child"><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/Java%E5%9F%BA%E7%A1%80/%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B/"><span class="card-category-list-name">并发编程</span><span class="card-category-list-count">9</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/Java%E5%9F%BA%E7%A1%80/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/"><span class="card-category-list-name">设计模式</span><span class="card-category-list-count">3</span></a></li></ul></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/Junit5/"><span class="card-category-list-name">Junit5</span><span class="card-category-list-count">1</span></a><ul class="card-category-list child"><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/Junit5/Unit-Test/"><span class="card-category-list-name">Unit Test</span><span class="card-category-list-count">1</span></a></li></ul></li>
+            </ul></div><div class="card-widget card-tags"><div class="item-headline"><i class="fas fa-tags"></i><span>Tags</span></div><div class="card-tag-cloud"><a href="/tags/AQS/" style="font-size: 1.2em; color: #999da3">AQS</a> <a href="/tags/AWS/" style="font-size: 1.1em; color: #999">AWS</a> <a href="/tags/CountDownLatch/" style="font-size: 1.1em; color: #999">CountDownLatch</a> <a href="/tags/DateTimeFormatter/" style="font-size: 1.1em; color: #999">DateTimeFormatter</a> <a href="/tags/English-blogs/" style="font-size: 1.1em; color: #999">English blogs</a> <a href="/tags/English-study/" style="font-size: 1.1em; color: #999">English study</a> <a href="/tags/Exchanger/" style="font-size: 1.1em; color: #999">Exchanger</a> <a href="/tags/Fork-Join%E6%A1%86%E6%9E%B6/" style="font-size: 1.1em; color: #999">Fork/Join框架</a> <a href="/tags/ForkJoinPool/" style="font-size: 1.1em; color: #999">ForkJoinPool</a> <a href="/tags/Git/" style="font-size: 1.1em; color: #999">Git</a> <a href="/tags/IDEA/" style="font-size: 1.1em; color: #999">IDEA</a> <a href="/tags/JSON/" style="font-size: 1.1em; color: #999">JSON</a> <a href="/tags/Java-%E5%9F%BA%E7%A1%80/" style="font-size: 1.1em; color: #999">Java 基础</a> <a href="/tags/Java%E5%9F%BA%E7%A1%80/" style="font-size: 1.5em; color: #99a9bf">Java基础</a> <a href="/tags/JsonFormat/" style="font-size: 1.1em; color: #999">JsonFormat</a> <a href="/tags/Junit5/" style="font-size: 1.1em; color: #999">Junit5</a> <a href="/tags/RequestBody/" style="font-size: 1.1em; color: #999">RequestBody</a> <a href="/tags/Semaphore/" style="font-size: 1.1em; color: #999">Semaphore</a> <a href="/tags/Servlet/" style="font-size: 1.1em; color: #999">Servlet</a> <a href="/tags/Spring/" style="font-size: 1.2em; color: #999da3">Spring</a> <a href="/tags/SpringBoot/" style="font-size: 1.3em; color: #99a1ac">SpringBoot</a> <a href="/tags/SpringBoot-starter/" style="font-size: 1.1em; color: #999">SpringBoot starter</a> <a href="/tags/SpringCloud/" style="font-size: 1.2em; color: #999da3">SpringCloud</a> <a href="/tags/SpringMVC/" style="font-size: 1.2em; color: #999da3">SpringMVC</a> <a href="/tags/Synchronized/" style="font-size: 1.1em; color: #999">Synchronized</a> <a href="/tags/ThreadPoolExecutor/" style="font-size: 1.1em; color: #999">ThreadPoolExecutor</a> <a href="/tags/converter/" style="font-size: 1.1em; color: #999">converter</a> <a href="/tags/docker/" style="font-size: 1.1em; color: #999">docker</a> <a href="/tags/dubbo/" style="font-size: 1.2em; color: #999da3">dubbo</a> <a href="/tags/freemarker/" style="font-size: 1.1em; color: #999">freemarker</a> <a href="/tags/git/" style="font-size: 1.1em; color: #999">git</a> <a href="/tags/hexo/" style="font-size: 1.1em; color: #999">hexo</a> <a href="/tags/jackson/" style="font-size: 1.1em; color: #999">jackson</a> <a href="/tags/layui/" style="font-size: 1.1em; color: #999">layui</a> <a href="/tags/leetcode/" style="font-size: 1.4em; color: #99a5b6">leetcode</a> <a href="/tags/lenient/" style="font-size: 1.1em; color: #999">lenient</a> <a href="/tags/localstack/" style="font-size: 1.1em; color: #999">localstack</a> <a href="/tags/nodepad/" style="font-size: 1.1em; color: #999">nodepad++</a> <a href="/tags/session%E6%B1%A1%E6%9F%93/" style="font-size: 1.1em; color: #999">session污染</a> <a href="/tags/shell%E8%87%AA%E5%8A%A8%E5%8C%96%E6%B5%8B%E8%AF%95/" style="font-size: 1.1em; color: #999">shell自动化测试</a></div></div><div class="card-widget card-archives"><div class="item-headline"><i class="fas fa-archive"></i><span>Archives</span><a class="card-more-btn" href="/archives/" title="More">
+    <i class="fas fa-angle-right"></i></a></div><ul class="card-archive-list"><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2021/07/"><span class="card-archive-list-date">July 2021</span><span class="card-archive-list-count">3</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2021/06/"><span class="card-archive-list-date">June 2021</span><span class="card-archive-list-count">1</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2021/01/"><span class="card-archive-list-date">January 2021</span><span class="card-archive-list-count">2</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2020/12/"><span class="card-archive-list-date">December 2020</span><span class="card-archive-list-count">1</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2020/07/"><span class="card-archive-list-date">July 2020</span><span class="card-archive-list-count">1</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2020/01/"><span class="card-archive-list-date">January 2020</span><span class="card-archive-list-count">2</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2019/12/"><span class="card-archive-list-date">December 2019</span><span class="card-archive-list-count">2</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2019/11/"><span class="card-archive-list-date">November 2019</span><span class="card-archive-list-count">1</span></a></li></ul></div><div class="card-widget card-webinfo"><div class="item-headline"><i class="fas fa-chart-line"></i><span>Info</span></div><div class="webinfo"><div class="webinfo-item"><div class="item-name">Article :</div><div class="item-count">61</div></div><div class="webinfo-item"><div class="item-name">UV :</div><div class="item-count" id="busuanzi_value_site_uv"></div></div><div class="webinfo-item"><div class="item-name">PV :</div><div class="item-count" id="busuanzi_value_site_pv"></div></div><div class="webinfo-item"><div class="item-name">Last Push :</div><div class="item-count" id="last-push-date" data-lastPushDate="2022-03-16T17:01:34.372Z"></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2022 By jpruby</div><div class="framework-info"><span>Framework </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>Theme </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="darkmode" type="button" title="Toggle Between Light And Dark Mode"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="Toggle between single-column and double-column"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="Setting"><i class="fas fa-cog fa-spin"></i></button><button id="go-up" type="button" title="Back To Top"><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.umd.js"></script><div class="js-pjax"><script>function subtitleType () {
+  if (true) { 
+    window.typed = new Typed("#subtitle", {
+      strings: ["安安静静写博客"],
+      startDelay: 300,
+      typeSpeed: 150,
+      loop: false,
+      backSpeed: 50
+    })
+  } else {
+    document.getElementById("subtitle").innerHTML = '安安静静写博客'
   }
-</script>
+}
 
-        </div>
-          
-  
-  <div class="toggle sidebar-toggle">
-    <span class="toggle-line toggle-line-first"></span>
-    <span class="toggle-line toggle-line-middle"></span>
-    <span class="toggle-line toggle-line-last"></span>
-  </div>
-
-  <aside class="sidebar">
-    <div class="sidebar-inner">
-
-      <ul class="sidebar-nav motion-element">
-        <li class="sidebar-nav-toc">
-          Table of Contents
-        </li>
-        <li class="sidebar-nav-overview">
-          Overview
-        </li>
-      </ul>
-
-      <!--noindex-->
-      <div class="post-toc-wrap sidebar-panel">
-      </div>
-      <!--/noindex-->
-
-      <div class="site-overview-wrap sidebar-panel">
-        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-  <p class="site-author-name" itemprop="name">jpruby</p>
-  <div class="site-description" itemprop="description">宁静致远</div>
-</div>
-<div class="site-state-wrap motion-element">
-  <nav class="site-state">
-      <div class="site-state-item site-state-posts">
-          <a href="/archives/">
-        
-          <span class="site-state-item-count">61</span>
-          <span class="site-state-item-name">posts</span>
-        </a>
-      </div>
-      <div class="site-state-item site-state-categories">
-        <span class="site-state-item-count">23</span>
-        <span class="site-state-item-name">categories</span>
-      </div>
-      <div class="site-state-item site-state-tags">
-        <span class="site-state-item-count">77</span>
-        <span class="site-state-item-name">tags</span>
-      </div>
-  </nav>
-</div>
-
-
-
-      </div>
-
-    </div>
-  </aside>
-  <div id="sidebar-dimmer"></div>
-
-
-      </div>
-    </main>
-
-    <footer class="footer">
-      <div class="footer-inner">
-        
-
-        
-
-<div class="copyright">
-  
-  &copy; 
-  <span itemprop="copyrightYear">2022</span>
-  <span class="with-love">
-    <i class="fa fa-heart"></i>
-  </span>
-  <span class="author" itemprop="copyrightHolder">jpruby</span>
-</div>
-  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a>
-  </div>
-
-        
-
-
-
-
-
-
-
-
-      </div>
-    </footer>
-  </div>
-
-  
-  <script src="/lib/anime.min.js"></script>
-  <script src="/lib/velocity/velocity.min.js"></script>
-  <script src="/lib/velocity/velocity.ui.min.js"></script>
-
-<script src="/js/utils.js"></script>
-
-<script src="/js/motion.js"></script>
-
-
-<script src="/js/schemes/pisces.js"></script>
-
-
-<script src="/js/next-boot.js"></script>
-
-
-
-
-  
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  
-
-  
-
-</body>
-</html>
+if (true) {
+  if (typeof Typed === 'function') {
+    subtitleType()
+  } else {
+    getScript('https://cdn.jsdelivr.net/npm/typed.js/lib/typed.min.js').then(subtitleType)
+  }
+} else {
+  subtitleType()
+}</script></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>

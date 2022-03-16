@@ -1,1161 +1,258 @@
-<!DOCTYPE html>
-<html lang="zh-Hans">
-<head>
-  <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
-<meta name="theme-color" content="#222">
-<meta name="generator" content="Hexo 6.1.0">
-  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
-  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
-  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
-  <link rel="mask-icon" href="/images/logo.svg" color="#222">
-
-<link rel="stylesheet" href="/css/main.css">
-
-
-<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
-
-<script id="hexo-configurations">
-    var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"jpruby888.github.io","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
-  </script>
-
-  <meta name="description" content="宁静致远">
+<!DOCTYPE html><html lang="zh-Hans" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"><title>jpruby的blog - 安安静静写博客</title><meta name="author" content="jpruby"><meta name="copyright" content="jpruby"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="宁静致远">
 <meta property="og:type" content="website">
-<meta property="og:title" content="jpruby">
+<meta property="og:title" content="jpruby的blog">
 <meta property="og:url" content="https://jpruby888.github.io/page/2/index.html">
-<meta property="og:site_name" content="jpruby">
+<meta property="og:site_name" content="jpruby的blog">
 <meta property="og:description" content="宁静致远">
 <meta property="og:locale">
+<meta property="og:image" content="https://jpruby888.github.io/images/favicon.png">
 <meta property="article:author" content="jpruby">
 <meta name="twitter:card" content="summary">
-
-<link rel="canonical" href="https://jpruby888.github.io/page/2/">
-
-
-<script id="page-configurations">
-  // https://hexo.io/docs/variables.html
-  CONFIG.page = {
-    sidebar: "",
-    isHome : true,
-    isPost : false,
-    lang   : 'zh-Hans'
-  };
-</script>
-
-  <title>jpruby</title>
-  
-
-
-
-
-
-
-  <noscript>
-  <style>
-  .use-motion .brand,
-  .use-motion .menu-item,
-  .sidebar-inner,
-  .use-motion .post-block,
-  .use-motion .pagination,
-  .use-motion .comments,
-  .use-motion .post-header,
-  .use-motion .post-body,
-  .use-motion .collection-header { opacity: initial; }
-
-  .use-motion .site-title,
-  .use-motion .site-subtitle {
-    opacity: initial;
-    top: initial;
+<meta name="twitter:image" content="https://jpruby888.github.io/images/favicon.png"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://jpruby888.github.io/page/2/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: 'Copy successfully',
+    error: 'Copy error',
+    noSupport: 'The browser does not support'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  date_suffix: {
+    just: 'Just',
+    min: 'minutes ago',
+    hour: 'hours ago',
+    day: 'days ago',
+    month: 'months ago'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery@2/dist/fjGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery@2/dist/fjGallery.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'jpruby的blog',
+  isPost: false,
+  isHome: true,
+  isHighlightShrink: false,
+  isToc: false,
+  postUpdate: '2022-03-17 01:01:34'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
   }
 
-  .use-motion .logo-line-before i { left: initial; }
-  .use-motion .logo-line-after i { right: initial; }
-  </style>
-</noscript>
-
-<link rel="alternate" href="/atom.xml" title="jpruby" type="application/atom+xml">
-</head>
-
-<body itemscope itemtype="http://schema.org/WebPage">
-  <div class="container use-motion">
-    <div class="headband"></div>
-
-    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
-      <div class="header-inner"><div class="site-brand-container">
-  <div class="site-nav-toggle">
-    <div class="toggle" aria-label="Toggle navigation bar">
-      <span class="toggle-line toggle-line-first"></span>
-      <span class="toggle-line toggle-line-middle"></span>
-      <span class="toggle-line toggle-line-last"></span>
-    </div>
-  </div>
-
-  <div class="site-meta">
-
-    <a href="/" class="brand" rel="start">
-      <span class="logo-line-before"><i></i></span>
-      <h1 class="site-title">jpruby</h1>
-      <span class="logo-line-after"><i></i></span>
-    </a>
-      <p class="site-subtitle" itemprop="description">安安静静写博客</p>
-  </div>
-
-  <div class="site-nav-right">
-    <div class="toggle popup-trigger">
-    </div>
-  </div>
-</div>
-
-
-
-
-<nav class="site-nav">
-  <ul id="menu" class="main-menu menu">
-        <li class="menu-item menu-item-home">
-
-    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
-
-  </li>
-        <li class="menu-item menu-item-about">
-
-    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a>
-
-  </li>
-        <li class="menu-item menu-item-tags">
-
-    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
-
-  </li>
-        <li class="menu-item menu-item-categories">
-
-    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
-
-  </li>
-        <li class="menu-item menu-item-archives">
-
-    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
-
-  </li>
-  </ul>
-</nav>
-
-
-
-
-</div>
-    </header>
-
-    
-  <div class="back-to-top">
-    <i class="fa fa-arrow-up"></i>
-    <span>0%</span>
-  </div>
-
-
-    <main class="main">
-      <div class="main-inner">
-        <div class="content-wrap">
-          
-
-          <div class="content index posts-expand">
-            
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
-    <link itemprop="mainEntityOfPage" href="https://jpruby888.github.io/post/9016b35c.html">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="jpruby">
-      <meta itemprop="description" content="宁静致远">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="jpruby">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/post/9016b35c.html" class="post-title-link" itemprop="url"> 解决@ResuestBody中的 JSON 自动转化非 boolean 为 boolean 值</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2019-12-17 11:39:58" itemprop="dateCreated datePublished" datetime="2019-12-17T11:39:58+08:00">2019-12-17</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2022-03-16 22:38:42" itemprop="dateModified" datetime="2022-03-16T22:38:42+08:00">2022-03-16</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/SpringBoot/" itemprop="url" rel="index"><span itemprop="name">SpringBoot</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p><img src="/code.jpg" alt="封面"></p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/post/9016b35c.html#more" rel="contents">
-                Read more &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
-    <link itemprop="mainEntityOfPage" href="https://jpruby888.github.io/post/b3e20ead.html">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="jpruby">
-      <meta itemprop="description" content="宁静致远">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="jpruby">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/post/b3e20ead.html" class="post-title-link" itemprop="url">如何在 SpringCloud 微服务项目中一键部署 docker 启动</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2019-12-11 17:26:46" itemprop="dateCreated datePublished" datetime="2019-12-11T17:26:46+08:00">2019-12-11</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2022-03-16 22:38:41" itemprop="dateModified" datetime="2022-03-16T22:38:41+08:00">2022-03-16</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/SpringCloud/" itemprop="url" rel="index"><span itemprop="name">SpringCloud</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p><img src="/docker.jpg"></p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/post/b3e20ead.html#more" rel="contents">
-                Read more &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
-    <link itemprop="mainEntityOfPage" href="https://jpruby888.github.io/post/f7f71700.html">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="jpruby">
-      <meta itemprop="description" content="宁静致远">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="jpruby">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/post/f7f71700.html" class="post-title-link" itemprop="url">Write a blog in English</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2019-11-05 21:55:46" itemprop="dateCreated datePublished" datetime="2019-11-05T21:55:46+08:00">2019-11-05</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2022-03-16 22:38:41" itemprop="dateModified" datetime="2022-03-16T22:38:41+08:00">2022-03-16</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/English-study/" itemprop="url" rel="index"><span itemprop="name">English study</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h3 id="Improve-my-spoken-English-now-and-written-listen"><a href="#Improve-my-spoken-English-now-and-written-listen" class="headerlink" title="Improve my spoken English now, and written, listen"></a>Improve my spoken English now, and written, listen</h3><p>It’s my third week in ThoughtWorks. And today afternoon, Sam who worked in REA and on business trip here made a session. Obviously, in English. I didn’t understand most contents. Almost all of the session for me is difficully. Except English, I also cannot understand some abbreviations and I didn’t used the services and tools which he refered.  </p>
-<p>Tomorrow, I’ll show a card to customers which I paired with Benqing. To tell them what we did and what we are going to do for this card. </p>
-<p>Emmm.. How to say, it’s magically, working in a foreign company. Lots of smart people and interesting colleagues. Before I entried TW I thought that this is not a company with good technology, but I’m wrong, at least I am the worst one.</p>
-<p>Keep going, man! Don’t be discouraged! When you want to do something succed, just like you want breath every second, you will success.</p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
-    <link itemprop="mainEntityOfPage" href="https://jpruby888.github.io/post/9cfc71b8.html">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="jpruby">
-      <meta itemprop="description" content="宁静致远">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="jpruby">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/post/9cfc71b8.html" class="post-title-link" itemprop="url">Scaffold-Cloud —— SpringCloud微服务架构实践</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2019-10-25 13:42:24" itemprop="dateCreated datePublished" datetime="2019-10-25T13:42:24+08:00">2019-10-25</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2022-03-16 22:38:41" itemprop="dateModified" datetime="2022-03-16T22:38:41+08:00">2022-03-16</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/SpringCloud/" itemprop="url" rel="index"><span itemprop="name">SpringCloud</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <center><u style="font-size=16px;"><a href="/">Scaffold-Cloud: SpringCloud微服务脚手架</a></u></center> [幕布](https://mubu.com/doc/6NZlNw3DIw)
-Scaffold-Cloud 是一个适用于开发者学习的 Spring-Cloud 微服务项目脚手架。项目期望集成大部分目前互联网公司使用的主流的Spring-Cloud微服务相关工具和服务。并结合一些实际的业务增加一些其他功能，如：分布式事务、定时任务、消息队列、日志分析等等，然后加入 CI/CD 并引入 docker 部署。
-
-<p>Scaffold-Cloud 基于 SpringCloud Netflix 全家桶进行微服务项目的构建，所以在这之前，使用 Scaffold-Cloud 需要先了解下 SpringCloud 以及 Netflix 工具全家桶。</p>
-<p><img src="/netflix.png"></p>
-<center><u style="font-size=6px; color:gray">Sorry, NetFlix is not available in your country yet.</u></center>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/post/9cfc71b8.html#more" rel="contents">
-                Read more &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
-    <link itemprop="mainEntityOfPage" href="https://jpruby888.github.io/post/2b1638b7.html">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="jpruby">
-      <meta itemprop="description" content="宁静致远">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="jpruby">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/post/2b1638b7.html" class="post-title-link" itemprop="url">The second day on the job in ThoughtWorks</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2019-10-22 20:41:42" itemprop="dateCreated datePublished" datetime="2019-10-22T20:41:42+08:00">2019-10-22</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2022-03-16 22:38:41" itemprop="dateModified" datetime="2022-03-16T22:38:41+08:00">2022-03-16</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E7%A8%8B%E5%BA%8F%E4%BA%BA%E7%94%9F/" itemprop="url" rel="index"><span itemprop="name">程序人生</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p><img src="/fm.png"></p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/post/2b1638b7.html#more" rel="contents">
-                Read more &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
-    <link itemprop="mainEntityOfPage" href="https://jpruby888.github.io/post/ac4ab9dd.html">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="jpruby">
-      <meta itemprop="description" content="宁静致远">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="jpruby">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/post/ac4ab9dd.html" class="post-title-link" itemprop="url">我项目中使用的分布式事务：LCN</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2019-10-20 11:14:44" itemprop="dateCreated datePublished" datetime="2019-10-20T11:14:44+08:00">2019-10-20</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2022-03-16 22:38:42" itemprop="dateModified" datetime="2022-03-16T22:38:42+08:00">2022-03-16</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E5%88%86%E5%B8%83%E5%BC%8F/" itemprop="url" rel="index"><span itemprop="name">分布式</span></a>
-                </span>
-                  , 
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E5%88%86%E5%B8%83%E5%BC%8F/%E5%88%86%E5%B8%83%E5%BC%8F%E4%BA%8B%E5%8A%A1/" itemprop="url" rel="index"><span itemprop="name">分布式事务</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p><img src="/tx.png" alt="官网首页"></p>
-<center><a href="#more2">其他关于分布式事务的总结整理</a></center>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/post/ac4ab9dd.html#more" rel="contents">
-                Read more &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
-    <link itemprop="mainEntityOfPage" href="https://jpruby888.github.io/post/1339e588.html">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="jpruby">
-      <meta itemprop="description" content="宁静致远">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="jpruby">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/post/1339e588.html" class="post-title-link" itemprop="url">其实我不太想离开这里</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2019-09-09 22:01:04" itemprop="dateCreated datePublished" datetime="2019-09-09T22:01:04+08:00">2019-09-09</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2022-03-16 22:38:41" itemprop="dateModified" datetime="2022-03-16T22:38:41+08:00">2022-03-16</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E7%A8%8B%E5%BA%8F%E4%BA%BA%E7%94%9F/" itemprop="url" rel="index"><span itemprop="name">程序人生</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p><img src="/fm.png" alt="杭州西湖"></p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/post/1339e588.html#more" rel="contents">
-                Read more &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
-    <link itemprop="mainEntityOfPage" href="https://jpruby888.github.io/post/19c6e00c.html">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="jpruby">
-      <meta itemprop="description" content="宁静致远">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="jpruby">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/post/19c6e00c.html" class="post-title-link" itemprop="url">并发编程学习(七)：Fork/Join框架原理及demo</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2019-08-14 16:48:56" itemprop="dateCreated datePublished" datetime="2019-08-14T16:48:56+08:00">2019-08-14</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2022-03-16 22:38:41" itemprop="dateModified" datetime="2022-03-16T22:38:41+08:00">2022-03-16</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Java%E5%9F%BA%E7%A1%80/" itemprop="url" rel="index"><span itemprop="name">Java基础</span></a>
-                </span>
-                  , 
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Java%E5%9F%BA%E7%A1%80/%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B/" itemprop="url" rel="index"><span itemprop="name">并发编程</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p><img src="/fm.jpg" alt="fm.jpg"></p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/post/19c6e00c.html#more" rel="contents">
-                Read more &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
-    <link itemprop="mainEntityOfPage" href="https://jpruby888.github.io/post/343686fd.html">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="jpruby">
-      <meta itemprop="description" content="宁静致远">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="jpruby">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/post/343686fd.html" class="post-title-link" itemprop="url">【设计模式】设计模式基本思想以及23种模式总结整理</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2019-08-12 11:47:54" itemprop="dateCreated datePublished" datetime="2019-08-12T11:47:54+08:00">2019-08-12</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2022-03-16 22:38:41" itemprop="dateModified" datetime="2022-03-16T22:38:41+08:00">2022-03-16</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Java%E5%9F%BA%E7%A1%80/" itemprop="url" rel="index"><span itemprop="name">Java基础</span></a>
-                </span>
-                  , 
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Java%E5%9F%BA%E7%A1%80/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" itemprop="url" rel="index"><span itemprop="name">设计模式</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p><img src="/bz.png" alt="封面"></p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/post/343686fd.html#more" rel="contents">
-                Read more &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
-    <link itemprop="mainEntityOfPage" href="https://jpruby888.github.io/post/cd3a834.html">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="jpruby">
-      <meta itemprop="description" content="宁静致远">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="jpruby">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/post/cd3a834.html" class="post-title-link" itemprop="url">Leetcode - 52. N皇后 II 回溯算法求解</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2019-08-09 18:19:50" itemprop="dateCreated datePublished" datetime="2019-08-09T18:19:50+08:00">2019-08-09</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2022-03-16 22:38:41" itemprop="dateModified" datetime="2022-03-16T22:38:41+08:00">2022-03-16</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/" itemprop="url" rel="index"><span itemprop="name">数据结构与算法</span></a>
-                </span>
-                  , 
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/%E7%AE%97%E6%B3%95%E9%A2%98%E8%A7%A3/" itemprop="url" rel="index"><span itemprop="name">算法题解</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h4 id="N皇后问题-leetcode"><a href="#N皇后问题-leetcode" class="headerlink" title="N皇后问题 - leetcode"></a>N皇后问题 - <a target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/n-queens-ii/">leetcode</a></h4><p>n 皇后问题研究的是如何将 n 个皇后放置在 n×n 的棋盘上，并且使皇后彼此之间不能相互攻击。<img src="/8-queens.png" alt="8皇后示例"><br>上图为 8 皇后问题的一种解法。给定一个整数 n，返回 n 皇后不同的解决方案的数量。</p>
-<h4 id="示例："><a href="#示例：" class="headerlink" title="示例："></a>示例：</h4><blockquote>
-<p>输入: 4<br>输出: 2<br>解释: 4 皇后问题存在如下两个不同的解法。</p>
-</blockquote>
-<figure class="highlight md"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">[</span><br><span class="line">[&quot;.Q..&quot;,  // 解法 1</span><br><span class="line">&quot;...Q&quot;,</span><br><span class="line">&quot;Q...&quot;,</span><br><span class="line">&quot;..Q.&quot;],</span><br><span class="line">[&quot;..Q.&quot;,  // 解法 2</span><br><span class="line">&quot;Q...&quot;,</span><br><span class="line">&quot;...Q&quot;,</span><br><span class="line">&quot;.Q..&quot;]</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/post/cd3a834.html#more" rel="contents">
-                Read more &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-
-  
-  <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/7/">7</a><a class="extend next" rel="next" href="/page/3/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
-  </nav>
-
-
-
-          </div>
-          
-
-<script>
-  window.addEventListener('tabs:register', () => {
-    let { activeClass } = CONFIG.comments;
-    if (CONFIG.comments.storage) {
-      activeClass = localStorage.getItem('comments_active') || activeClass;
-    }
-    if (activeClass) {
-      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
-      if (activeTab) {
-        activeTab.click();
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
       }
     }
-  });
-  if (CONFIG.comments.storage) {
-    window.addEventListener('tabs:click', event => {
-      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
-      let commentClass = event.target.classList[1];
-      localStorage.setItem('comments_active', commentClass);
-    });
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><meta name="generator" content="Hexo 6.1.0"><link rel="alternate" href="/atom.xml" title="jpruby的blog" type="application/atom+xml">
+</head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="/images/favicon.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data is-center"><div class="data-item"><a href="/archives/"><div class="headline">Articles</div><div class="length-num">61</div></a></div><div class="data-item"><a href="/tags/"><div class="headline">Tags</div><div class="length-num">77</div></a></div><div class="data-item"><a href="/categories/"><div class="headline">Categories</div><div class="length-num">23</div></a></div></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div class="page" id="body-wrap"><header class="full_page" id="page-header" style="background-image: url('/images/fileImage/top1.jpg')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">jpruby的blog</a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="site-info"><h1 id="site-title">jpruby的blog</h1><div id="site-subtitle"><span id="subtitle"></span></div></div><div id="scroll-down"><i class="fas fa-angle-down scroll-down-effects"></i></div></header><main class="layout" id="content-inner"><div class="recent-posts" id="recent-posts"><div class="recent-post-item"><div class="post_cover left"><a href="/post/9016b35c.html" title=" 解决@ResuestBody中的 JSON 自动转化非 boolean 为 boolean 值"><img class="post_bg" src="/images/fileImage/top1.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt=" 解决@ResuestBody中的 JSON 自动转化非 boolean 为 boolean 值"></a></div><div class="recent-post-info"><a class="article-title" href="/post/9016b35c.html" title=" 解决@ResuestBody中的 JSON 自动转化非 boolean 为 boolean 值"> 解决@ResuestBody中的 JSON 自动转化非 boolean 为 boolean 值</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">Created</span><time datetime="2019-12-17T03:39:58.000Z" title="Created 2019-12-17 11:39:58">2019-12-17</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/SpringBoot/">SpringBoot</a></span></div><div class="content">
+
+
+问题出现当我们在 SpringBoot 中写 API 的时候，通常我们会使用@RequestBody注解一个参数将这个对象标记之后，然后我们在请求头使用application/json调用这个 API，传入 JSON 的 body 体，就可以自动的将我们的 JSON 转化成 JAVA 对象。但是，当我使用的 JAVA 对象中有个 Boolean 的字段的时候，我的 JSON 的 body 对这个对象传数值、”True”等等其他值得时候，往往会被默认转成相应的 true 或者 false。例如传入{“able”:0}的时候，我的对象中的 able 字段就是 false。但是我不想要这个功能，我希望接口调用者传的类型都是 Boolean 类型。
+Debug 源码首先你要知道，在 SpringBoot 或者 SpringMVC 中对于request 和 response 的处理是使用的消息转换器处理的。所以我在 debug 源码的时候发现，SpringBoot 使用MappingJackson2HttpMessageConverter处理 JSON 转化成对象，然后实际的转化方法Map ...</div></div></div><div class="recent-post-item"><div class="post_cover right"><a href="/post/b3e20ead.html" title="如何在 SpringCloud 微服务项目中一键部署 docker 启动"><img class="post_bg" src="/images/fileImage/top1.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="如何在 SpringCloud 微服务项目中一键部署 docker 启动"></a></div><div class="recent-post-info"><a class="article-title" href="/post/b3e20ead.html" title="如何在 SpringCloud 微服务项目中一键部署 docker 启动">如何在 SpringCloud 微服务项目中一键部署 docker 启动</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">Created</span><time datetime="2019-12-11T09:26:46.000Z" title="Created 2019-12-11 17:26:46">2019-12-11</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/SpringCloud/">SpringCloud</a></span></div><div class="content">
+
+
+如何用 docker 一键启动 SpringCloud 微服务？为什么要使用 docker 启动我们的微服务？原始传统的部署方式为我们带来了太多问题，比如当你的服务在测试环境正运行的正常，但是部署到生产环境就会出现一大堆未知问题，你查了好久，debug 代码之后发现，仅仅是一个环境变量没有设置正确，导致产生了目前这么一大串问题，浪费了你的时间，拖延了项目上线的时间，甚至产生了严重的生产事故。这个时候，我们就需要一个机制来保证我们的代码在部署到本地、测试以及生产的时候，我们的代码不会受到环境不一致的影响而导致我们部署失败！
+还有就是我们可以使用 docker 打包镜像然后使用 docker-compose 编排容器一键启动，让运维自动化，极大的节省我们的工作时间。
+在 Spring-Cloud 微服务项目中如何使用 DOCKER？首先我们需要将我们的每一个服务打包成镜像例如我的 Scaffold-Cloud 项目中的 eureka 服务的 pom 文件(点击链接跳转到 github 以下代码行)如下：
+1234567891011121314151617181920212223242 ...</div></div></div><div class="recent-post-item"><div class="post_cover left"><a href="/post/f7f71700.html" title="Write a blog in English"><img class="post_bg" src="/images/fileImage/top1.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Write a blog in English"></a></div><div class="recent-post-info"><a class="article-title" href="/post/f7f71700.html" title="Write a blog in English">Write a blog in English</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">Created</span><time datetime="2019-11-05T13:55:46.000Z" title="Created 2019-11-05 21:55:46">2019-11-05</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/English-study/">English study</a></span></div><div class="content">Improve my spoken English now, and written, listenIt’s my third week in ThoughtWorks. And today afternoon, Sam who worked in REA and on business trip here made a session. Obviously, in English. I didn’t understand most contents. Almost all of the session for me is difficully. Except English, I also cannot understand some abbreviations and I didn’t used the services and tools which he refered.  
+Tomorrow, I’ll show a card to customers which I paired with Benqing. To tell them what we did and what ...</div></div></div><div class="recent-post-item"><div class="post_cover right"><a href="/post/9cfc71b8.html" title="Scaffold-Cloud —— SpringCloud微服务架构实践"><img class="post_bg" src="/images/fileImage/top1.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Scaffold-Cloud —— SpringCloud微服务架构实践"></a></div><div class="recent-post-info"><a class="article-title" href="/post/9cfc71b8.html" title="Scaffold-Cloud —— SpringCloud微服务架构实践">Scaffold-Cloud —— SpringCloud微服务架构实践</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">Created</span><time datetime="2019-10-25T05:42:24.000Z" title="Created 2019-10-25 13:42:24">2019-10-25</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/SpringCloud/">SpringCloud</a></span></div><div class="content">Scaffold-Cloud: SpringCloud微服务脚手架 [幕布](https://mubu.com/doc/6NZlNw3DIw)
+Scaffold-Cloud 是一个适用于开发者学习的 Spring-Cloud 微服务项目脚手架。项目期望集成大部分目前互联网公司使用的主流的Spring-Cloud微服务相关工具和服务。并结合一些实际的业务增加一些其他功能，如：分布式事务、定时任务、消息队列、日志分析等等，然后加入 CI/CD 并引入 docker 部署。
+
+Scaffold-Cloud 基于 SpringCloud Netflix 全家桶进行微服务项目的构建，所以在这之前，使用 Scaffold-Cloud 需要先了解下 SpringCloud 以及 Netflix 工具全家桶。
+
+Sorry, NetFlix is not available in your country yet.
+
+
+Spring Cloud 介绍从单体应用到微服务在早期的企业中，项目基本上都是单体应用，将一个网站部署在一台单独的服务器上对用户提供服务。但是这样的服务最大的缺点就是，当服务器断电或者 ...</div></div></div><div class="recent-post-item"><div class="post_cover left"><a href="/post/2b1638b7.html" title="The second day on the job in ThoughtWorks"><img class="post_bg" src="/images/fileImage/top1.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="The second day on the job in ThoughtWorks"></a></div><div class="recent-post-info"><a class="article-title" href="/post/2b1638b7.html" title="The second day on the job in ThoughtWorks">The second day on the job in ThoughtWorks</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">Created</span><time datetime="2019-10-22T12:41:42.000Z" title="Created 2019-10-22 20:41:42">2019-10-22</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/%E7%A8%8B%E5%BA%8F%E4%BA%BA%E7%94%9F/">程序人生</a></span></div><div class="content">
+
+
+来到了一个我曾经羡慕的公司大学毕业之后，我去了杭州，同花顺，一个说起来还是某行业顶尖的服务提供商，算是很有名的大公司吧，但是却是996。甚至不止996，我曾经一段时间连着每天2、3点下班。每当我看到一个去了TW的大学同学的朋友圈之后，我承认我酸了。
+
+上图就是在TW的同学，出差去泰国时候的朋友圈。我当时就在想，难道大学毕业之后去一个“奋斗比”公司，真的就比在一个“养老型”公司技术提升的就快么？后来我仔细想了下，如果真的是一个好学的人，在一个轻松的公司，照样每天下班后可以学习，而如果在一个业务繁重的公司中的话，也许每天因为敲业务代码，学习、看书的时间都没有了，更何况出去玩？
+所以，我很羡慕去TW工作的，尤其是，这算是为数不多的在西安的比较好点儿的公司了。
+然而也许是命运看到了我的愿望，两年后的昨天，我入职了ThoughtWorks。
+入职感受第一天入职的时候，感觉公司好小好拥挤（不过后来知道是在同一层楼的三幢楼都有办公区域），而且好吵。然后工作常用语言是英语，想了想自己的英语水平，瞬间就怂了。第一天就乖乖的找个每人的角落，配置下电脑，办理一下入职流程。
+今天是我入职的第二天，我被带 ...</div></div></div><div class="recent-post-item"><div class="post_cover right"><a href="/post/ac4ab9dd.html" title="我项目中使用的分布式事务：LCN"><img class="post_bg" src="/images/fileImage/top1.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="我项目中使用的分布式事务：LCN"></a></div><div class="recent-post-info"><a class="article-title" href="/post/ac4ab9dd.html" title="我项目中使用的分布式事务：LCN">我项目中使用的分布式事务：LCN</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">Created</span><time datetime="2019-10-20T03:14:44.000Z" title="Created 2019-10-20 11:14:44">2019-10-20</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/%E5%88%86%E5%B8%83%E5%BC%8F/">分布式</a><i class="fas fa-angle-right article-meta-link"></i><a class="article-meta__categories" href="/categories/%E5%88%86%E5%B8%83%E5%BC%8F/%E5%88%86%E5%B8%83%E5%BC%8F%E4%BA%8B%E5%8A%A1/">分布式事务</a></span></div><div class="content">
+其他关于分布式事务的总结整理
+
+
+
+
+
+背景由于公司项目是使用dubbo进行开发的分布式服务，所以项目中有很多涉及到分布式事务问题的场景。比如有两个模块：用户模块和账户资金模块。有一个场景是用户被邀请成为系统的新用户，需要先初始化用户信息，然后再去账户资金模块初始化用户账户信息。两个不同的模块为两个不同的RPC服务，分别被调用然后插入数据，这时候如果账户资金插入失败，不加入分布式事务的话用户直接初始化成功。我们希望这种情况下用户插入的信息被回滚，所以需要引入分布式事务来进行业务处理。
+使用的框架经过调研，我们发现TX-LCN框架比较适合我们的业务场景，我们打算引入并使用LCN事务模式来进行服务中的分布式事务的业务处理。关于LCN、TCC、TXC几种事务模式的区别在下面整理。
+在官网下载对应的服务，并引入项目或者单独启动：
+
+引入依赖：
+12345678910&lt;dependency&gt;    &lt;groupId&gt;com.codingapi&lt;/groupId&gt;    &lt;artifactId&gt;transaction-dubbo&lt;/artif ...</div></div></div><div class="recent-post-item"><div class="post_cover left"><a href="/post/1339e588.html" title="其实我不太想离开这里"><img class="post_bg" src="/images/fileImage/top1.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="其实我不太想离开这里"></a></div><div class="recent-post-info"><a class="article-title" href="/post/1339e588.html" title="其实我不太想离开这里">其实我不太想离开这里</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">Created</span><time datetime="2019-09-09T14:01:04.000Z" title="Created 2019-09-09 22:01:04">2019-09-09</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/%E7%A8%8B%E5%BA%8F%E4%BA%BA%E7%94%9F/">程序人生</a></span></div><div class="content">
+
+
+
+序我要离开了。离开杭州，离开这个生活了快三年的地儿。放弃要去一线大公司的欲望，放弃年薪百万的梦想，放弃温柔可爱的南方姑娘，放弃我毕业之前一直向往的自由和远方… … 最让我难受的，在杭州两年认识的几个朋友，也许以后再难见上一面。还有，回到了家乡，我是否就此过上一个安逸的生活，还能否保持目前的这份斗志。杭州被程序员论坛称为“奋斗逼之都”，源于马老师的福报，我虽不喜欢这种996的工作节奏，但是离开这里，真的要放弃很多。
+辞职2019年8月21日，在被称为互联网寒冬的这年，我辞职了。因为这一年以来，公司的经营状况出了很大的问题，8月，线上服务器关闭了，这意味着理财业务此时已经完全停止，公司金融部门用仅剩的海外贷款业务维持着最后一线生机。这种时刻，但凡是觉得自己在离开之后能够找到合适工作的人，都不会想要再继续再公司呆下去。我就是其中之一，所以我向老大说，我想走了！
+后来，我们一起去吃了散伙饭，又是火锅，每次都是。为什么说“每次”呢？因为在我之前，还有5个人。我想我也不会是最后一个吧。
+准备事实上半年以来我都在使用空闲时间学习、刷算法题、写博客、点亮GitHub绿点以期望自己在之后找工作能 ...</div></div></div><div class="recent-post-item"><div class="post_cover right"><a href="/post/19c6e00c.html" title="并发编程学习(七)：Fork/Join框架原理及demo"><img class="post_bg" src="/images/fileImage/top1.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="并发编程学习(七)：Fork/Join框架原理及demo"></a></div><div class="recent-post-info"><a class="article-title" href="/post/19c6e00c.html" title="并发编程学习(七)：Fork/Join框架原理及demo">并发编程学习(七)：Fork/Join框架原理及demo</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">Created</span><time datetime="2019-08-14T08:48:56.000Z" title="Created 2019-08-14 16:48:56">2019-08-14</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/Java%E5%9F%BA%E7%A1%80/">Java基础</a><i class="fas fa-angle-right article-meta-link"></i><a class="article-meta__categories" href="/categories/Java%E5%9F%BA%E7%A1%80/%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B/">并发编程</a></span></div><div class="content">
+
+
+概念Fork&#x2F;Join框架是jdk1.7引入的一个基于“分治”思想的多线程框架。它的功能是将一个大任务切分(fork)成多个相同逻辑的小任务，分而治之，当子任务全都执行完成之后，将结果合并(join)起来，最终成为整体任务的执行结果。原理可以抽象成下图表示：
+
+Fork&#x2F;Join相关代码原理及思想Fork&#x2F;Join执行步骤
+进行任务分割：将任务分割成小任务，然后这个小任务有可能还需要继续分割，直到足够小。
+
+执行并合并结果：分割的子任务分别放在双端队列里，然后几个启动线程分别从双端队列里获取任务执行。子任务执行完的结果都统一放在一个队列里，启动一个线程从队列里拿数据，然后合并这些数据。
+
+
+Fork&#x2F;Join使用两个类完成以上步骤：
+
+ForkJoinTask：
+Fork&#x2F;Join提供了两个子类：RecursiveAction：用于没有返回结果的任务；RecursiveTask ：用于有返回结果的任务
+
+
+ForkJoinPool ：public class ForkJoinPool extends AbstractExecuto ...</div></div></div><div class="recent-post-item"><div class="post_cover left"><a href="/post/343686fd.html" title="【设计模式】设计模式基本思想以及23种模式总结整理"><img class="post_bg" src="/images/fileImage/top1.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="【设计模式】设计模式基本思想以及23种模式总结整理"></a></div><div class="recent-post-info"><a class="article-title" href="/post/343686fd.html" title="【设计模式】设计模式基本思想以及23种模式总结整理">【设计模式】设计模式基本思想以及23种模式总结整理</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">Created</span><time datetime="2019-08-12T03:47:54.000Z" title="Created 2019-08-12 11:47:54">2019-08-12</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/Java%E5%9F%BA%E7%A1%80/">Java基础</a><i class="fas fa-angle-right article-meta-link"></i><a class="article-meta__categories" href="/categories/Java%E5%9F%BA%E7%A1%80/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/">设计模式</a></span></div><div class="content">
+
+
+设计模式主要思想设计模式是在长期应用开发过程中，众多开发者总结归纳出来的程序架构与设计思想。是经过实践证明的，可在实际背景下使用的一系列程序设计方案。设计模式产生的根本目的就是为了解决开发过程中重复的代码编写，以及让程序更易扩展复用。
+设计模式的原则
+单一职责：每个类都应该实现单一的功能，否则应该将类进行拆分
+里氏替换：即继承复用&#x2F;合成复用。尽量使用合成&#x2F;聚合的方式而不是继承。任何父类出现的地方，子类都可以出现。派生类可以在基类的基础上扩展自己的功能实现。是对“开闭原则”的一个补充。在里氏替换原则中，尽量不要对父类进行重载或者重写，因为父类代表一个定义好的结构，通过规范好的接口与外界进行交互，子类不应该随意破坏它，而是对其进行扩展。
+依赖倒置：“开闭原则”的基础。即面向接口编程。依赖于抽象而不是依赖于具体的实现，编程时遇到具体的类时，不与具体的类交互，而与抽象接口进行交互。便于增加新的具体类的时候代码可以复用。
+接口隔离：每个接口不应该存在子类用不到却必须实现的方法，否则就应该将接口拆分，将职责单一化。
+最少知道：即迪米特法则。一个类对于自己依赖的类知道的越少 ...</div></div></div><div class="recent-post-item"><div class="post_cover right"><a href="/post/cd3a834.html" title="Leetcode - 52. N皇后 II 回溯算法求解"><img class="post_bg" src="/images/fileImage/top1.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Leetcode - 52. N皇后 II 回溯算法求解"></a></div><div class="recent-post-info"><a class="article-title" href="/post/cd3a834.html" title="Leetcode - 52. N皇后 II 回溯算法求解">Leetcode - 52. N皇后 II 回溯算法求解</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">Created</span><time datetime="2019-08-09T10:19:50.000Z" title="Created 2019-08-09 18:19:50">2019-08-09</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/">数据结构与算法</a><i class="fas fa-angle-right article-meta-link"></i><a class="article-meta__categories" href="/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/%E7%AE%97%E6%B3%95%E9%A2%98%E8%A7%A3/">算法题解</a></span></div><div class="content">N皇后问题 - leetcoden 皇后问题研究的是如何将 n 个皇后放置在 n×n 的棋盘上，并且使皇后彼此之间不能相互攻击。上图为 8 皇后问题的一种解法。给定一个整数 n，返回 n 皇后不同的解决方案的数量。
+示例：
+输入: 4输出: 2解释: 4 皇后问题存在如下两个不同的解法。
+
+12345678910[[&quot;.Q..&quot;,  // 解法 1&quot;...Q&quot;,&quot;Q...&quot;,&quot;..Q.&quot;],[&quot;..Q.&quot;,  // 解法 2&quot;Q...&quot;,&quot;...Q&quot;,&quot;.Q..&quot;]]
+
+
+
+
+解题思路：使用回溯算法，深度优先搜索，进行遍历查询深度优先搜索的条件是有能够判断棋盘是否能落子的依据。
+我这边使用一个长度为N的数组存储第J列是否有棋子，使用两个N*2-1长度的数组分别存储左对角线和右对角线是否有棋子。
+对于左右对角线来说，左对角线的每一个位置i与j的和都相同，右对角线的每一个位置的i与j的差都相同，所以可以用来判断某个位置的斜线上是否存 ...</div></div></div><nav id="pagination"><div class="pagination"><a class="extend prev" rel="prev" href="/"><i class="fas fa-chevron-left fa-fw"></i></a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/#content-inner">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/7/#content-inner">7</a><a class="extend next" rel="next" href="/page/3/#content-inner"><i class="fas fa-chevron-right fa-fw"></i></a></div></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="/images/favicon.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">jpruby</div><div class="author-info__description">宁静致远</div></div><div class="card-info-data is-center"><div class="card-info-data-item"><a href="/archives/"><div class="headline">Articles</div><div class="length-num">61</div></a></div><div class="card-info-data-item"><a href="/tags/"><div class="headline">Tags</div><div class="length-num">77</div></a></div><div class="card-info-data-item"><a href="/categories/"><div class="headline">Categories</div><div class="length-num">23</div></a></div></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/xxxxxx"><i class="fab fa-github"></i><span>Follow Me</span></a></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>Announcement</span></div><div class="announcement_content">This is my Blog</div></div><div class="sticky_layout"><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>Recent Post</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/post/891bfe8a.html" title="编写自定义的 SpringBoot starter 实现自动装配"><img src="/images/fileImage/top1.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="编写自定义的 SpringBoot starter 实现自动装配"/></a><div class="content"><a class="title" href="/post/891bfe8a.html" title="编写自定义的 SpringBoot starter 实现自动装配">编写自定义的 SpringBoot starter 实现自动装配</a><time datetime="2021-07-30T08:47:15.000Z" title="Created 2021-07-30 16:47:15">2021-07-30</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/post/c7f9efd1.html" title="我的无奈的来源，正是他"><img src="/images/fileImage/top1.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="我的无奈的来源，正是他"/></a><div class="content"><a class="title" href="/post/c7f9efd1.html" title="我的无奈的来源，正是他">我的无奈的来源，正是他</a><time datetime="2021-07-26T12:06:19.000Z" title="Created 2021-07-26 20:06:19">2021-07-26</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/post/1e5ae654.html" title="写博客有什么用？"><img src="/images/fileImage/top1.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="写博客有什么用？"/></a><div class="content"><a class="title" href="/post/1e5ae654.html" title="写博客有什么用？">写博客有什么用？</a><time datetime="2021-07-21T15:11:21.000Z" title="Created 2021-07-21 23:11:21">2021-07-21</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/post/bb2f6bb7.html" title="为什么并不是所有人都有自由意志？"><img src="/images/fileImage/top1.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="为什么并不是所有人都有自由意志？"/></a><div class="content"><a class="title" href="/post/bb2f6bb7.html" title="为什么并不是所有人都有自由意志？">为什么并不是所有人都有自由意志？</a><time datetime="2021-06-20T06:41:15.000Z" title="Created 2021-06-20 14:41:15">2021-06-20</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/post/b2405a89.html" title="由 SpringBoot 升级到 2.4.2 引发的 Jackson 的 JsonFormat 问题排查"><img src="/images/fileImage/top1.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="由 SpringBoot 升级到 2.4.2 引发的 Jackson 的 JsonFormat 问题排查"/></a><div class="content"><a class="title" href="/post/b2405a89.html" title="由 SpringBoot 升级到 2.4.2 引发的 Jackson 的 JsonFormat 问题排查">由 SpringBoot 升级到 2.4.2 引发的 Jackson 的 JsonFormat 问题排查</a><time datetime="2021-01-20T11:37:43.000Z" title="Created 2021-01-20 19:37:43">2021-01-20</time></div></div></div></div><div class="card-widget card-categories"><div class="item-headline">
+            <i class="fas fa-folder-open"></i>
+            <span>Categories</span>
+            <a class="card-more-btn" href="/categories/" title="More">
+    <i class="fas fa-angle-right"></i></a>
+            </div>
+            <ul class="card-category-list" id="aside-cat-list">
+            <li class="card-category-list-item "><a class="card-category-list-link" href="/categories/AWS/"><span class="card-category-list-name">AWS</span><span class="card-category-list-count">1</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/English-study/"><span class="card-category-list-name">English study</span><span class="card-category-list-count">1</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/Git/"><span class="card-category-list-name">Git</span><span class="card-category-list-count">1</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/Java%E5%9F%BA%E7%A1%80/"><span class="card-category-list-name">Java基础</span><span class="card-category-list-count">16</span></a><ul class="card-category-list child"><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/Java%E5%9F%BA%E7%A1%80/%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B/"><span class="card-category-list-name">并发编程</span><span class="card-category-list-count">9</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/Java%E5%9F%BA%E7%A1%80/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/"><span class="card-category-list-name">设计模式</span><span class="card-category-list-count">3</span></a></li></ul></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/Junit5/"><span class="card-category-list-name">Junit5</span><span class="card-category-list-count">1</span></a><ul class="card-category-list child"><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/Junit5/Unit-Test/"><span class="card-category-list-name">Unit Test</span><span class="card-category-list-count">1</span></a></li></ul></li>
+            </ul></div><div class="card-widget card-tags"><div class="item-headline"><i class="fas fa-tags"></i><span>Tags</span></div><div class="card-tag-cloud"><a href="/tags/AQS/" style="font-size: 1.2em; color: #999da3">AQS</a> <a href="/tags/AWS/" style="font-size: 1.1em; color: #999">AWS</a> <a href="/tags/CountDownLatch/" style="font-size: 1.1em; color: #999">CountDownLatch</a> <a href="/tags/DateTimeFormatter/" style="font-size: 1.1em; color: #999">DateTimeFormatter</a> <a href="/tags/English-blogs/" style="font-size: 1.1em; color: #999">English blogs</a> <a href="/tags/English-study/" style="font-size: 1.1em; color: #999">English study</a> <a href="/tags/Exchanger/" style="font-size: 1.1em; color: #999">Exchanger</a> <a href="/tags/Fork-Join%E6%A1%86%E6%9E%B6/" style="font-size: 1.1em; color: #999">Fork/Join框架</a> <a href="/tags/ForkJoinPool/" style="font-size: 1.1em; color: #999">ForkJoinPool</a> <a href="/tags/Git/" style="font-size: 1.1em; color: #999">Git</a> <a href="/tags/IDEA/" style="font-size: 1.1em; color: #999">IDEA</a> <a href="/tags/JSON/" style="font-size: 1.1em; color: #999">JSON</a> <a href="/tags/Java-%E5%9F%BA%E7%A1%80/" style="font-size: 1.1em; color: #999">Java 基础</a> <a href="/tags/Java%E5%9F%BA%E7%A1%80/" style="font-size: 1.5em; color: #99a9bf">Java基础</a> <a href="/tags/JsonFormat/" style="font-size: 1.1em; color: #999">JsonFormat</a> <a href="/tags/Junit5/" style="font-size: 1.1em; color: #999">Junit5</a> <a href="/tags/RequestBody/" style="font-size: 1.1em; color: #999">RequestBody</a> <a href="/tags/Semaphore/" style="font-size: 1.1em; color: #999">Semaphore</a> <a href="/tags/Servlet/" style="font-size: 1.1em; color: #999">Servlet</a> <a href="/tags/Spring/" style="font-size: 1.2em; color: #999da3">Spring</a> <a href="/tags/SpringBoot/" style="font-size: 1.3em; color: #99a1ac">SpringBoot</a> <a href="/tags/SpringBoot-starter/" style="font-size: 1.1em; color: #999">SpringBoot starter</a> <a href="/tags/SpringCloud/" style="font-size: 1.2em; color: #999da3">SpringCloud</a> <a href="/tags/SpringMVC/" style="font-size: 1.2em; color: #999da3">SpringMVC</a> <a href="/tags/Synchronized/" style="font-size: 1.1em; color: #999">Synchronized</a> <a href="/tags/ThreadPoolExecutor/" style="font-size: 1.1em; color: #999">ThreadPoolExecutor</a> <a href="/tags/converter/" style="font-size: 1.1em; color: #999">converter</a> <a href="/tags/docker/" style="font-size: 1.1em; color: #999">docker</a> <a href="/tags/dubbo/" style="font-size: 1.2em; color: #999da3">dubbo</a> <a href="/tags/freemarker/" style="font-size: 1.1em; color: #999">freemarker</a> <a href="/tags/git/" style="font-size: 1.1em; color: #999">git</a> <a href="/tags/hexo/" style="font-size: 1.1em; color: #999">hexo</a> <a href="/tags/jackson/" style="font-size: 1.1em; color: #999">jackson</a> <a href="/tags/layui/" style="font-size: 1.1em; color: #999">layui</a> <a href="/tags/leetcode/" style="font-size: 1.4em; color: #99a5b6">leetcode</a> <a href="/tags/lenient/" style="font-size: 1.1em; color: #999">lenient</a> <a href="/tags/localstack/" style="font-size: 1.1em; color: #999">localstack</a> <a href="/tags/nodepad/" style="font-size: 1.1em; color: #999">nodepad++</a> <a href="/tags/session%E6%B1%A1%E6%9F%93/" style="font-size: 1.1em; color: #999">session污染</a> <a href="/tags/shell%E8%87%AA%E5%8A%A8%E5%8C%96%E6%B5%8B%E8%AF%95/" style="font-size: 1.1em; color: #999">shell自动化测试</a></div></div><div class="card-widget card-archives"><div class="item-headline"><i class="fas fa-archive"></i><span>Archives</span><a class="card-more-btn" href="/archives/" title="More">
+    <i class="fas fa-angle-right"></i></a></div><ul class="card-archive-list"><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2021/07/"><span class="card-archive-list-date">July 2021</span><span class="card-archive-list-count">3</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2021/06/"><span class="card-archive-list-date">June 2021</span><span class="card-archive-list-count">1</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2021/01/"><span class="card-archive-list-date">January 2021</span><span class="card-archive-list-count">2</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2020/12/"><span class="card-archive-list-date">December 2020</span><span class="card-archive-list-count">1</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2020/07/"><span class="card-archive-list-date">July 2020</span><span class="card-archive-list-count">1</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2020/01/"><span class="card-archive-list-date">January 2020</span><span class="card-archive-list-count">2</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2019/12/"><span class="card-archive-list-date">December 2019</span><span class="card-archive-list-count">2</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2019/11/"><span class="card-archive-list-date">November 2019</span><span class="card-archive-list-count">1</span></a></li></ul></div><div class="card-widget card-webinfo"><div class="item-headline"><i class="fas fa-chart-line"></i><span>Info</span></div><div class="webinfo"><div class="webinfo-item"><div class="item-name">Article :</div><div class="item-count">61</div></div><div class="webinfo-item"><div class="item-name">UV :</div><div class="item-count" id="busuanzi_value_site_uv"></div></div><div class="webinfo-item"><div class="item-name">PV :</div><div class="item-count" id="busuanzi_value_site_pv"></div></div><div class="webinfo-item"><div class="item-name">Last Push :</div><div class="item-count" id="last-push-date" data-lastPushDate="2022-03-16T17:01:34.372Z"></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2022 By jpruby</div><div class="framework-info"><span>Framework </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>Theme </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="darkmode" type="button" title="Toggle Between Light And Dark Mode"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="Toggle between single-column and double-column"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="Setting"><i class="fas fa-cog fa-spin"></i></button><button id="go-up" type="button" title="Back To Top"><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.umd.js"></script><div class="js-pjax"><script>function subtitleType () {
+  if (true) { 
+    window.typed = new Typed("#subtitle", {
+      strings: ["安安静静写博客"],
+      startDelay: 300,
+      typeSpeed: 150,
+      loop: false,
+      backSpeed: 50
+    })
+  } else {
+    document.getElementById("subtitle").innerHTML = '安安静静写博客'
   }
-</script>
+}
 
-        </div>
-          
-  
-  <div class="toggle sidebar-toggle">
-    <span class="toggle-line toggle-line-first"></span>
-    <span class="toggle-line toggle-line-middle"></span>
-    <span class="toggle-line toggle-line-last"></span>
-  </div>
-
-  <aside class="sidebar">
-    <div class="sidebar-inner">
-
-      <ul class="sidebar-nav motion-element">
-        <li class="sidebar-nav-toc">
-          Table of Contents
-        </li>
-        <li class="sidebar-nav-overview">
-          Overview
-        </li>
-      </ul>
-
-      <!--noindex-->
-      <div class="post-toc-wrap sidebar-panel">
-      </div>
-      <!--/noindex-->
-
-      <div class="site-overview-wrap sidebar-panel">
-        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-  <p class="site-author-name" itemprop="name">jpruby</p>
-  <div class="site-description" itemprop="description">宁静致远</div>
-</div>
-<div class="site-state-wrap motion-element">
-  <nav class="site-state">
-      <div class="site-state-item site-state-posts">
-          <a href="/archives/">
-        
-          <span class="site-state-item-count">61</span>
-          <span class="site-state-item-name">posts</span>
-        </a>
-      </div>
-      <div class="site-state-item site-state-categories">
-        <span class="site-state-item-count">23</span>
-        <span class="site-state-item-name">categories</span>
-      </div>
-      <div class="site-state-item site-state-tags">
-        <span class="site-state-item-count">77</span>
-        <span class="site-state-item-name">tags</span>
-      </div>
-  </nav>
-</div>
-
-
-
-      </div>
-
-    </div>
-  </aside>
-  <div id="sidebar-dimmer"></div>
-
-
-      </div>
-    </main>
-
-    <footer class="footer">
-      <div class="footer-inner">
-        
-
-        
-
-<div class="copyright">
-  
-  &copy; 
-  <span itemprop="copyrightYear">2022</span>
-  <span class="with-love">
-    <i class="fa fa-heart"></i>
-  </span>
-  <span class="author" itemprop="copyrightHolder">jpruby</span>
-</div>
-  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a>
-  </div>
-
-        
-
-
-
-
-
-
-
-
-      </div>
-    </footer>
-  </div>
-
-  
-  <script src="/lib/anime.min.js"></script>
-  <script src="/lib/velocity/velocity.min.js"></script>
-  <script src="/lib/velocity/velocity.ui.min.js"></script>
-
-<script src="/js/utils.js"></script>
-
-<script src="/js/motion.js"></script>
-
-
-<script src="/js/schemes/pisces.js"></script>
-
-
-<script src="/js/next-boot.js"></script>
-
-
-
-
-  
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  
-
-  
-
-</body>
-</html>
+if (true) {
+  if (typeof Typed === 'function') {
+    subtitleType()
+  } else {
+    getScript('https://cdn.jsdelivr.net/npm/typed.js/lib/typed.min.js').then(subtitleType)
+  }
+} else {
+  subtitleType()
+}</script></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
