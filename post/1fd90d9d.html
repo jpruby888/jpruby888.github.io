@@ -1,0 +1,226 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"><title>用标准方式升级Ubuntu内核并启用BBR | jpruby的blog</title><meta name="keywords" content="Linux,Ubuntu,VPS,BBR"><meta name="author" content="jpruby"><meta name="copyright" content="jpruby"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="Google 的 TCP BBR 拥塞控制算法能够有效地提高网速，根据实地测试，在部署了最新版内核并开启了 TCP BBR 的机器上网速甚至可以提升好几个数量级。从 4.9 开始，Linux 内核已经用上了该算法，但是不少 VPS 的内核甚至还停留在 4.4，更不要说开启 BBR 了。这篇文章就来讲一下，在 Ubuntu 上如何以标准的方式优雅地升级系统内核，并开启 BBR。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="用标准方式升级Ubuntu内核并启用BBR">
+<meta property="og:url" content="https://jpruby888.github.io/post/1fd90d9d.html">
+<meta property="og:site_name" content="jpruby的blog">
+<meta property="og:description" content="Google 的 TCP BBR 拥塞控制算法能够有效地提高网速，根据实地测试，在部署了最新版内核并开启了 TCP BBR 的机器上网速甚至可以提升好几个数量级。从 4.9 开始，Linux 内核已经用上了该算法，但是不少 VPS 的内核甚至还停留在 4.4，更不要说开启 BBR 了。这篇文章就来讲一下，在 Ubuntu 上如何以标准的方式优雅地升级系统内核，并开启 BBR。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://jpruby888.github.io/images/featureimages/2.jpg">
+<meta property="article:published_time" content="2019-02-02T09:09:57.000Z">
+<meta property="article:modified_time" content="2019-02-02T09:09:57.000Z">
+<meta property="article:author" content="jpruby">
+<meta property="article:tag" content="Linux">
+<meta property="article:tag" content="Ubuntu">
+<meta property="article:tag" content="VPS">
+<meta property="article:tag" content="BBR">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://jpruby888.github.io/images/featureimages/2.jpg"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://jpruby888.github.io/post/1fd90d9d"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"search.xml","languages":{"hits_empty":"找不到您查询的内容：${query}"}},
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '天',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery@2/dist/fjGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery@2/dist/fjGallery.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: true,
+  isAnchor: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '用标准方式升级Ubuntu内核并启用BBR',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2019-02-02 17:09:57'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><meta name="generator" content="Hexo 6.1.0"><link rel="alternate" href="/atom.xml" title="jpruby的blog" type="application/atom+xml">
+</head><body><div id="loading-box"><div class="loading-left-bg"></div><div class="loading-right-bg"></div><div class="spinner-box"><div class="configure-border-1"><div class="configure-core"></div></div><div class="configure-border-2"><div class="configure-core"></div></div><div class="loading-word">加载中...</div></div></div><div id="web_bg"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="/images/favicon.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data is-center"><div class="data-item"><a href="/archives/"><div class="headline">文章</div><div class="length-num">247</div></a></div><div class="data-item"><a href="/tags/"><div class="headline">标签</div><div class="length-num">220</div></a></div><div class="data-item"><a href="/categories/"><div class="headline">分类</div><div class="length-num">33</div></a></div></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/messageboard/"><i class="fa-fw fas fa-paper-plane"></i><span> 留言板</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('/images/featureimages/2.jpg')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">jpruby的blog</a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/messageboard/"><i class="fa-fw fas fa-paper-plane"></i><span> 留言板</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">用标准方式升级Ubuntu内核并启用BBR</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2019-02-02T09:09:57.000Z" title="发表于 2019-02-02 17:09:57">2019-02-02</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2019-02-02T09:09:57.000Z" title="更新于 2019-02-02 17:09:57">2019-02-02</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/Linux/">Linux</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="用标准方式升级Ubuntu内核并启用BBR"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><p>Google 的 TCP BBR 拥塞控制算法能够有效地提高网速，根据实地测试，在部署了最新版内核并开启了 TCP BBR 的机器上网速甚至可以提升好几个数量级。从 4.9 开始，Linux 内核已经用上了该算法，但是不少 VPS 的内核甚至还停留在 4.4，更不要说开启 BBR 了。这篇文章就来讲一下，在 Ubuntu 上如何以标准的方式优雅地升级系统内核，并开启 BBR。</p>
+<span id="more"></span>
+
+<h2 id="BBR"><a href="#BBR" class="headerlink" title="BBR"></a>BBR</h2><h3 id="BBR-简介"><a href="#BBR-简介" class="headerlink" title="BBR 简介"></a>BBR 简介</h3><blockquote>
+<p>参考来源: <a target="_blank" rel="noopener" href="https://zh.wikipedia.org/wiki/TCP%E6%8B%A5%E5%A1%9E%E6%8E%A7%E5%88%B6#TCP_BBR">TCP 拥塞控制 - 维基百科，自由的百科全书</a></p>
+</blockquote>
+<p>TCP BBR（Bottleneck Bandwidth and Round-trip propagation time）是由 Google 设计，于 2016 年发布的拥塞算法。该算法使用网络最近出站数据分组当时的最大带宽和往返时间来创建网络的显式模型。数据包传输的每个累积或选择性确认用于生成记录在数据包传输过程和确认返回期间的时间内所传送数据量的采样率。Google 在 YouTube 上应用该算法，将全球平均的 YouTube 网络吞吐量提高了 4%，在一些国家超过了 14%。BBR 之后移植入 Linux 内核 4.9 版本，并且对于 QUIC 可用。</p>
+<h3 id="监测-BBR-是否开启"><a href="#监测-BBR-是否开启" class="headerlink" title="监测 BBR 是否开启"></a>监测 BBR 是否开启</h3><p>在 VPS 上运行以下命令来返回可用的 TCP 拥塞控制算法。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sysctl net.ipv4.tcp_available_congestion_control</span><br></pre></td></tr></table></figure>
+
+<p>如果返回的内容中没有 bbr 字样，比如类似以下的内容，则不能开启。反之，则可以开启，直接跳到后文启用 BBR 部分即可。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">net.ipv4.tcp_available_congestion_control = reno cubic</span><br></pre></td></tr></table></figure>
+
+<p>在 VPS 上运行以下命令来返回现在正在使用的 TCP 拥塞控制算法。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sysctl net.ipv4.tcp_congestion_control</span><br></pre></td></tr></table></figure>
+
+<p>如果返回的内容中没有 bbr 字样，比如类似以下的内容，则表示未开启 BBR。反之，则表示你的 VPS 已经开启了 BBR，你已经大功告成了。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">net.ipv4.tcp_congestion_control = cubic</span><br></pre></td></tr></table></figure>
+
+<h2 id="升级内核"><a href="#升级内核" class="headerlink" title="升级内核"></a>升级内核</h2><h3 id="查看当前内核版本"><a href="#查看当前内核版本" class="headerlink" title="查看当前内核版本"></a>查看当前内核版本</h3><p>由于 BBR 只能在 4.9 以上的内核中开启，如果内核低于 4.9 版本，则需要升级内核，4.9 版本以上的就可以跳过这一步了。据我所知，国内云主机很多默认镜像还是 4.4 的内核。输入<code>uname -r</code>可以查看当前的内核版本。</p>
+<h3 id="通过-APT-升级内核"><a href="#通过-APT-升级内核" class="headerlink" title="通过 APT 升级内核"></a>通过 APT 升级内核</h3><p>很多开启 BBR 的一键脚本都是手动下载新内核并编译安装的，但是手动升级内核存在着安全隐患，而且无法及时得到更新。</p>
+<p>其实 Ubuntu 官方提供了升级最新内核的方式，那就是<code>linux-hwe-generic</code>软件包。Ubuntu 通过 apt 包管理工具提供了两个内核版本，一个是通用版本(General Availability&#x2F;GA)，即最稳定的版本；一个是硬件启用版本(Hardware Enablement&#x2F;HWE)，会跟随最新的内核更新。</p>
+<p>我们可以通过输入<code>apt search linux-generic</code>看到这两个软件包。其实那些内核版本旧的装的就是<code>linux-generic</code>这个最稳定版本。</p>
+<p>那么好了，这样就很明了了，我们就要安装<code>linux-generic-hwe</code>包即可，可以将 Ubuntu 升级为当前版本可用的最新稳定内核。Ubuntu 16.04 的包叫<code>linux-generic-hwe-16.04</code>，Ubuntu 18.04 的包叫<code>linux-generic-hwe-18.04</code>，可以以此类推。以 Ubuntu 16.04 为例，输入以下命令进行安装即可，重启后才会生效。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo apt install linux-generic-hwe-16.04 -y</span><br><span class="line">sudo reboot</span><br></pre></td></tr></table></figure>
+
+<p>重启后，我们可以再次输入<code>uname -r</code>查看一下内核版本，我们可以看到，此时我的 Ubuntu 16.04 已经是 4.15 版本的内核了。</p>
+<p>大家可能看到了还有一个叫做<code>linux-generic-hwe-16.04-edge</code>的包，那是做什么的呢？这个呢就相当于测试版吧，如果你想要使用更加新的内核，可以使用这个包。</p>
+<h2 id="启用-BBR"><a href="#启用-BBR" class="headerlink" title="启用 BBR"></a>启用 BBR</h2><h3 id="装载-BBR"><a href="#装载-BBR" class="headerlink" title="装载 BBR"></a>装载 BBR</h3><p>此时，虽然内核已经升级好了，但还没有正式装载 BBR 模块，还无法在可用拥塞算法中查到。运行以下命令装载 BBR。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo modprobe tcp_bbr</span><br><span class="line">echo &quot;tcp_bbr&quot; | sudo tee -a /etc/modules-load.d/modules.conf</span><br></pre></td></tr></table></figure>
+
+<p>此时，输入<code>sysctl net.ipv4.tcp_available_congestion_control</code>命令，就能看到 bbr 了。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">net.ipv4.tcp_available_congestion_control = reno cubic bbr</span><br></pre></td></tr></table></figure>
+
+<h3 id="正式启用-BBR"><a href="#正式启用-BBR" class="headerlink" title="正式启用 BBR"></a>正式启用 BBR</h3><p>执行以下命令，将 BBR 配置写入 sysctl.conf 文件，正式启用 BBR。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">echo &quot;net.core.default_qdisc=fq&quot; | sudo tee -a /etc/sysctl.conf</span><br><span class="line">echo &quot;net.ipv4.tcp_congestion_control=bbr&quot; | sudo tee -a /etc/sysctl.conf</span><br><span class="line">sudo sysctl -p</span><br></pre></td></tr></table></figure>
+
+<p>此时，BBR 已经启用完成，通过<code>sysctl net.ipv4.tcp_congestion_control</code>验证一下，可以看到现在使用的拥塞算法已经是 BBR 了，如图所示。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">net.ipv4.tcp_congestion_control = bbr</span><br></pre></td></tr></table></figure>
+
+<h2 id="后话"><a href="#后话" class="headerlink" title="后话"></a>后话</h2><p>至此，已经完成了 Ubuntu 系统的内核升级和 TCP_BBR 的开启，享受高速网络吧。关于内核提升，虽然编译内核升级的方式也是有效的，但是还是更加推荐通过 APT 的方式升级内核。这既是官方推荐的方式，也是不容易出现问题的方式，还能跟随更新，何乐而不为呢。</p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="mailto:undefined">jpruby</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="https://jpruby888.github.io/post/1fd90d9d.html">https://jpruby888.github.io/post/1fd90d9d.html</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://jpruby888.github.io" target="_blank">jpruby的blog</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/Linux/">Linux</a><a class="post-meta__tags" href="/tags/Ubuntu/">Ubuntu</a><a class="post-meta__tags" href="/tags/VPS/">VPS</a><a class="post-meta__tags" href="/tags/BBR/">BBR</a></div><div class="post_share"><div class="social-share" data-image="/images/featureimages/2.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/social-share.js/dist/js/social-share.min.js" defer></script></div></div><div class="post-reward"><div class="reward-button"><i class="fas fa-qrcode"></i> 打赏</div><div class="reward-main"><ul class="reward-all"><li class="reward-item"><a href="/img/wechat.png" target="_blank"><img class="post-qr-code-img" src="/img/wechat.png" alt="wechat"/></a><div class="post-qr-code-desc">wechat</div></li><li class="reward-item"><a href="/img/alipay.jpg" target="_blank"><img class="post-qr-code-img" src="/img/alipay.jpg" alt="alipay"/></a><div class="post-qr-code-desc">alipay</div></li></ul></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/post/2a6ece32.html"><img class="prev-cover" src="/images/featureimages/9.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">通过Docker快速部署FileBrowser 2.0</div></div></a></div><div class="next-post pull-right"><a href="/post/49e6adb5.html"><img class="next-cover" src="/images/featureimages/6.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">Linux自建KMS服务器</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><div><a href="/post/dba5d77e.html" title="体验 Windows 10 内置 Linux 子系统"><img class="cover" src="/images/featureimages/13.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2018-05-05</div><div class="title">体验 Windows 10 内置 Linux 子系统</div></div></a></div><div><a href="/post/53f11296.html" title="在Ubuntu 16.04搭建Minecraft服务器1.13"><img class="cover" src="/images/featureimages/9.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2018-08-05</div><div class="title">在Ubuntu 16.04搭建Minecraft服务器1.13</div></div></a></div><div><a href="/post/c6d80a7a.html" title="在Ubuntu 16.04中安装php7.2"><img class="cover" src="/images/featureimages/13.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2018-08-09</div><div class="title">在Ubuntu 16.04中安装php7.2</div></div></a></div><div><a href="/post/f2f88eec.html" title="Linux安装部署上线项目流程"><img class="cover" src="/images/featureimages/3.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2020-12-25</div><div class="title">Linux安装部署上线项目流程</div></div></a></div><div><a href="/post/4aa1535f.html" title="通过Docker部署acme.sh"><img class="cover" src="/images/featureimages/11.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2019-02-13</div><div class="title">通过Docker部署acme.sh</div></div></a></div><div><a href="/post/2a3cd76b.html" title="直接修改和替换Jar包中文件的几种方式"><img class="cover" src="/images/featureimages/13.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2020-05-18</div><div class="title">直接修改和替换Jar包中文件的几种方式</div></div></a></div></div></div><hr/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div></div><div class="comment-wrap"><div><div class="vcomment" id="vcomment"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="/images/favicon.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">jpruby</div><div class="author-info__description">宁静致远</div></div><div class="card-info-data is-center"><div class="card-info-data-item"><a href="/archives/"><div class="headline">文章</div><div class="length-num">247</div></a></div><div class="card-info-data-item"><a href="/tags/"><div class="headline">标签</div><div class="length-num">220</div></a></div><div class="card-info-data-item"><a href="/categories/"><div class="headline">分类</div><div class="length-num">33</div></a></div></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://gitee.com/jpruby"><i class="fab fa-github"></i><span>追随我吧</span></a></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">一个放笔记的地方，如果你喜欢请评论</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#BBR"><span class="toc-number">1.</span> <span class="toc-text">BBR</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#BBR-%E7%AE%80%E4%BB%8B"><span class="toc-number">1.1.</span> <span class="toc-text">BBR 简介</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%9B%91%E6%B5%8B-BBR-%E6%98%AF%E5%90%A6%E5%BC%80%E5%90%AF"><span class="toc-number">1.2.</span> <span class="toc-text">监测 BBR 是否开启</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8D%87%E7%BA%A7%E5%86%85%E6%A0%B8"><span class="toc-number">2.</span> <span class="toc-text">升级内核</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9F%A5%E7%9C%8B%E5%BD%93%E5%89%8D%E5%86%85%E6%A0%B8%E7%89%88%E6%9C%AC"><span class="toc-number">2.1.</span> <span class="toc-text">查看当前内核版本</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%80%9A%E8%BF%87-APT-%E5%8D%87%E7%BA%A7%E5%86%85%E6%A0%B8"><span class="toc-number">2.2.</span> <span class="toc-text">通过 APT 升级内核</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%90%AF%E7%94%A8-BBR"><span class="toc-number">3.</span> <span class="toc-text">启用 BBR</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%A3%85%E8%BD%BD-BBR"><span class="toc-number">3.1.</span> <span class="toc-text">装载 BBR</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%AD%A3%E5%BC%8F%E5%90%AF%E7%94%A8-BBR"><span class="toc-number">3.2.</span> <span class="toc-text">正式启用 BBR</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%90%8E%E8%AF%9D"><span class="toc-number">4.</span> <span class="toc-text">后话</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/post/a9c4edf1.html" title="反射工具包JOOR、Hutool与原生反射对比">反射工具包JOOR、Hutool与原生反射对比</a><time datetime="2021-08-16T02:34:45.000Z" title="发表于 2021-08-16 10:34:45">2021-08-16</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/post/d232be0e.html" title="使用CODEX为你的项目编制一套代码库目录/索引">使用CODEX为你的项目编制一套代码库目录/索引</a><time datetime="2021-08-16T02:33:53.000Z" title="发表于 2021-08-16 10:33:53">2021-08-16</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/post/9e3b75c0.html" title="screw 一颗螺丝钉的使命">screw 一颗螺丝钉的使命</a><time datetime="2021-08-16T02:32:21.000Z" title="发表于 2021-08-16 10:32:21">2021-08-16</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/post/1a3a1ad3.html" title="如何优化代码中的if-else/switch">如何优化代码中的if-else/switch</a><time datetime="2021-08-16T02:30:27.000Z" title="发表于 2021-08-16 10:30:27">2021-08-16</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/post/f3355887.html" title="ESB的体系结构">ESB的体系结构</a><time datetime="2021-08-16T02:28:40.000Z" title="发表于 2021-08-16 10:28:40">2021-08-16</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2021 - 2022 By jpruby</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div><div class="footer_custom_text">一看就会，一写就废？反复,重复,反反复复就能成功。<a target="_blank" rel="noopener" href="https://gitee.com/jpruby">My Gitee</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><a id="to_comment" href="#post-comment" title="直达评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">本地搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="is-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据库加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div><hr/><div id="local-search-results"></div></div></div><div id="search-mask"></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.umd.js"></script><script src="https://cdn.jsdelivr.net/npm/vanilla-lazyload/dist/lazyload.iife.min.js"></script><script src="/js/search/local-search.js"></script><script>var preloader = {
+  endLoading: () => {
+    document.body.style.overflow = 'auto';
+    document.getElementById('loading-box').classList.add("loaded")
+  },
+  initLoading: () => {
+    document.body.style.overflow = '';
+    document.getElementById('loading-box').classList.remove("loaded")
+
+  }
+}
+window.addEventListener('load',preloader.endLoading())</script><div class="js-pjax"><script>function loadValine () {
+  function initValine () {
+    const valine = new Valine(Object.assign({
+      el: '#vcomment',
+      appId: 'iJzt0X9OdhFCcdn4N0dJ86fY-gzGzoHsz',
+      appKey: '8vtaRafgQSvU5ntYgszJfRW5',
+      avatar: 'monsterid',
+      serverURLs: '',
+      emojiMaps: "",
+      path: window.location.pathname,
+      visitor: false
+    }, null))
+  }
+
+  if (typeof Valine === 'function') initValine() 
+  else getScript('https://cdn.jsdelivr.net/npm/valine/dist/Valine.min.js').then(initValine)
+}
+
+if ('Valine' === 'Valine' || !true) {
+  if (true) btf.loadComment(document.getElementById('vcomment'),loadValine)
+  else setTimeout(loadValine, 0)
+} else {
+  function loadOtherComment () {
+    loadValine()
+  }
+}</script></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>

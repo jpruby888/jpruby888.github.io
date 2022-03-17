@@ -1,0 +1,407 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"><title>Oracle SQLPLUS命令 | jpruby的blog</title><meta name="keywords" content="SQL"><meta name="author" content="jpruby"><meta name="copyright" content="jpruby"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="今天学习了 Oracle SQL*PLUS 的语句，就在这里总结一下。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Oracle SQLPLUS命令">
+<meta property="og:url" content="https://jpruby888.github.io/post/3c8387b6.html">
+<meta property="og:site_name" content="jpruby的blog">
+<meta property="og:description" content="今天学习了 Oracle SQL*PLUS 的语句，就在这里总结一下。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://jpruby888.github.io/images/featureimages/13.jpg">
+<meta property="article:published_time" content="2017-09-26T07:00:00.000Z">
+<meta property="article:modified_time" content="2017-09-26T07:00:00.000Z">
+<meta property="article:author" content="jpruby">
+<meta property="article:tag" content="数据库">
+<meta property="article:tag" content="SQL">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://jpruby888.github.io/images/featureimages/13.jpg"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://jpruby888.github.io/post/3c8387b6"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"search.xml","languages":{"hits_empty":"找不到您查询的内容：${query}"}},
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '天',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery@2/dist/fjGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery@2/dist/fjGallery.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: true,
+  isAnchor: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'Oracle SQLPLUS命令',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2017-09-26 15:00:00'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><meta name="generator" content="Hexo 6.1.0"><link rel="alternate" href="/atom.xml" title="jpruby的blog" type="application/atom+xml">
+</head><body><div id="loading-box"><div class="loading-left-bg"></div><div class="loading-right-bg"></div><div class="spinner-box"><div class="configure-border-1"><div class="configure-core"></div></div><div class="configure-border-2"><div class="configure-core"></div></div><div class="loading-word">加载中...</div></div></div><div id="web_bg"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="/images/favicon.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data is-center"><div class="data-item"><a href="/archives/"><div class="headline">文章</div><div class="length-num">247</div></a></div><div class="data-item"><a href="/tags/"><div class="headline">标签</div><div class="length-num">220</div></a></div><div class="data-item"><a href="/categories/"><div class="headline">分类</div><div class="length-num">33</div></a></div></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/messageboard/"><i class="fa-fw fas fa-paper-plane"></i><span> 留言板</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('/images/featureimages/13.jpg')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">jpruby的blog</a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/messageboard/"><i class="fa-fw fas fa-paper-plane"></i><span> 留言板</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">Oracle SQLPLUS命令</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2017-09-26T07:00:00.000Z" title="发表于 2017-09-26 15:00:00">2017-09-26</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2017-09-26T07:00:00.000Z" title="更新于 2017-09-26 15:00:00">2017-09-26</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/">数据库</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="Oracle SQLPLUS命令"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><p>今天学习了 Oracle SQL*PLUS 的语句，就在这里总结一下。</p>
+<span id="more"></span>
+
+<h2 id="官方的-HELP-INDEX-截图"><a href="#官方的-HELP-INDEX-截图" class="headerlink" title="官方的 HELP INDEX 截图"></a>官方的 HELP INDEX 截图</h2><p><img src="https://img.iszy.xyz/20190318220212.png"></p>
+<h2 id="语句总结"><a href="#语句总结" class="headerlink" title="语句总结"></a>语句总结</h2><table>
+<thead>
+<tr>
+<th align="center">SQL 语句</th>
+<th align="center">说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">@</td>
+<td align="center">运行指定脚本</td>
+</tr>
+<tr>
+<td align="center">@@</td>
+<td align="center">同@，运行 nest script 时使用</td>
+</tr>
+<tr>
+<td align="center">&#x2F;</td>
+<td align="center">执行最近脚本</td>
+</tr>
+<tr>
+<td align="center">Accept</td>
+<td align="center">接受用户输入行存储到替代变量中</td>
+</tr>
+<tr>
+<td align="center">Append</td>
+<td align="center">向当前 SQL 行追加文本</td>
+</tr>
+<tr>
+<td align="center">Archive log</td>
+<td align="center">查看和管理归档信息</td>
+</tr>
+<tr>
+<td align="center">attribute</td>
+<td align="center">设置 object 类型 column 属性</td>
+</tr>
+<tr>
+<td align="center">break</td>
+<td align="center">分开重复列</td>
+</tr>
+<tr>
+<td align="center">Btitle</td>
+<td align="center">设置 report 尾</td>
+</tr>
+<tr>
+<td align="center">change</td>
+<td align="center">修改错误代码</td>
+</tr>
+<tr>
+<td align="center">clear</td>
+<td align="center">清楚</td>
+</tr>
+<tr>
+<td align="center">column</td>
+<td align="center">命令集</td>
+</tr>
+<tr>
+<td align="center">Compute</td>
+<td align="center">运算查询结果集</td>
+</tr>
+<tr>
+<td align="center">Connect</td>
+<td align="center">会话中切换连接命令</td>
+</tr>
+<tr>
+<td align="center">Copy</td>
+<td align="center">复制</td>
+</tr>
+<tr>
+<td align="center">Define</td>
+<td align="center">定义变量</td>
+</tr>
+<tr>
+<td align="center">Del</td>
+<td align="center">删除 SQL BUFFER 指定行</td>
+</tr>
+<tr>
+<td align="center">Describe</td>
+<td align="center">描述表、视图的列以及函数、程序的说明</td>
+</tr>
+<tr>
+<td align="center">Disconnect</td>
+<td align="center">断开连接</td>
+</tr>
+<tr>
+<td align="center">Edit</td>
+<td align="center">创建或编辑 sql 脚本</td>
+</tr>
+<tr>
+<td align="center">Get</td>
+<td align="center">将 sql 脚本从文件 load into sql buffer</td>
+</tr>
+<tr>
+<td align="center">Help</td>
+<td align="center">帮助</td>
+</tr>
+<tr>
+<td align="center">Host</td>
+<td align="center">sql 会话模式利用 host 命令调用 cmd 命令</td>
+</tr>
+<tr>
+<td align="center">Input</td>
+<td align="center">追加新行 enter a new line</td>
+</tr>
+<tr>
+<td align="center">List</td>
+<td align="center">列出 SQL BUFFER 中 sql 语句</td>
+</tr>
+<tr>
+<td align="center">Password</td>
+<td align="center">修改 current user 密码</td>
+</tr>
+<tr>
+<td align="center">Pause</td>
+<td align="center">暂停</td>
+</tr>
+<tr>
+<td align="center">Print</td>
+<td align="center">打印变量</td>
+</tr>
+<tr>
+<td align="center">Prompt</td>
+<td align="center">向 screen 发送消息</td>
+</tr>
+<tr>
+<td align="center">Quit</td>
+<td align="center">用法同 exit</td>
+</tr>
+<tr>
+<td align="center">Recovery</td>
+<td align="center">恢复数据库等操作</td>
+</tr>
+<tr>
+<td align="center">Remark</td>
+<td align="center">单行注释</td>
+</tr>
+<tr>
+<td align="center">Repfooter</td>
+<td align="center">放置 report 头（见 ttitle）</td>
+</tr>
+<tr>
+<td align="center">Repheader</td>
+<td align="center">放置 report 角</td>
+</tr>
+<tr>
+<td align="center">Reserved words (SQL)</td>
+<td align="center">SQL 保留字</td>
+</tr>
+<tr>
+<td align="center">Reserved words (PL&#x2F;SQL)</td>
+<td align="center">PL&#x2F;SQL 保留字</td>
+</tr>
+<tr>
+<td align="center">Run</td>
+<td align="center">列出 sql buffer 内容同时执行该内容</td>
+</tr>
+<tr>
+<td align="center">Save</td>
+<td align="center">保存缓冲区内容</td>
+</tr>
+<tr>
+<td align="center">Set</td>
+<td align="center">设置</td>
+</tr>
+<tr>
+<td align="center">Show</td>
+<td align="center">显示变量或参数值</td>
+</tr>
+<tr>
+<td align="center">Shutdown</td>
+<td align="center">关闭数据库（DBA 用户执行）</td>
+</tr>
+<tr>
+<td align="center">Spool</td>
+<td align="center">将屏幕显示保存到文件</td>
+</tr>
+<tr>
+<td align="center">Sqlplus</td>
+<td align="center"></td>
+</tr>
+<tr>
+<td align="center">Start</td>
+<td align="center">恢复 set 变量值</td>
+</tr>
+<tr>
+<td align="center">Startup</td>
+<td align="center">启动数据库（DBA 用户执行）</td>
+</tr>
+<tr>
+<td align="center">Store</td>
+<td align="center">存储 set 变量值</td>
+</tr>
+<tr>
+<td align="center">Timing</td>
+<td align="center">计时器</td>
+</tr>
+<tr>
+<td align="center">Ttitle</td>
+<td align="center">设置 report 抬头</td>
+</tr>
+<tr>
+<td align="center">Undefined</td>
+<td align="center"></td>
+</tr>
+<tr>
+<td align="center">Variable</td>
+<td align="center">声明绑定变量供 PLSQL 块引用</td>
+</tr>
+<tr>
+<td align="center">Whenever oserror</td>
+<td align="center">执行命令中遇到系统异常</td>
+</tr>
+<tr>
+<td align="center">Whenerror sqlerror</td>
+<td align="center">执行命令中遇到 SQL 异常</td>
+</tr>
+<tr>
+<td align="center">Xquery</td>
+<td align="center">运行 xquery 语句</td>
+</tr>
+</tbody></table>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="mailto:undefined">jpruby</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="https://jpruby888.github.io/post/3c8387b6.html">https://jpruby888.github.io/post/3c8387b6.html</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://jpruby888.github.io" target="_blank">jpruby的blog</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/">数据库</a><a class="post-meta__tags" href="/tags/SQL/">SQL</a></div><div class="post_share"><div class="social-share" data-image="/images/featureimages/13.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/social-share.js/dist/js/social-share.min.js" defer></script></div></div><div class="post-reward"><div class="reward-button"><i class="fas fa-qrcode"></i> 打赏</div><div class="reward-main"><ul class="reward-all"><li class="reward-item"><a href="/img/wechat.png" target="_blank"><img class="post-qr-code-img" src="/img/wechat.png" alt="wechat"/></a><div class="post-qr-code-desc">wechat</div></li><li class="reward-item"><a href="/img/alipay.jpg" target="_blank"><img class="post-qr-code-img" src="/img/alipay.jpg" alt="alipay"/></a><div class="post-qr-code-desc">alipay</div></li></ul></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/post/ef5e5855.html"><img class="prev-cover" src="/images/featureimages/7.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">道格拉斯—普克法</div></div></a></div><div class="next-post pull-right"><a href="/post/a596ff0f.html"><img class="next-cover" src="/images/featureimages/13.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">最佳工作序列算法</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><div><a href="/post/acdd21d9.html" title="SQL Server数据库角色成员身份"><img class="cover" src="/images/featureimages/4.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2017-11-11</div><div class="title">SQL Server数据库角色成员身份</div></div></a></div><div><a href="/post/f38e6f1f.html" title="事务传播机制和事务隔离级别"><img class="cover" src="/images/featureimages/7.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2019-03-23</div><div class="title">事务传播机制和事务隔离级别</div></div></a></div><div><a href="/post/ac4ab9dd.html" title="我项目中使用的分布式事务：LCN"><img class="cover" src="/images/featureimages/4.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2019-10-20</div><div class="title">我项目中使用的分布式事务：LCN</div></div></a></div><div><a href="/post/389bc5ad.html" title="Oracle PL/SQL BREAK-ON排列实例"><img class="cover" src="/images/featureimages/0.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2017-12-05</div><div class="title">Oracle PL/SQL BREAK-ON排列实例</div></div></a></div><div><a href="/post/8122f1b7.html" title="Oracle PL/SQL while loop循环实例"><img class="cover" src="/images/featureimages/5.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2017-11-29</div><div class="title">Oracle PL/SQL while loop循环实例</div></div></a></div></div></div><hr/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div></div><div class="comment-wrap"><div><div class="vcomment" id="vcomment"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="/images/favicon.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">jpruby</div><div class="author-info__description">宁静致远</div></div><div class="card-info-data is-center"><div class="card-info-data-item"><a href="/archives/"><div class="headline">文章</div><div class="length-num">247</div></a></div><div class="card-info-data-item"><a href="/tags/"><div class="headline">标签</div><div class="length-num">220</div></a></div><div class="card-info-data-item"><a href="/categories/"><div class="headline">分类</div><div class="length-num">33</div></a></div></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://gitee.com/jpruby"><i class="fab fa-github"></i><span>追随我吧</span></a></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">一个放笔记的地方，如果你喜欢请评论</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%98%E6%96%B9%E7%9A%84-HELP-INDEX-%E6%88%AA%E5%9B%BE"><span class="toc-number">1.</span> <span class="toc-text">官方的 HELP INDEX 截图</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%AF%AD%E5%8F%A5%E6%80%BB%E7%BB%93"><span class="toc-number">2.</span> <span class="toc-text">语句总结</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/post/a9c4edf1.html" title="反射工具包JOOR、Hutool与原生反射对比">反射工具包JOOR、Hutool与原生反射对比</a><time datetime="2021-08-16T02:34:45.000Z" title="发表于 2021-08-16 10:34:45">2021-08-16</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/post/d232be0e.html" title="使用CODEX为你的项目编制一套代码库目录/索引">使用CODEX为你的项目编制一套代码库目录/索引</a><time datetime="2021-08-16T02:33:53.000Z" title="发表于 2021-08-16 10:33:53">2021-08-16</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/post/9e3b75c0.html" title="screw 一颗螺丝钉的使命">screw 一颗螺丝钉的使命</a><time datetime="2021-08-16T02:32:21.000Z" title="发表于 2021-08-16 10:32:21">2021-08-16</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/post/1a3a1ad3.html" title="如何优化代码中的if-else/switch">如何优化代码中的if-else/switch</a><time datetime="2021-08-16T02:30:27.000Z" title="发表于 2021-08-16 10:30:27">2021-08-16</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/post/f3355887.html" title="ESB的体系结构">ESB的体系结构</a><time datetime="2021-08-16T02:28:40.000Z" title="发表于 2021-08-16 10:28:40">2021-08-16</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2021 - 2022 By jpruby</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div><div class="footer_custom_text">一看就会，一写就废？反复,重复,反反复复就能成功。<a target="_blank" rel="noopener" href="https://gitee.com/jpruby">My Gitee</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><a id="to_comment" href="#post-comment" title="直达评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">本地搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="is-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据库加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div><hr/><div id="local-search-results"></div></div></div><div id="search-mask"></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.umd.js"></script><script src="https://cdn.jsdelivr.net/npm/vanilla-lazyload/dist/lazyload.iife.min.js"></script><script src="/js/search/local-search.js"></script><script>var preloader = {
+  endLoading: () => {
+    document.body.style.overflow = 'auto';
+    document.getElementById('loading-box').classList.add("loaded")
+  },
+  initLoading: () => {
+    document.body.style.overflow = '';
+    document.getElementById('loading-box').classList.remove("loaded")
+
+  }
+}
+window.addEventListener('load',preloader.endLoading())</script><div class="js-pjax"><script>function loadValine () {
+  function initValine () {
+    const valine = new Valine(Object.assign({
+      el: '#vcomment',
+      appId: 'iJzt0X9OdhFCcdn4N0dJ86fY-gzGzoHsz',
+      appKey: '8vtaRafgQSvU5ntYgszJfRW5',
+      avatar: 'monsterid',
+      serverURLs: '',
+      emojiMaps: "",
+      path: window.location.pathname,
+      visitor: false
+    }, null))
+  }
+
+  if (typeof Valine === 'function') initValine() 
+  else getScript('https://cdn.jsdelivr.net/npm/valine/dist/Valine.min.js').then(initValine)
+}
+
+if ('Valine' === 'Valine' || !true) {
+  if (true) btf.loadComment(document.getElementById('vcomment'),loadValine)
+  else setTimeout(loadValine, 0)
+} else {
+  function loadOtherComment () {
+    loadValine()
+  }
+}</script></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>

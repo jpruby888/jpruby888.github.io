@@ -1,0 +1,363 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"><title>Linux自建KMS服务器 | jpruby的blog</title><meta name="keywords" content="Windows,KMS,Office"><meta name="author" content="jpruby"><meta name="copyright" content="jpruby"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="今天来简单介绍一下如何自建 KMS 激活 Windows 以及 Office。不想自己部署的也可以直接跳到激活，我提供了自建的 KMS 地址，大家可以使用。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Linux自建KMS服务器">
+<meta property="og:url" content="https://jpruby888.github.io/post/49e6adb5.html">
+<meta property="og:site_name" content="jpruby的blog">
+<meta property="og:description" content="今天来简单介绍一下如何自建 KMS 激活 Windows 以及 Office。不想自己部署的也可以直接跳到激活，我提供了自建的 KMS 地址，大家可以使用。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://jpruby888.github.io/images/featureimages/6.jpg">
+<meta property="article:published_time" content="2019-01-11T08:36:00.000Z">
+<meta property="article:modified_time" content="2020-06-30T04:36:00.000Z">
+<meta property="article:author" content="jpruby">
+<meta property="article:tag" content="Windows">
+<meta property="article:tag" content="KMS">
+<meta property="article:tag" content="Office">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://jpruby888.github.io/images/featureimages/6.jpg"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://jpruby888.github.io/post/49e6adb5"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"search.xml","languages":{"hits_empty":"找不到您查询的内容：${query}"}},
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '天',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery@2/dist/fjGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery@2/dist/fjGallery.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: true,
+  isAnchor: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'Linux自建KMS服务器',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2020-06-30 12:36:00'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><meta name="generator" content="Hexo 6.1.0"><link rel="alternate" href="/atom.xml" title="jpruby的blog" type="application/atom+xml">
+</head><body><div id="loading-box"><div class="loading-left-bg"></div><div class="loading-right-bg"></div><div class="spinner-box"><div class="configure-border-1"><div class="configure-core"></div></div><div class="configure-border-2"><div class="configure-core"></div></div><div class="loading-word">加载中...</div></div></div><div id="web_bg"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="/images/favicon.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data is-center"><div class="data-item"><a href="/archives/"><div class="headline">文章</div><div class="length-num">247</div></a></div><div class="data-item"><a href="/tags/"><div class="headline">标签</div><div class="length-num">220</div></a></div><div class="data-item"><a href="/categories/"><div class="headline">分类</div><div class="length-num">33</div></a></div></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/messageboard/"><i class="fa-fw fas fa-paper-plane"></i><span> 留言板</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('/images/featureimages/6.jpg')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">jpruby的blog</a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/messageboard/"><i class="fa-fw fas fa-paper-plane"></i><span> 留言板</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">Linux自建KMS服务器</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2019-01-11T08:36:00.000Z" title="发表于 2019-01-11 16:36:00">2019-01-11</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2020-06-30T04:36:00.000Z" title="更新于 2020-06-30 12:36:00">2020-06-30</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E5%BA%94%E7%94%A8%E9%83%A8%E7%BD%B2/">应用部署</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="Linux自建KMS服务器"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><p>今天来简单介绍一下如何自建 KMS 激活 Windows 以及 Office。不想自己部署的也可以直接跳到<a href="#%E6%BF%80%E6%B4%BB">激活</a>，我提供了自建的 KMS 地址，大家可以使用。</p>
+<span id="more"></span>
+
+<h2 id="KMS-简介"><a href="#KMS-简介" class="headerlink" title="KMS 简介"></a>KMS 简介</h2><p>KMS 是一种专为中型和大型企业设计的 Microsoft 产品的激活方法。 在标准 SOHO 环境中，您在安装期间输入产品密钥，然后通过 Internet 激活产品。这是通过向<code>microsoft.com</code>上的服务器发送请求来完成的，然后该服务器授予或拒绝激活。</p>
+<p>通过输入称为通用批量许可证密钥（GVLK）的特殊密钥（又名“KMS 客户端密钥”），产品不再要求 Microsoft 服务器进行激活，而是通常驻留在公司内部网中的用户定义服务器（称为 KMS 服务器）。 Microsoft 仅将其 KMS 服务器提供给签署了所谓“选择合同”的公司。</p>
+<p>KMS 激活大家应该比较熟悉，网上的激活工具基本都是使用 KMS 激活的，激活的期限一般是 180 天。不过激活工具相当于开了一个 KMS 服务器运行在你的电脑上，每过 180 天，系统会自动连接激活服务器进行激活，所以只要 KMS 服务器还在就不用担心失效的问题。如果 KMS 不在了，换一个即可，180 天总能找到一个，或者像本文这样自建一个就不怕失效了。</p>
+<h2 id="vlmscd-介绍和安装"><a href="#vlmscd-介绍和安装" class="headerlink" title="vlmscd 介绍和安装"></a>vlmscd 介绍和安装</h2><p>vlmcsd 是完全与 Microsoft 兼容的 KMS 服务器，是 KMS 服务器的一个独立开源实现，可供所有人使用。可为客户端提供产品激活服务，是 Microsoft KMS 服务器的直接替代品。可以在 Windows 和 Linux 上运行。可以运行在大多数嵌入式系统上，如路由器，NAS，移动电话，平板电脑，电视，机顶盒等。相对于 Microsoft KMS 服务器仅激活客户已支付的产品，vlmcsd 从不拒绝激活。</p>
+<p>虽然 vlmcsd 既不需要激活密钥也不需要付费，但它并不是宣扬盗版 Windows。 其目的是确保合法副本的所有者可以无限制地使用他们的软件。例如，如果购买新计算机或主板，由于硬件更改，密钥将无法从 Microsoft 服务器激活，这种情况下可以通过使用 vlmcsd 激活来继续使用。</p>
+<p>项目地址：<a target="_blank" rel="noopener" href="https://github.com/Wind4/vlmcsd">Wind4&#x2F;vlmcsd</a></p>
+<h3 id="安装-Docker"><a href="#安装-Docker" class="headerlink" title="安装 Docker"></a>安装 Docker</h3><p>为了避免系统环境不同引发未知问题，在这里使用 Docker。</p>
+<p>Ubuntu 安装脚本：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">wget -qO- https://get.docker.com/ | sh</span><br></pre></td></tr></table></figure>
+
+<p>CentOS 安装脚本：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">curl -fsSL https://get.docker.com -o get-docker.sh</span><br><span class="line">sudo sh get-docker.sh</span><br></pre></td></tr></table></figure>
+
+<h3 id="安装-vlmscd"><a href="#安装-vlmscd" class="headerlink" title="安装 vlmscd"></a>安装 vlmscd</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">docker pull mikolatero/vlmcsd</span><br><span class="line">docker run -d -p 1688:1688 --restart=always --name=<span class="string">&quot;vlmcsd&quot;</span> mikolatero/vlmcsd</span><br></pre></td></tr></table></figure>
+
+<h3 id="防火墙"><a href="#防火墙" class="headerlink" title="防火墙"></a>防火墙</h3><p>需要打开 1688 端口供 vlmcsd 使用。在这里举两个常用的。</p>
+<h4 id="UFW"><a href="#UFW" class="headerlink" title="UFW"></a>UFW</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ufw allow 1688</span><br></pre></td></tr></table></figure>
+
+<h4 id="iptables"><a href="#iptables" class="headerlink" title="iptables"></a>iptables</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">iptables -A INPUT -p tcp --dport 1688 -j ACCEPT</span><br><span class="line">iptables -A OUTPUT -p tcp --sport 1688 -j ACCEPT</span><br></pre></td></tr></table></figure>
+
+<h2 id="激活"><a href="#激活" class="headerlink" title="激活"></a>激活</h2><p>在此我提供一下我个人使用的 KMS 服务器，不想自行安装的可以使用以下服务器。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">KMS服务器: kms.iszy.xyz</span><br><span class="line">端口: 1688</span><br></pre></td></tr></table></figure>
+
+<h3 id="激活-Windows"><a href="#激活-Windows" class="headerlink" title="激活 Windows"></a>激活 Windows</h3><p>用管理员权限打开 cmd(命令提示符)，输入以下命令。</p>
+<h4 id="配置-GVLK"><a href="#配置-GVLK" class="headerlink" title="配置 GVLK"></a>配置 GVLK</h4><p>一般情况下，新装的系统，没有输入过其他 key 的，系统会自带 GVLK，可以忽略此步，当然做了也没有影响。输入过其他 key 的则需要此步。</p>
+<p>将以下命令中的 Key 替换成对应系统版本的 Key。</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#slmgr /ipk GVLK</span></span><br><span class="line"><span class="comment">#Example:</span></span><br><span class="line">slmgr /ipk GCRJD<span class="literal">-8NW9H-F2CDX-CCM8D-9D6T9</span></span><br></pre></td></tr></table></figure>
+
+<p>部分 GVLK 列表</p>
+<table>
+<thead>
+<tr>
+<th align="center">GVLK</th>
+<th align="left">系统版本</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">TX9XD-98N7V-6WMQ6-BX7FG-H8Q99</td>
+<td align="left">Windows 10 Home</td>
+</tr>
+<tr>
+<td align="center">3KHY7-WNT83-DGQKR-F7HPR-844BM</td>
+<td align="left">Windows 10 Home N</td>
+</tr>
+<tr>
+<td align="center">7HNRX-D7KGG-3K4RQ-4WPJ4-YTDFH</td>
+<td align="left">Windows 10 Home Single Language</td>
+</tr>
+<tr>
+<td align="center">PVMJN-6DFY6-9CCP6-7BKTT-D3WVR</td>
+<td align="left">Windows 10 Home Country Specific</td>
+</tr>
+<tr>
+<td align="center">789NJ-TQK6T-6XTH8-J39CJ-J8D3P</td>
+<td align="left">Windows 8.1 Professional with Media Center</td>
+</tr>
+<tr>
+<td align="center">M9Q9P-WNJJT-6PXPY-DWX8H-6XWKK</td>
+<td align="left">Windows 8.1 Core</td>
+</tr>
+<tr>
+<td align="center">7B9N3-D94CG-YTVHR-QBPX3-RJP64</td>
+<td align="left">Windows 8.1 Core N</td>
+</tr>
+<tr>
+<td align="center">BB6NG-PQ82V-VRDPW-8XVD2-V8P66</td>
+<td align="left">Windows 8.1 Core Single Language</td>
+</tr>
+<tr>
+<td align="center">NCTT7-2RGK8-WMHRF-RY7YQ-JTXG3</td>
+<td align="left">Windows 8.1 Core Country Specific</td>
+</tr>
+<tr>
+<td align="center">GNBB8-YVD74-QJHX6-27H4K-8QHDG</td>
+<td align="left">Windows 8 Professional with Media Center</td>
+</tr>
+<tr>
+<td align="center">BN3D2-R7TKB-3YPBD-8DRP2-27GG4</td>
+<td align="left">Windows 8 Core</td>
+</tr>
+<tr>
+<td align="center">8N2M2-HWPGY-7PGT9-HGDD8-GVGGY</td>
+<td align="left">Windows 8 Core N</td>
+</tr>
+<tr>
+<td align="center">2WN2H-YGCQR-KFX6K-CD6TF-84YXQ</td>
+<td align="left">Windows 8 Core Single Language</td>
+</tr>
+<tr>
+<td align="center">4K36P-JN4VD-GDC6V-KDT89-DYFKP</td>
+<td align="left">Windows 8 Core Country Specific</td>
+</tr>
+</tbody></table>
+<p>更多 GVLK<a target="_blank" rel="noopener" href="https://docs.microsoft.com/zh-cn/windows-server/get-started/kmsclientkeys">点击这里</a>查看。</p>
+<h4 id="配置使用-KMS-服务器"><a href="#配置使用-KMS-服务器" class="headerlink" title="配置使用 KMS 服务器"></a>配置使用 KMS 服务器</h4><figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># slmgr /skms kms-server[:tcp-port]</span></span><br><span class="line"><span class="comment"># Example:</span></span><br><span class="line">slmgr /skms kms.iszy.xyz:<span class="number">1688</span></span><br></pre></td></tr></table></figure>
+
+<p>将 IP 换成你的 vlmscd 所在服务器即可。1688 是默认端口，如果之前是按照本文进行配置，此端口可以不写。</p>
+<h4 id="进行激活"><a href="#进行激活" class="headerlink" title="进行激活"></a>进行激活</h4><figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">slmgr /ato</span><br></pre></td></tr></table></figure>
+
+<p>等待一会儿会看到激活成功的提示。</p>
+<p>可以输入以下命令查看激活状态，一般显示<code>批量激活将于 xxxx/x/x xx:xx:xx 过期</code>，一般是 180 天或 45 天的有效期。过期后，如果 KMS 服务器还在，会自动续期的。</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">slmgr /xpr</span><br></pre></td></tr></table></figure>
+
+<h3 id="激活-Office"><a href="#激活-Office" class="headerlink" title="激活 Office"></a>激活 Office</h3><p>你需要安装 Vol 版 Office 才能使用 KMS。可以去<a target="_blank" rel="noopener" href="https://msdn.itellyou.cn/">MSDN</a>上找一找，一般 Vol 版的文件都带 VL，文件名一般以 SW 开头。</p>
+<h4 id="配置-GVLK-1"><a href="#配置-GVLK-1" class="headerlink" title="配置 GVLK"></a>配置 GVLK</h4><p>同样，没装过 key 的，一般可以忽略此步。</p>
+<p>将以下命令中的 Key 替换成对应软件版本的 Key。</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> exist <span class="string">&quot;C:\Program Files (x86)\Microsoft Office\Office14\ospp.vbs&quot;</span> (<span class="built_in">cd</span> <span class="string">&quot;C:\Program Files (x86)\Microsoft Office\Office14&quot;</span>) <span class="keyword">else</span> (<span class="built_in">cd</span> <span class="string">&quot;c:\Program Files\Microsoft Office\Office14&quot;</span>)</span><br><span class="line"><span class="keyword">if</span> exist <span class="string">&quot;C:\Program Files (x86)\Microsoft Office\Office15\ospp.vbs&quot;</span> (<span class="built_in">cd</span> <span class="string">&quot;C:\Program Files (x86)\Microsoft Office\Office15&quot;</span>) <span class="keyword">else</span> (<span class="built_in">cd</span> <span class="string">&quot;c:\Program Files\Microsoft Office\Office15&quot;</span>)</span><br><span class="line"><span class="keyword">if</span> exist <span class="string">&quot;C:\Program Files (x86)\Microsoft Office\Office16\ospp.vbs&quot;</span> (<span class="built_in">cd</span> <span class="string">&quot;C:\Program Files (x86)\Microsoft Office\Office16&quot;</span>) <span class="keyword">else</span> (<span class="built_in">cd</span> <span class="string">&quot;c:\Program Files\Microsoft Office\Office16&quot;</span>)</span><br><span class="line"><span class="comment"># cscript ospp.vbs /inpkey:GVLK</span></span><br><span class="line"><span class="comment"># Example:</span></span><br><span class="line">cscript ospp.vbs /inpkey:YC7DK<span class="literal">-G2NP3-2QQC3-J6H88-GVGXT</span></span><br></pre></td></tr></table></figure>
+
+<p>部分 GVLK 列表</p>
+<table>
+<thead>
+<tr>
+<th align="center">GVLK</th>
+<th align="left">软件版本</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">NMMKJ-6RK4F-KMJVX-8D9MJ-6MWKP</td>
+<td align="left">Office Professional Plus 2019</td>
+</tr>
+<tr>
+<td align="center">6NWWJ-YQWMR-QKGCB-6TMB3-9D9HK</td>
+<td align="left">Office Standard 2019</td>
+</tr>
+<tr>
+<td align="center">B4NPR-3FKK7-T2MBV-FRQ4W-PKD2B</td>
+<td align="left">Project Professional 2019</td>
+</tr>
+<tr>
+<td align="center">C4F7P-NCP8C-6CQPT-MQHV9-JXD2M</td>
+<td align="left">Project Standard 2019</td>
+</tr>
+<tr>
+<td align="center">9BGNQ-K37YR-RQHF2-38RQ3-7VCBB</td>
+<td align="left">Visio Professional 2019</td>
+</tr>
+<tr>
+<td align="center">7TQNQ-K3YQQ-3PFH7-CCPPM-X4VQ2</td>
+<td align="left">Visio Standard 2019</td>
+</tr>
+<tr>
+<td align="center">XQNVK-8JYDB-WJ9W3-YJ8YR-WFG99</td>
+<td align="left">Office Professional Plus 2016</td>
+</tr>
+<tr>
+<td align="center">JNRGM-WHDWX-FJJG3-K47QV-DRTFM</td>
+<td align="left">Office Standard 2016</td>
+</tr>
+<tr>
+<td align="center">YG9NW-3K39V-2T3HJ-93F3Q-G83KT</td>
+<td align="left">Project Professional 2016</td>
+</tr>
+<tr>
+<td align="center">GNFHQ-F6YQM-KQDGJ-327XX-KQBVC</td>
+<td align="left">Project Standard 2016</td>
+</tr>
+<tr>
+<td align="center">PD3PC-RHNGV-FXJ29-8JK7D-RJRJK</td>
+<td align="left">Visio Professional 2016</td>
+</tr>
+<tr>
+<td align="center">7WHWN-4T7MP-G96JF-G33KR-W8GF4</td>
+<td align="left">Visio Standard 2016</td>
+</tr>
+</tbody></table>
+<p>更多 GVLK<a target="_blank" rel="noopener" href="https://docs.microsoft.com/zh-cn/DeployOffice/vlactivation/gvlks">点击这里</a>查看。</p>
+<h4 id="配置使用-KMS-服务器-1"><a href="#配置使用-KMS-服务器-1" class="headerlink" title="配置使用 KMS 服务器"></a>配置使用 KMS 服务器</h4><p>将 IP 换成你的 vlmscd 所在服务器即可。1688 是默认端口，如果之前是按照本文进行配置，第二条命令可以不写。</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># cscript ospp.vbs /sethst:kms-server</span></span><br><span class="line"><span class="comment"># Example:</span></span><br><span class="line">cscript ospp.vbs /sethst:kms.iszy.xyz</span><br><span class="line"><span class="comment"># cscript ospp.vbs /setprt:tcp-port</span></span><br><span class="line"><span class="comment"># Example:</span></span><br><span class="line">cscript ospp.vbs /setprt:<span class="number">1688</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="进行激活-1"><a href="#进行激活-1" class="headerlink" title="进行激活"></a>进行激活</h4><figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cscript ospp.vbs /act</span><br></pre></td></tr></table></figure>
+
+<p>等一会儿会显示激活成功。</p>
+<p>可以输入以下命令查看激活状态，一般是 180 天或 45 天的有效期。过期后，如果 KMS 服务器还在，会自动续期的。</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cscript ospp.vbs /dstatus</span><br></pre></td></tr></table></figure>
+
+<h2 id="后话"><a href="#后话" class="headerlink" title="后话"></a>后话</h2><p>到此，自建 KMS 到激活都介绍完了，按照本文介绍应该已经正常激活了，享受你的软件吧。如果 KMS 服务器出现问题，180 天应该早就解决了吧。</p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="mailto:undefined">jpruby</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="https://jpruby888.github.io/post/49e6adb5.html">https://jpruby888.github.io/post/49e6adb5.html</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://jpruby888.github.io" target="_blank">jpruby的blog</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/Windows/">Windows</a><a class="post-meta__tags" href="/tags/KMS/">KMS</a><a class="post-meta__tags" href="/tags/Office/">Office</a></div><div class="post_share"><div class="social-share" data-image="/images/featureimages/6.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/social-share.js/dist/js/social-share.min.js" defer></script></div></div><div class="post-reward"><div class="reward-button"><i class="fas fa-qrcode"></i> 打赏</div><div class="reward-main"><ul class="reward-all"><li class="reward-item"><a href="/img/wechat.png" target="_blank"><img class="post-qr-code-img" src="/img/wechat.png" alt="wechat"/></a><div class="post-qr-code-desc">wechat</div></li><li class="reward-item"><a href="/img/alipay.jpg" target="_blank"><img class="post-qr-code-img" src="/img/alipay.jpg" alt="alipay"/></a><div class="post-qr-code-desc">alipay</div></li></ul></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/post/1fd90d9d.html"><img class="prev-cover" src="/images/featureimages/2.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">用标准方式升级Ubuntu内核并启用BBR</div></div></a></div><div class="next-post pull-right"><a href="/page/bgfw/"><img class="next-cover" src="/images/featureimages/11.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">【评测】优质SS/SSR/Trojan/V2Ray机场推荐</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><div><a href="/post/dba5d77e.html" title="体验 Windows 10 内置 Linux 子系统"><img class="cover" src="/images/featureimages/13.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2018-05-05</div><div class="title">体验 Windows 10 内置 Linux 子系统</div></div></a></div><div><a href="/post/2a3cd76b.html" title="直接修改和替换Jar包中文件的几种方式"><img class="cover" src="/images/featureimages/13.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2020-05-18</div><div class="title">直接修改和替换Jar包中文件的几种方式</div></div></a></div><div><a href="/post/b6b1df55.html" title="Office 365 家庭版开车圆满结束~"><img class="cover" src="/images/featureimages/13.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-01-09</div><div class="title">Office 365 家庭版开车圆满结束~</div></div></a></div></div></div><hr/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div></div><div class="comment-wrap"><div><div class="vcomment" id="vcomment"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="/images/favicon.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">jpruby</div><div class="author-info__description">宁静致远</div></div><div class="card-info-data is-center"><div class="card-info-data-item"><a href="/archives/"><div class="headline">文章</div><div class="length-num">247</div></a></div><div class="card-info-data-item"><a href="/tags/"><div class="headline">标签</div><div class="length-num">220</div></a></div><div class="card-info-data-item"><a href="/categories/"><div class="headline">分类</div><div class="length-num">33</div></a></div></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://gitee.com/jpruby"><i class="fab fa-github"></i><span>追随我吧</span></a></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">一个放笔记的地方，如果你喜欢请评论</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#KMS-%E7%AE%80%E4%BB%8B"><span class="toc-number">1.</span> <span class="toc-text">KMS 简介</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#vlmscd-%E4%BB%8B%E7%BB%8D%E5%92%8C%E5%AE%89%E8%A3%85"><span class="toc-number">2.</span> <span class="toc-text">vlmscd 介绍和安装</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%89%E8%A3%85-Docker"><span class="toc-number">2.1.</span> <span class="toc-text">安装 Docker</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%89%E8%A3%85-vlmscd"><span class="toc-number">2.2.</span> <span class="toc-text">安装 vlmscd</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%98%B2%E7%81%AB%E5%A2%99"><span class="toc-number">2.3.</span> <span class="toc-text">防火墙</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#UFW"><span class="toc-number">2.3.1.</span> <span class="toc-text">UFW</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#iptables"><span class="toc-number">2.3.2.</span> <span class="toc-text">iptables</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%BF%80%E6%B4%BB"><span class="toc-number">3.</span> <span class="toc-text">激活</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%BF%80%E6%B4%BB-Windows"><span class="toc-number">3.1.</span> <span class="toc-text">激活 Windows</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%85%8D%E7%BD%AE-GVLK"><span class="toc-number">3.1.1.</span> <span class="toc-text">配置 GVLK</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%85%8D%E7%BD%AE%E4%BD%BF%E7%94%A8-KMS-%E6%9C%8D%E5%8A%A1%E5%99%A8"><span class="toc-number">3.1.2.</span> <span class="toc-text">配置使用 KMS 服务器</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%BF%9B%E8%A1%8C%E6%BF%80%E6%B4%BB"><span class="toc-number">3.1.3.</span> <span class="toc-text">进行激活</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%BF%80%E6%B4%BB-Office"><span class="toc-number">3.2.</span> <span class="toc-text">激活 Office</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%85%8D%E7%BD%AE-GVLK-1"><span class="toc-number">3.2.1.</span> <span class="toc-text">配置 GVLK</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%85%8D%E7%BD%AE%E4%BD%BF%E7%94%A8-KMS-%E6%9C%8D%E5%8A%A1%E5%99%A8-1"><span class="toc-number">3.2.2.</span> <span class="toc-text">配置使用 KMS 服务器</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%BF%9B%E8%A1%8C%E6%BF%80%E6%B4%BB-1"><span class="toc-number">3.2.3.</span> <span class="toc-text">进行激活</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%90%8E%E8%AF%9D"><span class="toc-number">4.</span> <span class="toc-text">后话</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/post/a9c4edf1.html" title="反射工具包JOOR、Hutool与原生反射对比">反射工具包JOOR、Hutool与原生反射对比</a><time datetime="2021-08-16T02:34:45.000Z" title="发表于 2021-08-16 10:34:45">2021-08-16</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/post/d232be0e.html" title="使用CODEX为你的项目编制一套代码库目录/索引">使用CODEX为你的项目编制一套代码库目录/索引</a><time datetime="2021-08-16T02:33:53.000Z" title="发表于 2021-08-16 10:33:53">2021-08-16</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/post/9e3b75c0.html" title="screw 一颗螺丝钉的使命">screw 一颗螺丝钉的使命</a><time datetime="2021-08-16T02:32:21.000Z" title="发表于 2021-08-16 10:32:21">2021-08-16</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/post/1a3a1ad3.html" title="如何优化代码中的if-else/switch">如何优化代码中的if-else/switch</a><time datetime="2021-08-16T02:30:27.000Z" title="发表于 2021-08-16 10:30:27">2021-08-16</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/post/f3355887.html" title="ESB的体系结构">ESB的体系结构</a><time datetime="2021-08-16T02:28:40.000Z" title="发表于 2021-08-16 10:28:40">2021-08-16</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2021 - 2022 By jpruby</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div><div class="footer_custom_text">一看就会，一写就废？反复,重复,反反复复就能成功。<a target="_blank" rel="noopener" href="https://gitee.com/jpruby">My Gitee</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><a id="to_comment" href="#post-comment" title="直达评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">本地搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="is-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据库加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div><hr/><div id="local-search-results"></div></div></div><div id="search-mask"></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.umd.js"></script><script src="https://cdn.jsdelivr.net/npm/vanilla-lazyload/dist/lazyload.iife.min.js"></script><script src="/js/search/local-search.js"></script><script>var preloader = {
+  endLoading: () => {
+    document.body.style.overflow = 'auto';
+    document.getElementById('loading-box').classList.add("loaded")
+  },
+  initLoading: () => {
+    document.body.style.overflow = '';
+    document.getElementById('loading-box').classList.remove("loaded")
+
+  }
+}
+window.addEventListener('load',preloader.endLoading())</script><div class="js-pjax"><script>function loadValine () {
+  function initValine () {
+    const valine = new Valine(Object.assign({
+      el: '#vcomment',
+      appId: 'iJzt0X9OdhFCcdn4N0dJ86fY-gzGzoHsz',
+      appKey: '8vtaRafgQSvU5ntYgszJfRW5',
+      avatar: 'monsterid',
+      serverURLs: '',
+      emojiMaps: "",
+      path: window.location.pathname,
+      visitor: false
+    }, null))
+  }
+
+  if (typeof Valine === 'function') initValine() 
+  else getScript('https://cdn.jsdelivr.net/npm/valine/dist/Valine.min.js').then(initValine)
+}
+
+if ('Valine' === 'Valine' || !true) {
+  if (true) btf.loadComment(document.getElementById('vcomment'),loadValine)
+  else setTimeout(loadValine, 0)
+} else {
+  function loadOtherComment () {
+    loadValine()
+  }
+}</script></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>

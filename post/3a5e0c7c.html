@@ -1,0 +1,223 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"><title>在VMware中安装&quot;开源版Windows&quot;——ReactOS | jpruby的blog</title><meta name="keywords" content="reactos,vmware,install,安装,虚拟机"><meta name="author" content="jpruby"><meta name="copyright" content="jpruby"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="ReactOS 是一个适用于 x86&#x2F;x64 平台的免费、开源的操作系统暨项目，旨在提供 Windows 平台下的程序与驱动的二进制兼容性，简直可以说是开源版的 Windows。借由逆向工程等手段，其以净室设计的方法进行开发。为确保操作系统没有任何一部分是看过泄漏出来的微软 Windows 源码的人所写，或者逆向工程的过程达不到净室设计标准，一个全盘的源码审查由 ReactOS 主要开发">
+<meta property="og:type" content="article">
+<meta property="og:title" content="在VMware中安装&quot;开源版Windows&quot;——ReactOS">
+<meta property="og:url" content="https://jpruby888.github.io/post/3a5e0c7c.html">
+<meta property="og:site_name" content="jpruby的blog">
+<meta property="og:description" content="ReactOS 是一个适用于 x86&#x2F;x64 平台的免费、开源的操作系统暨项目，旨在提供 Windows 平台下的程序与驱动的二进制兼容性，简直可以说是开源版的 Windows。借由逆向工程等手段，其以净室设计的方法进行开发。为确保操作系统没有任何一部分是看过泄漏出来的微软 Windows 源码的人所写，或者逆向工程的过程达不到净室设计标准，一个全盘的源码审查由 ReactOS 主要开发">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://jpruby888.github.io/images/featureimages/9.jpg">
+<meta property="article:published_time" content="2018-07-28T06:43:13.000Z">
+<meta property="article:modified_time" content="2018-07-28T06:43:13.000Z">
+<meta property="article:author" content="jpruby">
+<meta property="article:tag" content="ReactOS">
+<meta property="article:tag" content="开源">
+<meta property="article:tag" content="VMWare">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://jpruby888.github.io/images/featureimages/9.jpg"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://jpruby888.github.io/post/3a5e0c7c"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"search.xml","languages":{"hits_empty":"找不到您查询的内容：${query}"}},
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '天',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery@2/dist/fjGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery@2/dist/fjGallery.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: true,
+  isAnchor: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '在VMware中安装"开源版Windows"——ReactOS',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2018-07-28 14:43:13'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><meta name="generator" content="Hexo 6.1.0"><link rel="alternate" href="/atom.xml" title="jpruby的blog" type="application/atom+xml">
+</head><body><div id="loading-box"><div class="loading-left-bg"></div><div class="loading-right-bg"></div><div class="spinner-box"><div class="configure-border-1"><div class="configure-core"></div></div><div class="configure-border-2"><div class="configure-core"></div></div><div class="loading-word">加载中...</div></div></div><div id="web_bg"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="/images/favicon.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data is-center"><div class="data-item"><a href="/archives/"><div class="headline">文章</div><div class="length-num">247</div></a></div><div class="data-item"><a href="/tags/"><div class="headline">标签</div><div class="length-num">220</div></a></div><div class="data-item"><a href="/categories/"><div class="headline">分类</div><div class="length-num">33</div></a></div></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/messageboard/"><i class="fa-fw fas fa-paper-plane"></i><span> 留言板</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('/images/featureimages/9.jpg')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">jpruby的blog</a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/messageboard/"><i class="fa-fw fas fa-paper-plane"></i><span> 留言板</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">在VMware中安装&quot;开源版Windows&quot;——ReactOS</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2018-07-28T06:43:13.000Z" title="发表于 2018-07-28 14:43:13">2018-07-28</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2018-07-28T06:43:13.000Z" title="更新于 2018-07-28 14:43:13">2018-07-28</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E5%85%B6%E4%BB%96/">其他</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="在VMware中安装&quot;开源版Windows&quot;——ReactOS"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><p>ReactOS 是一个适用于 x86&#x2F;x64 平台的免费、开源的操作系统暨项目，旨在提供 Windows 平台下的程序与驱动的二进制兼容性，简直可以说是开源版的 Windows。借由逆向工程等手段，其以净室设计的方法进行开发。为确保操作系统没有任何一部分是看过泄漏出来的微软 Windows 源码的人所写，或者逆向工程的过程达不到净室设计标准，一个全盘的源码审查由 ReactOS 主要开发者下令展开。此审查目前已经结束。这篇文章将演示如何在 VMWare 虚拟机上体验 ReactOS。</p>
+<span id="more"></span>
+
+<h2 id="下载系统镜像"><a href="#下载系统镜像" class="headerlink" title="下载系统镜像"></a>下载系统镜像</h2><p>前往 ReactOS 官网<a target="_blank" rel="noopener" href="https://www.reactos.org/download">下载系统镜像</a>。</p>
+<p><img src="https://img.iszy.xyz/20190318215607.png"></p>
+<p>将会得到一个 zip 压缩包，解压后是 ReactOS 的安装镜像。</p>
+<h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><p>首先你要安装有 VMware Workstation Pro(或 Player 版)，这部分安装不再赘述。</p>
+<h3 id="创建虚拟机"><a href="#创建虚拟机" class="headerlink" title="创建虚拟机"></a>创建虚拟机</h3><h4 id="新建虚拟机"><a href="#新建虚拟机" class="headerlink" title="新建虚拟机"></a>新建虚拟机</h4><p><img src="https://img.iszy.xyz/20190318215634.png"></p>
+<h4 id="选择镜像"><a href="#选择镜像" class="headerlink" title="选择镜像"></a>选择镜像</h4><p><img src="https://img.iszy.xyz/20190318215652.png"></p>
+<h4 id="系统类型设置"><a href="#系统类型设置" class="headerlink" title="系统类型设置"></a>系统类型设置</h4><p>全部选择其他</p>
+<p><img src="https://img.iszy.xyz/20190318215707.png"></p>
+<h4 id="选择虚拟机存储位置"><a href="#选择虚拟机存储位置" class="headerlink" title="选择虚拟机存储位置"></a>选择虚拟机存储位置</h4><p><img src="https://img.iszy.xyz/20190318215717.png"></p>
+<h4 id="硬盘设置"><a href="#硬盘设置" class="headerlink" title="硬盘设置"></a>硬盘设置</h4><p>容量设置为 8G，不用太多</p>
+<p><img src="https://img.iszy.xyz/20190318215728.png"></p>
+<h4 id="其他参数设置"><a href="#其他参数设置" class="headerlink" title="其他参数设置"></a>其他参数设置</h4><p>内存建议至少 512M，如果想的话，可以开启加速 3D 图形</p>
+<p><img src="https://img.iszy.xyz/20190318215740.png"></p>
+<p>点击完成即可。</p>
+<h3 id="安装-ReactOS"><a href="#安装-ReactOS" class="headerlink" title="安装 ReactOS"></a>安装 ReactOS</h3><p>首先启动虚拟机，进入安装进程。</p>
+<h4 id="选择语言"><a href="#选择语言" class="headerlink" title="选择语言"></a>选择语言</h4><p>有许多语言可供选择，在这里我选择<code>Chinese (RPC)</code>，点击回车。</p>
+<p><img src="https://img.iszy.xyz/20190318215752.png"></p>
+<h4 id="调整屏幕分辨率"><a href="#调整屏幕分辨率" class="headerlink" title="调整屏幕分辨率"></a>调整屏幕分辨率</h4><p>一路回车到如下界面，可以调整屏幕分辨率，若不需要，回车即可。</p>
+<p><img src="https://img.iszy.xyz/20190318215803.png"></p>
+<p>在此，我调整了分辨率为<code>1280x1024x32</code>。</p>
+<p><img src="https://img.iszy.xyz/20190318215814.png"></p>
+<h4 id="安装-1"><a href="#安装-1" class="headerlink" title="安装"></a>安装</h4><p>一路回车进行安装，到如下界面。在虚拟机右下角断开 CD 连接后回车重启。</p>
+<p><img src="https://img.iszy.xyz/20190318215825.png"></p>
+<h2 id="设置"><a href="#设置" class="headerlink" title="设置"></a>设置</h2><p>启动后直接回车进入第一个系统，后面都是类 Windows 的操作，比较简单，不用设置的地方下一步即可。</p>
+<p><img src="https://img.iszy.xyz/20190318215850.png"></p>
+<p>在此页面可以设置时区、输入语言和键盘，可惜似乎没有中文的输入法支持。</p>
+<p><img src="https://img.iszy.xyz/20190318215901.png"></p>
+<p>在此页面可以设置系统密码，我在此留空，不设密码。</p>
+<p><img src="https://img.iszy.xyz/20190318215909.png"></p>
+<p>时区选择北京，关闭夏令时。</p>
+<p><img src="https://img.iszy.xyz/20190318215922.png"></p>
+<p>一路下一步完成安装，重启后即可进入系统。自动安装驱动可以取消，反正也没有可以支持的内容。</p>
+<p><img src="https://img.iszy.xyz/20190318215937.png"></p>
+<h2 id="后话"><a href="#后话" class="headerlink" title="后话"></a>后话</h2><p>ReactOS 完成度已经很高了，经网友测试已经可以兼容许多 Windows 下的程序，完全没有使用 Windows 的代码，可以说是非常了不起了。现在 ReactOS 仍在积极开发，提供了许多新的功能，看官大可以体验一下，说不定未来这个系统真的能够代理 Windows 呢。</p>
+<p>在此我就体验了一下 ReactOS 自带的扫雷游戏，更多功能留给看官自行探索。</p>
+<p><img src="https://img.iszy.xyz/20190318215950.png"></p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="mailto:undefined">jpruby</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="https://jpruby888.github.io/post/3a5e0c7c.html">https://jpruby888.github.io/post/3a5e0c7c.html</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://jpruby888.github.io" target="_blank">jpruby的blog</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/ReactOS/">ReactOS</a><a class="post-meta__tags" href="/tags/%E5%BC%80%E6%BA%90/">开源</a><a class="post-meta__tags" href="/tags/VMWare/">VMWare</a></div><div class="post_share"><div class="social-share" data-image="/images/featureimages/9.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/social-share.js/dist/js/social-share.min.js" defer></script></div></div><div class="post-reward"><div class="reward-button"><i class="fas fa-qrcode"></i> 打赏</div><div class="reward-main"><ul class="reward-all"><li class="reward-item"><a href="/img/wechat.png" target="_blank"><img class="post-qr-code-img" src="/img/wechat.png" alt="wechat"/></a><div class="post-qr-code-desc">wechat</div></li><li class="reward-item"><a href="/img/alipay.jpg" target="_blank"><img class="post-qr-code-img" src="/img/alipay.jpg" alt="alipay"/></a><div class="post-qr-code-desc">alipay</div></li></ul></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/post/a7600a1a.html"><img class="prev-cover" src="/images/featureimages/11.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">用一个闲置域名尝试一下网站备案</div></div></a></div><div class="next-post pull-right"><a href="/post/fab9ad28.html"><img class="next-cover" src="/images/featureimages/7.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">NexT 主题配置记录</div></div></a></div></nav><hr/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div></div><div class="comment-wrap"><div><div class="vcomment" id="vcomment"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="/images/favicon.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">jpruby</div><div class="author-info__description">宁静致远</div></div><div class="card-info-data is-center"><div class="card-info-data-item"><a href="/archives/"><div class="headline">文章</div><div class="length-num">247</div></a></div><div class="card-info-data-item"><a href="/tags/"><div class="headline">标签</div><div class="length-num">220</div></a></div><div class="card-info-data-item"><a href="/categories/"><div class="headline">分类</div><div class="length-num">33</div></a></div></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://gitee.com/jpruby"><i class="fab fa-github"></i><span>追随我吧</span></a></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">一个放笔记的地方，如果你喜欢请评论</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%8B%E8%BD%BD%E7%B3%BB%E7%BB%9F%E9%95%9C%E5%83%8F"><span class="toc-number">1.</span> <span class="toc-text">下载系统镜像</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%89%E8%A3%85"><span class="toc-number">2.</span> <span class="toc-text">安装</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%9B%E5%BB%BA%E8%99%9A%E6%8B%9F%E6%9C%BA"><span class="toc-number">2.1.</span> <span class="toc-text">创建虚拟机</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%96%B0%E5%BB%BA%E8%99%9A%E6%8B%9F%E6%9C%BA"><span class="toc-number">2.1.1.</span> <span class="toc-text">新建虚拟机</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%80%89%E6%8B%A9%E9%95%9C%E5%83%8F"><span class="toc-number">2.1.2.</span> <span class="toc-text">选择镜像</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%B3%BB%E7%BB%9F%E7%B1%BB%E5%9E%8B%E8%AE%BE%E7%BD%AE"><span class="toc-number">2.1.3.</span> <span class="toc-text">系统类型设置</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%80%89%E6%8B%A9%E8%99%9A%E6%8B%9F%E6%9C%BA%E5%AD%98%E5%82%A8%E4%BD%8D%E7%BD%AE"><span class="toc-number">2.1.4.</span> <span class="toc-text">选择虚拟机存储位置</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%A1%AC%E7%9B%98%E8%AE%BE%E7%BD%AE"><span class="toc-number">2.1.5.</span> <span class="toc-text">硬盘设置</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%85%B6%E4%BB%96%E5%8F%82%E6%95%B0%E8%AE%BE%E7%BD%AE"><span class="toc-number">2.1.6.</span> <span class="toc-text">其他参数设置</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%89%E8%A3%85-ReactOS"><span class="toc-number">2.2.</span> <span class="toc-text">安装 ReactOS</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%80%89%E6%8B%A9%E8%AF%AD%E8%A8%80"><span class="toc-number">2.2.1.</span> <span class="toc-text">选择语言</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%B0%83%E6%95%B4%E5%B1%8F%E5%B9%95%E5%88%86%E8%BE%A8%E7%8E%87"><span class="toc-number">2.2.2.</span> <span class="toc-text">调整屏幕分辨率</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%AE%89%E8%A3%85-1"><span class="toc-number">2.2.3.</span> <span class="toc-text">安装</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%AE%BE%E7%BD%AE"><span class="toc-number">3.</span> <span class="toc-text">设置</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%90%8E%E8%AF%9D"><span class="toc-number">4.</span> <span class="toc-text">后话</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/post/a9c4edf1.html" title="反射工具包JOOR、Hutool与原生反射对比">反射工具包JOOR、Hutool与原生反射对比</a><time datetime="2021-08-16T02:34:45.000Z" title="发表于 2021-08-16 10:34:45">2021-08-16</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/post/d232be0e.html" title="使用CODEX为你的项目编制一套代码库目录/索引">使用CODEX为你的项目编制一套代码库目录/索引</a><time datetime="2021-08-16T02:33:53.000Z" title="发表于 2021-08-16 10:33:53">2021-08-16</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/post/9e3b75c0.html" title="screw 一颗螺丝钉的使命">screw 一颗螺丝钉的使命</a><time datetime="2021-08-16T02:32:21.000Z" title="发表于 2021-08-16 10:32:21">2021-08-16</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/post/1a3a1ad3.html" title="如何优化代码中的if-else/switch">如何优化代码中的if-else/switch</a><time datetime="2021-08-16T02:30:27.000Z" title="发表于 2021-08-16 10:30:27">2021-08-16</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/post/f3355887.html" title="ESB的体系结构">ESB的体系结构</a><time datetime="2021-08-16T02:28:40.000Z" title="发表于 2021-08-16 10:28:40">2021-08-16</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2021 - 2022 By jpruby</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div><div class="footer_custom_text">一看就会，一写就废？反复,重复,反反复复就能成功。<a target="_blank" rel="noopener" href="https://gitee.com/jpruby">My Gitee</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><a id="to_comment" href="#post-comment" title="直达评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">本地搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="is-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据库加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div><hr/><div id="local-search-results"></div></div></div><div id="search-mask"></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.umd.js"></script><script src="https://cdn.jsdelivr.net/npm/vanilla-lazyload/dist/lazyload.iife.min.js"></script><script src="/js/search/local-search.js"></script><script>var preloader = {
+  endLoading: () => {
+    document.body.style.overflow = 'auto';
+    document.getElementById('loading-box').classList.add("loaded")
+  },
+  initLoading: () => {
+    document.body.style.overflow = '';
+    document.getElementById('loading-box').classList.remove("loaded")
+
+  }
+}
+window.addEventListener('load',preloader.endLoading())</script><div class="js-pjax"><script>function loadValine () {
+  function initValine () {
+    const valine = new Valine(Object.assign({
+      el: '#vcomment',
+      appId: 'iJzt0X9OdhFCcdn4N0dJ86fY-gzGzoHsz',
+      appKey: '8vtaRafgQSvU5ntYgszJfRW5',
+      avatar: 'monsterid',
+      serverURLs: '',
+      emojiMaps: "",
+      path: window.location.pathname,
+      visitor: false
+    }, null))
+  }
+
+  if (typeof Valine === 'function') initValine() 
+  else getScript('https://cdn.jsdelivr.net/npm/valine/dist/Valine.min.js').then(initValine)
+}
+
+if ('Valine' === 'Valine' || !true) {
+  if (true) btf.loadComment(document.getElementById('vcomment'),loadValine)
+  else setTimeout(loadValine, 0)
+} else {
+  function loadOtherComment () {
+    loadValine()
+  }
+}</script></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>

@@ -1,0 +1,274 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"><title>(转载)Javascript模块化编程（三）：require.js的用法 | jpruby的blog</title><meta name="keywords" content="JavaScript,转载,模块化"><meta name="author" content="jpruby"><meta name="copyright" content="jpruby"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="原文链接: Javascript 模块化编程（三）：require.js 的用法 —— 阮一峰">
+<meta property="og:type" content="article">
+<meta property="og:title" content="(转载)Javascript模块化编程（三）：require.js的用法">
+<meta property="og:url" content="https://jpruby888.github.io/post/df35c56a.html">
+<meta property="og:site_name" content="jpruby的blog">
+<meta property="og:description" content="原文链接: Javascript 模块化编程（三）：require.js 的用法 —— 阮一峰">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://jpruby888.github.io/images/featureimages/1.jpg">
+<meta property="article:published_time" content="2019-08-14T02:05:00.000Z">
+<meta property="article:modified_time" content="2019-08-14T02:05:00.000Z">
+<meta property="article:author" content="jpruby">
+<meta property="article:tag" content="JavaScript">
+<meta property="article:tag" content="转载">
+<meta property="article:tag" content="模块化">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://jpruby888.github.io/images/featureimages/1.jpg"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://jpruby888.github.io/post/df35c56a"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"search.xml","languages":{"hits_empty":"找不到您查询的内容：${query}"}},
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '天',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery@2/dist/fjGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery@2/dist/fjGallery.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: true,
+  isAnchor: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '(转载)Javascript模块化编程（三）：require.js的用法',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2019-08-14 10:05:00'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><meta name="generator" content="Hexo 6.1.0"><link rel="alternate" href="/atom.xml" title="jpruby的blog" type="application/atom+xml">
+</head><body><div id="loading-box"><div class="loading-left-bg"></div><div class="loading-right-bg"></div><div class="spinner-box"><div class="configure-border-1"><div class="configure-core"></div></div><div class="configure-border-2"><div class="configure-core"></div></div><div class="loading-word">加载中...</div></div></div><div id="web_bg"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="/images/favicon.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data is-center"><div class="data-item"><a href="/archives/"><div class="headline">文章</div><div class="length-num">247</div></a></div><div class="data-item"><a href="/tags/"><div class="headline">标签</div><div class="length-num">220</div></a></div><div class="data-item"><a href="/categories/"><div class="headline">分类</div><div class="length-num">33</div></a></div></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/messageboard/"><i class="fa-fw fas fa-paper-plane"></i><span> 留言板</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('/images/featureimages/1.jpg')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">jpruby的blog</a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/messageboard/"><i class="fa-fw fas fa-paper-plane"></i><span> 留言板</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">(转载)Javascript模块化编程（三）：require.js的用法</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2019-08-14T02:05:00.000Z" title="发表于 2019-08-14 10:05:00">2019-08-14</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2019-08-14T02:05:00.000Z" title="更新于 2019-08-14 10:05:00">2019-08-14</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E7%BC%96%E7%A8%8B/">编程</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="(转载)Javascript模块化编程（三）：require.js的用法"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><blockquote>
+<p>原文链接: <a target="_blank" rel="noopener" href="http://www.ruanyifeng.com/blog/2012/11/require_js.html">Javascript 模块化编程（三）：require.js 的用法</a> —— 阮一峰</p>
+</blockquote>
+<span id="more"></span>
+
+<p>这个系列的<a target="_blank" rel="noopener" href="https://www.iszy.cc/2019/08/14/javascript_module/">第一部分</a>和<a target="_blank" rel="noopener" href="https://www.iszy.cc/2019/08/14/asynchronous_module_definition/">第二部分</a>，介绍了 Javascript 模块原型和理论概念，今天介绍如何将它们用于实战。</p>
+<p>我采用的是一个非常流行的库<a target="_blank" rel="noopener" href="http://requirejs.org/">require.js</a>。</p>
+<p><img src="https://img.iszy.xyz/20190814101519.png?x-oss-process=style/mystyle"></p>
+<h2 id="为什么要用-require-js？"><a href="#为什么要用-require-js？" class="headerlink" title="为什么要用 require.js？"></a>为什么要用 require.js？</h2><p>最早的时候，所有 Javascript 代码都写在一个文件里面，只要加载这一个文件就够了。后来，代码越来越多，一个文件不够了，必须分成多个文件，依次加载。下面的网页代码，相信很多人都见过。</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">&quot;1.js&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">&quot;2.js&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">&quot;3.js&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">&quot;4.js&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">&quot;5.js&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">&quot;6.js&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>这段代码依次加载多个 js 文件。</p>
+<p>这样的写法有很大的缺点。首先，加载的时候，浏览器会停止网页渲染，加载文件越多，网页失去响应的时间就会越长；其次，由于 js 文件之间存在依赖关系，因此必须严格保证加载顺序（比如上例的 1.js 要在 2.js 的前面），依赖性最大的模块一定要放到最后加载，当依赖关系很复杂的时候，代码的编写和维护都会变得困难。</p>
+<p>require.js 的诞生，就是为了解决这两个问题：</p>
+<ul>
+<li>实现 js 文件的异步加载，避免网页失去响应；</li>
+<li>管理模块之间的依赖性，便于代码的编写和维护。</li>
+</ul>
+<h2 id="require-js-的加载"><a href="#require-js-的加载" class="headerlink" title="require.js 的加载"></a>require.js 的加载</h2><p>使用 require.js 的第一步，是先去官方网站<a target="_blank" rel="noopener" href="http://requirejs.org/docs/download.html">下载</a>最新版本。</p>
+<p>下载后，假定把它放在 js 子目录下面，就可以加载了。</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">&quot;js/require.js&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>有人可能会想到，加载这个文件，也可能造成网页失去响应。解决办法有两个，一个是把它放在网页底部加载，另一个是写成下面这样：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">&quot;js/require.js&quot;</span> <span class="attr">defer</span> <span class="attr">async</span>=<span class="string">&quot;true&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>async 属性表明这个文件需要异步加载，避免网页失去响应。IE 不支持这个属性，只支持 defer，所以把 defer 也写上。</p>
+<p>加载 require.js 以后，下一步就要加载我们自己的代码了。假定我们自己的代码文件是 main.js，也放在 js 目录下面。那么，只需要写成下面这样就行了：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">&quot;js/require.js&quot;</span> <span class="attr">data-main</span>=<span class="string">&quot;js/main&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>data-main 属性的作用是，指定网页程序的主模块。在上例中，就是 js 目录下面的 main.js，这个文件会第一个被 require.js 加载。由于 require.js 默认的文件后缀名是 js，所以可以把 main.js 简写成 main。</p>
+<h2 id="主模块的写法"><a href="#主模块的写法" class="headerlink" title="主模块的写法"></a>主模块的写法</h2><p>上一节的 main.js，我把它称为”主模块”，意思是整个网页的入口代码。它有点像 C 语言的 main()函数，所有代码都从这儿开始运行。</p>
+<p>下面就来看，怎么写 main.js。</p>
+<p>如果我们的代码不依赖任何其他模块，那么可以直接写入 javascript 代码。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// main.js</span></span><br><span class="line"></span><br><span class="line"><span class="title function_">alert</span>(<span class="string">&quot;加载成功！&quot;</span>);</span><br></pre></td></tr></table></figure>
+
+<p>但这样的话，就没必要使用 require.js 了。真正常见的情况是，主模块依赖于其他模块，这时就要使用 AMD 规范定义的的 require()函数。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// main.js</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">require</span>([<span class="string">&quot;moduleA&quot;</span>, <span class="string">&quot;moduleB&quot;</span>, <span class="string">&quot;moduleC&quot;</span>], <span class="keyword">function</span> (<span class="params"></span></span><br><span class="line"><span class="params">  moduleA,</span></span><br><span class="line"><span class="params">  moduleB,</span></span><br><span class="line"><span class="params">  moduleC</span></span><br><span class="line"><span class="params"></span>) &#123;</span><br><span class="line">  <span class="comment">// some code here</span></span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<p>require()函数接受两个参数。第一个参数是一个数组，表示所依赖的模块，上例就是[‘moduleA’, ‘moduleB’, ‘moduleC’]，即主模块依赖这三个模块；第二个参数是一个回调函数，当前面指定的模块都加载成功后，它将被调用。加载的模块会以参数形式传入该函数，从而在回调函数内部就可以使用这些模块。</p>
+<p>require()异步加载 moduleA，moduleB 和 moduleC，浏览器不会失去响应；它指定的回调函数，只有前面的模块都加载成功后，才会运行，解决了依赖性的问题。</p>
+<p>下面，我们看一个实际的例子。</p>
+<p>假定主模块依赖 jquery、underscore 和 backbone 这三个模块，main.js 就可以这样写：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">require</span>([<span class="string">&quot;jquery&quot;</span>, <span class="string">&quot;underscore&quot;</span>, <span class="string">&quot;backbone&quot;</span>], <span class="keyword">function</span> (<span class="params">$, _, Backbone</span>) &#123;</span><br><span class="line">  <span class="comment">// some code here</span></span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<p>require.js 会先加载 jQuery、underscore 和 backbone，然后再运行回调函数。主模块的代码就写在回调函数中。</p>
+<h2 id="模块的加载"><a href="#模块的加载" class="headerlink" title="模块的加载"></a>模块的加载</h2><p>上一节最后的示例中，主模块的依赖模块是[‘jquery’, ‘underscore’, ‘backbone’]。默认情况下，require.js 假定这三个模块与 main.js 在同一个目录，文件名分别为 jquery.js，underscore.js 和 backbone.js，然后自动加载。</p>
+<p>使用 require.config()方法，我们可以对模块的加载行为进行自定义。require.config()就写在主模块（main.js）的头部。参数就是一个对象，这个对象的 paths 属性指定各个模块的加载路径。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">require</span>.<span class="title function_">config</span>(&#123;</span><br><span class="line">  <span class="attr">paths</span>: &#123;</span><br><span class="line">    <span class="attr">jquery</span>: <span class="string">&quot;jquery.min&quot;</span>,</span><br><span class="line">    <span class="attr">underscore</span>: <span class="string">&quot;underscore.min&quot;</span>,</span><br><span class="line">    <span class="attr">backbone</span>: <span class="string">&quot;backbone.min&quot;</span>,</span><br><span class="line">  &#125;,</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<p>上面的代码给出了三个模块的文件名，路径默认与 main.js 在同一个目录（js 子目录）。如果这些模块在其他目录，比如 js&#x2F;lib 目录，则有两种写法。一种是逐一指定路径。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">require</span>.<span class="title function_">config</span>(&#123;</span><br><span class="line">  <span class="attr">paths</span>: &#123;</span><br><span class="line">    <span class="attr">jquery</span>: <span class="string">&quot;lib/jquery.min&quot;</span>,</span><br><span class="line">    <span class="attr">underscore</span>: <span class="string">&quot;lib/underscore.min&quot;</span>,</span><br><span class="line">    <span class="attr">backbone</span>: <span class="string">&quot;lib/backbone.min&quot;</span>,</span><br><span class="line">  &#125;,</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<p>另一种则是直接改变基目录（baseUrl）。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">require</span>.<span class="title function_">config</span>(&#123;</span><br><span class="line">  <span class="attr">baseUrl</span>: <span class="string">&quot;js/lib&quot;</span>,</span><br><span class="line"></span><br><span class="line">  <span class="attr">paths</span>: &#123;</span><br><span class="line">    <span class="attr">jquery</span>: <span class="string">&quot;jquery.min&quot;</span>,</span><br><span class="line">    <span class="attr">underscore</span>: <span class="string">&quot;underscore.min&quot;</span>,</span><br><span class="line">    <span class="attr">backbone</span>: <span class="string">&quot;backbone.min&quot;</span>,</span><br><span class="line">  &#125;,</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<p>如果某个模块在另一台主机上，也可以直接指定它的网址，比如：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">require</span>.<span class="title function_">config</span>(&#123;</span><br><span class="line">  <span class="attr">paths</span>: &#123;</span><br><span class="line">    <span class="attr">jquery</span>: <span class="string">&quot;https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min&quot;</span>,</span><br><span class="line">  &#125;,</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<p>require.js 要求，每个模块是一个单独的 js 文件。这样的话，如果加载多个模块，就会发出多次 HTTP 请求，会影响网页的加载速度。因此，require.js 提供了一个<a target="_blank" rel="noopener" href="http://requirejs.org/docs/optimization.html">优化工具</a>，当模块部署完毕以后，可以用这个工具将多个模块合并在一个文件中，减少 HTTP 请求数。</p>
+<h2 id="AMD-模块的写法"><a href="#AMD-模块的写法" class="headerlink" title="AMD 模块的写法"></a>AMD 模块的写法</h2><p>require.js 加载的模块，采用 AMD 规范。也就是说，模块必须按照 AMD 的规定来写。</p>
+<p>具体来说，就是模块必须采用特定的 define()函数来定义。如果一个模块不依赖其他模块，那么可以直接定义在 define()函数之中。</p>
+<p>假定现在有一个 math.js 文件，它定义了一个 math 模块。那么，math.js 就要这样写：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// math.js</span></span><br><span class="line"></span><br><span class="line"><span class="title function_">define</span>(<span class="keyword">function</span> (<span class="params"></span>) &#123;</span><br><span class="line">  <span class="keyword">var</span> add = <span class="keyword">function</span> (<span class="params">x, y</span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> x + y;</span><br><span class="line">  &#125;;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> &#123;</span><br><span class="line">    <span class="attr">add</span>: add,</span><br><span class="line">  &#125;;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<p>加载方法如下：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// main.js</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">require</span>([<span class="string">&quot;math&quot;</span>], <span class="keyword">function</span> (<span class="params">math</span>) &#123;</span><br><span class="line">  <span class="title function_">alert</span>(math.<span class="title function_">add</span>(<span class="number">1</span>, <span class="number">1</span>));</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<p>如果这个模块还依赖其他模块，那么 define()函数的第一个参数，必须是一个数组，指明该模块的依赖性。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="title function_">define</span>([<span class="string">&quot;myLib&quot;</span>], <span class="keyword">function</span> (<span class="params">myLib</span>) &#123;</span><br><span class="line">  <span class="keyword">function</span> <span class="title function_">foo</span>(<span class="params"></span>) &#123;</span><br><span class="line">    myLib.<span class="title function_">doSomething</span>();</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> &#123;</span><br><span class="line">    <span class="attr">foo</span>: foo,</span><br><span class="line">  &#125;;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<p>当 require()函数加载上面这个模块的时候，就会先加载 myLib.js 文件。</p>
+<h2 id="加载非规范的模块"><a href="#加载非规范的模块" class="headerlink" title="加载非规范的模块"></a>加载非规范的模块</h2><p>理论上，require.js 加载的模块，必须是按照 AMD 规范、用 define()函数定义的模块。但是实际上，虽然已经有一部分流行的函数库（比如 jQuery）符合 AMD 规范，更多的库并不符合。那么，require.js 是否能够加载非规范的模块呢？</p>
+<p>回答是可以的。</p>
+<p>这样的模块在用 require()加载之前，要先用 require.config()方法，定义它们的一些特征。</p>
+<p>举例来说，underscore 和 backbone 这两个库，都没有采用 AMD 规范编写。如果要加载它们的话，必须先定义它们的特征。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">require</span>.<span class="title function_">config</span>(&#123;</span><br><span class="line">  <span class="attr">shim</span>: &#123;</span><br><span class="line">    <span class="attr">underscore</span>: &#123;</span><br><span class="line">      <span class="attr">exports</span>: <span class="string">&quot;_&quot;</span>,</span><br><span class="line">    &#125;,</span><br><span class="line"></span><br><span class="line">    <span class="attr">backbone</span>: &#123;</span><br><span class="line">      <span class="attr">deps</span>: [<span class="string">&quot;underscore&quot;</span>, <span class="string">&quot;jquery&quot;</span>],</span><br><span class="line">      <span class="attr">exports</span>: <span class="string">&quot;Backbone&quot;</span>,</span><br><span class="line">    &#125;,</span><br><span class="line">  &#125;,</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<p>require.config()接受一个配置对象，这个对象除了有前面说过的 paths 属性之外，还有一个 shim 属性，专门用来配置不兼容的模块。具体来说，每个模块要定义（1）exports 值（输出的变量名），表明这个模块外部调用时的名称；（2）deps 数组，表明该模块的依赖性。</p>
+<p>比如，jQuery 的插件可以这样定义：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">　　<span class="attr">shim</span>: &#123;</span><br><span class="line"></span><br><span class="line">　　　　<span class="string">&#x27;jquery.scroll&#x27;</span>: &#123;</span><br><span class="line"></span><br><span class="line">　　　　　　<span class="attr">deps</span>: [<span class="string">&#x27;jquery&#x27;</span>],</span><br><span class="line"></span><br><span class="line">　　　　　　<span class="attr">exports</span>: <span class="string">&#x27;jQuery.fn.scroll&#x27;</span></span><br><span class="line"></span><br><span class="line">　　　　&#125;</span><br><span class="line"></span><br><span class="line">　　&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="require-js-插件"><a href="#require-js-插件" class="headerlink" title="require.js 插件"></a>require.js 插件</h2><p>require.js 还提供一系列<a target="_blank" rel="noopener" href="https://github.com/jrburke/requirejs/wiki/Plugins">插件</a>，实现一些特定的功能。</p>
+<p>domready 插件，可以让回调函数在页面 DOM 结构加载完成后再运行。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">require</span>([<span class="string">&quot;domready!&quot;</span>], <span class="keyword">function</span> (<span class="params">doc</span>) &#123;</span><br><span class="line">  <span class="comment">// called once the DOM is ready</span></span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<p>text 和 image 插件，则是允许 require.js 加载文本和图片文件。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="title function_">define</span>([<span class="string">&quot;text!review.txt&quot;</span>, <span class="string">&quot;image!cat.jpg&quot;</span>], <span class="keyword">function</span> (<span class="params">review, cat</span>) &#123;</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(review);</span><br><span class="line"></span><br><span class="line">  <span class="variable language_">document</span>.<span class="property">body</span>.<span class="title function_">appendChild</span>(cat);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<p>类似的插件还有 json 和 mdown，用于加载 json 文件和 markdown 文件。</p>
+<p>（完）</p>
+</article><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/JavaScript/">JavaScript</a><a class="post-meta__tags" href="/tags/%E8%BD%AC%E8%BD%BD/">转载</a><a class="post-meta__tags" href="/tags/%E6%A8%A1%E5%9D%97%E5%8C%96/">模块化</a></div><div class="post_share"><div class="social-share" data-image="/images/featureimages/1.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/social-share.js/dist/js/social-share.min.js" defer></script></div></div><div class="post-reward"><div class="reward-button"><i class="fas fa-qrcode"></i> 打赏</div><div class="reward-main"><ul class="reward-all"><li class="reward-item"><a href="/img/wechat.png" target="_blank"><img class="post-qr-code-img" src="/img/wechat.png" alt="wechat"/></a><div class="post-qr-code-desc">wechat</div></li><li class="reward-item"><a href="/img/alipay.jpg" target="_blank"><img class="post-qr-code-img" src="/img/alipay.jpg" alt="alipay"/></a><div class="post-qr-code-desc">alipay</div></li></ul></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/post/19c6e00c.html"><img class="prev-cover" src="/images/featureimages/12.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">并发编程学习(七)：Fork/Join框架原理及demo</div></div></a></div><div class="next-post pull-right"><a href="/post/b97e41af.html"><img class="next-cover" src="/images/featureimages/0.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">(转载)Javascript模块化编程（二）：AMD规范</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><div><a href="/post/b97e41af.html" title="(转载)Javascript模块化编程（二）：AMD规范"><img class="cover" src="/images/featureimages/0.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2019-08-14</div><div class="title">(转载)Javascript模块化编程（二）：AMD规范</div></div></a></div><div><a href="/post/7244329a.html" title="(转载)Javascript模块化编程（一）：模块的写法"><img class="cover" src="/images/featureimages/1.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2019-08-14</div><div class="title">(转载)Javascript模块化编程（一）：模块的写法</div></div></a></div><div><a href="/post/1f0f8df0.html" title="多次提前还贷计算器"><img class="cover" src="/images/featureimages/10.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-04-16</div><div class="title">多次提前还贷计算器</div></div></a></div><div><a href="/post/49fa7865.html" title="哔哩哔哩AV号、BV号转换"><img class="cover" src="/images/featureimages/0.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-05-10</div><div class="title">哔哩哔哩AV号、BV号转换</div></div></a></div><div><a href="/post/636e2d18.html" title="在Vue中使用CodeMirror实现编写JSON编辑器"><img class="cover" src="/images/featureimages/14.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-05-11</div><div class="title">在Vue中使用CodeMirror实现编写JSON编辑器</div></div></a></div><div><a href="/post/53638891.html" title="Vuex数据持久化"><img class="cover" src="/images/featureimages/12.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-05-13</div><div class="title">Vuex数据持久化</div></div></a></div></div></div><hr/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div></div><div class="comment-wrap"><div><div class="vcomment" id="vcomment"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="/images/favicon.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">jpruby</div><div class="author-info__description">宁静致远</div></div><div class="card-info-data is-center"><div class="card-info-data-item"><a href="/archives/"><div class="headline">文章</div><div class="length-num">247</div></a></div><div class="card-info-data-item"><a href="/tags/"><div class="headline">标签</div><div class="length-num">220</div></a></div><div class="card-info-data-item"><a href="/categories/"><div class="headline">分类</div><div class="length-num">33</div></a></div></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://gitee.com/jpruby"><i class="fab fa-github"></i><span>追随我吧</span></a></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">一个放笔记的地方，如果你喜欢请评论</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E8%A6%81%E7%94%A8-require-js%EF%BC%9F"><span class="toc-number">1.</span> <span class="toc-text">为什么要用 require.js？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#require-js-%E7%9A%84%E5%8A%A0%E8%BD%BD"><span class="toc-number">2.</span> <span class="toc-text">require.js 的加载</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%BB%E6%A8%A1%E5%9D%97%E7%9A%84%E5%86%99%E6%B3%95"><span class="toc-number">3.</span> <span class="toc-text">主模块的写法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%A8%A1%E5%9D%97%E7%9A%84%E5%8A%A0%E8%BD%BD"><span class="toc-number">4.</span> <span class="toc-text">模块的加载</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#AMD-%E6%A8%A1%E5%9D%97%E7%9A%84%E5%86%99%E6%B3%95"><span class="toc-number">5.</span> <span class="toc-text">AMD 模块的写法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8A%A0%E8%BD%BD%E9%9D%9E%E8%A7%84%E8%8C%83%E7%9A%84%E6%A8%A1%E5%9D%97"><span class="toc-number">6.</span> <span class="toc-text">加载非规范的模块</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#require-js-%E6%8F%92%E4%BB%B6"><span class="toc-number">7.</span> <span class="toc-text">require.js 插件</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/post/a9c4edf1.html" title="反射工具包JOOR、Hutool与原生反射对比">反射工具包JOOR、Hutool与原生反射对比</a><time datetime="2021-08-16T02:34:45.000Z" title="发表于 2021-08-16 10:34:45">2021-08-16</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/post/d232be0e.html" title="使用CODEX为你的项目编制一套代码库目录/索引">使用CODEX为你的项目编制一套代码库目录/索引</a><time datetime="2021-08-16T02:33:53.000Z" title="发表于 2021-08-16 10:33:53">2021-08-16</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/post/9e3b75c0.html" title="screw 一颗螺丝钉的使命">screw 一颗螺丝钉的使命</a><time datetime="2021-08-16T02:32:21.000Z" title="发表于 2021-08-16 10:32:21">2021-08-16</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/post/1a3a1ad3.html" title="如何优化代码中的if-else/switch">如何优化代码中的if-else/switch</a><time datetime="2021-08-16T02:30:27.000Z" title="发表于 2021-08-16 10:30:27">2021-08-16</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/post/f3355887.html" title="ESB的体系结构">ESB的体系结构</a><time datetime="2021-08-16T02:28:40.000Z" title="发表于 2021-08-16 10:28:40">2021-08-16</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2021 - 2022 By jpruby</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div><div class="footer_custom_text">一看就会，一写就废？反复,重复,反反复复就能成功。<a target="_blank" rel="noopener" href="https://gitee.com/jpruby">My Gitee</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><a id="to_comment" href="#post-comment" title="直达评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">本地搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="is-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据库加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div><hr/><div id="local-search-results"></div></div></div><div id="search-mask"></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.umd.js"></script><script src="https://cdn.jsdelivr.net/npm/vanilla-lazyload/dist/lazyload.iife.min.js"></script><script src="/js/search/local-search.js"></script><script>var preloader = {
+  endLoading: () => {
+    document.body.style.overflow = 'auto';
+    document.getElementById('loading-box').classList.add("loaded")
+  },
+  initLoading: () => {
+    document.body.style.overflow = '';
+    document.getElementById('loading-box').classList.remove("loaded")
+
+  }
+}
+window.addEventListener('load',preloader.endLoading())</script><div class="js-pjax"><script>function loadValine () {
+  function initValine () {
+    const valine = new Valine(Object.assign({
+      el: '#vcomment',
+      appId: 'iJzt0X9OdhFCcdn4N0dJ86fY-gzGzoHsz',
+      appKey: '8vtaRafgQSvU5ntYgszJfRW5',
+      avatar: 'monsterid',
+      serverURLs: '',
+      emojiMaps: "",
+      path: window.location.pathname,
+      visitor: false
+    }, null))
+  }
+
+  if (typeof Valine === 'function') initValine() 
+  else getScript('https://cdn.jsdelivr.net/npm/valine/dist/Valine.min.js').then(initValine)
+}
+
+if ('Valine' === 'Valine' || !true) {
+  if (true) btf.loadComment(document.getElementById('vcomment'),loadValine)
+  else setTimeout(loadValine, 0)
+} else {
+  function loadOtherComment () {
+    loadValine()
+  }
+}</script></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>

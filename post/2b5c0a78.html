@@ -1,0 +1,240 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"><title>Powershell 美化——oh-my-posh | jpruby的blog</title><meta name="keywords" content="powershell, oh-my-posh,scoop"><meta name="author" content="jpruby"><meta name="copyright" content="jpruby"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="为什么想到干这个事呢？这两天装了 WSL，但是 PowerShell 的配色实在让我无法忍受，有时候甚至到了看不清字的程度。经过一番谷歌，我发现 PowerShell 也是可以变得很好看的。下面我就记录一下我这次美化的过程。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Powershell 美化——oh-my-posh">
+<meta property="og:url" content="https://jpruby888.github.io/post/2b5c0a78.html">
+<meta property="og:site_name" content="jpruby的blog">
+<meta property="og:description" content="为什么想到干这个事呢？这两天装了 WSL，但是 PowerShell 的配色实在让我无法忍受，有时候甚至到了看不清字的程度。经过一番谷歌，我发现 PowerShell 也是可以变得很好看的。下面我就记录一下我这次美化的过程。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://jpruby888.github.io/images/featureimages/9.jpg">
+<meta property="article:published_time" content="2018-05-06T04:00:00.000Z">
+<meta property="article:modified_time" content="2019-08-13T16:00:06.000Z">
+<meta property="article:author" content="jpruby">
+<meta property="article:tag" content="Scoop">
+<meta property="article:tag" content="PowerShell">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://jpruby888.github.io/images/featureimages/9.jpg"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://jpruby888.github.io/post/2b5c0a78"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"search.xml","languages":{"hits_empty":"找不到您查询的内容：${query}"}},
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '天',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery@2/dist/fjGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery@2/dist/fjGallery.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: true,
+  isAnchor: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'Powershell 美化——oh-my-posh',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2019-08-14 00:00:06'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><meta name="generator" content="Hexo 6.1.0"><link rel="alternate" href="/atom.xml" title="jpruby的blog" type="application/atom+xml">
+</head><body><div id="loading-box"><div class="loading-left-bg"></div><div class="loading-right-bg"></div><div class="spinner-box"><div class="configure-border-1"><div class="configure-core"></div></div><div class="configure-border-2"><div class="configure-core"></div></div><div class="loading-word">加载中...</div></div></div><div id="web_bg"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="/images/favicon.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data is-center"><div class="data-item"><a href="/archives/"><div class="headline">文章</div><div class="length-num">247</div></a></div><div class="data-item"><a href="/tags/"><div class="headline">标签</div><div class="length-num">220</div></a></div><div class="data-item"><a href="/categories/"><div class="headline">分类</div><div class="length-num">33</div></a></div></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/messageboard/"><i class="fa-fw fas fa-paper-plane"></i><span> 留言板</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('/images/featureimages/9.jpg')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">jpruby的blog</a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/messageboard/"><i class="fa-fw fas fa-paper-plane"></i><span> 留言板</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">Powershell 美化——oh-my-posh</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2018-05-06T04:00:00.000Z" title="发表于 2018-05-06 12:00:00">2018-05-06</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2019-08-13T16:00:06.000Z" title="更新于 2019-08-14 00:00:06">2019-08-14</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E5%85%B6%E4%BB%96/">其他</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="Powershell 美化——oh-my-posh"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><p>为什么想到干这个事呢？这两天装了 WSL，但是 PowerShell 的配色实在让我无法忍受，有时候甚至到了看不清字的程度。经过一番谷歌，我发现 PowerShell 也是可以变得很好看的。下面我就记录一下我这次美化的过程。</p>
+<span id="more"></span>
+
+<h2 id="安装包管理器scoop"><a href="#安装包管理器scoop" class="headerlink" title="安装包管理器scoop"></a>安装包管理器<code>scoop</code></h2><p><code>scoop</code>是 Windows 中超级好用的一个包管理器，许多软件可以通过这个包管理器直接傻瓜式安装，连环境变量也会自动配置好。可以类比 Linux 中的<code>yum</code>或者<code>apt</code>，用习惯了会爱不释手的，非常推荐。</p>
+<h3 id="更改脚本执行策略"><a href="#更改脚本执行策略" class="headerlink" title="更改脚本执行策略"></a>更改脚本执行策略</h3><p>如果你没有打开运行远程签名的脚本文件则会提示你输入下面的指令：</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">Set-ExecutionPolicy</span> RemoteSigned <span class="literal">-scope</span> CurrentUser</span><br></pre></td></tr></table></figure>
+
+<h3 id="安装scoop"><a href="#安装scoop" class="headerlink" title="安装scoop"></a>安装<code>scoop</code></h3><figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">iex</span> (<span class="built_in">new-object</span> net.webclient).downloadstring(<span class="string">&#x27;https://get.scoop.sh&#x27;</span>)</span><br></pre></td></tr></table></figure>
+
+<h2 id="安装需要的软件"><a href="#安装需要的软件" class="headerlink" title="安装需要的软件"></a>安装需要的软件</h2><h3 id="安装concfg"><a href="#安装concfg" class="headerlink" title="安装concfg"></a>安装<code>concfg</code></h3><p><a target="_blank" rel="noopener" href="https://github.com/lukesampson/concfg">lukesampson&#x2F;concfg</a>  可以用来导入和导出 Windows 控制台的设置。</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">scoop install concfg</span><br></pre></td></tr></table></figure>
+
+<p>如果需要卸载可以输入<code>scoop uninstall concfg</code>。</p>
+<h3 id="安装git"><a href="#安装git" class="headerlink" title="安装git"></a>安装<code>git</code></h3><figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">scoop install git</span><br></pre></td></tr></table></figure>
+
+<p>此时，<code>git</code>的环境变量是设置在当前用户下的。如果需要设置在系统下，可以通过以下语句安装。需要使用<code>sudo</code>来提升权限，是的，就是<code>Linux</code>中的那个<code>sudo</code>。</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">scoop install sudo</span><br><span class="line">sudo scoop install <span class="literal">-g</span> git</span><br></pre></td></tr></table></figure>
+
+<h3 id="安装posh-git"><a href="#安装posh-git" class="headerlink" title="安装posh-git"></a>安装<code>posh-git</code></h3><p><code>posh-git</code> 是 <code>oh-my-posh</code> 的依赖，在<code>scoop</code>的<code>extras</code>包中。</p>
+<p>先添加名为<code>extras</code>的<code>bucket</code>。</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">scoop bucket add extras</span><br></pre></td></tr></table></figure>
+
+<p>安装<code>posh-git</code></p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">scoop install posh<span class="literal">-git</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="安装oh-my-posh"><a href="#安装oh-my-posh" class="headerlink" title="安装oh-my-posh"></a>安装<code>oh-my-posh</code></h3><p><code>oh-my-posh</code>在<code>scoop</code>的主包中，直接安装即可。这个软件能够让你的<code>PowerShell</code>有着接近<code>Linux</code>中<code>Oh-my-zsh</code>的效果。</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">scoop install <span class="built_in">oh</span><span class="literal">-my-posh</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="添加字体"><a href="#添加字体" class="headerlink" title="添加字体"></a>添加字体</h2><h3 id="下载并安装字体"><a href="#下载并安装字体" class="headerlink" title="下载并安装字体"></a>下载并安装字体</h3><p>系统中默认的字体缺失了一些<code>oh-my-posh</code>需要用到的字符，所以需要安装一个可以支持的字体。</p>
+<p>我选择 <strong>sarasa gothic</strong> 系列字体，可以在 <a target="_blank" rel="noopener" href="https://github.com/be5invis/Sarasa-Gothic/releases"><strong>sarasa gothic</strong></a> 下载，然后右键安装字体即可。</p>
+<h3 id="修改注册表"><a href="#修改注册表" class="headerlink" title="修改注册表"></a>修改注册表</h3><p>为了能够在配置里使用，还需要修改注册表。</p>
+<p>按 <code>WIN+R</code> 打开运行，输入 <code>regedit</code> 打开注册表编辑器。</p>
+<p>在 <code>HKEY_LOCAL_MACHINE &gt;&gt; SOFTWARE &gt;&gt; Microsoft &gt;&gt; Windows NT &gt;&gt; CurrentVersion &gt;&gt; Console &gt;&gt; TrueTypeFont</code> 路径下新增一个字符串项目，名称任意，内容为 <code>Sarasa Term SC</code>。</p>
+<h2 id="应用配置"><a href="#应用配置" class="headerlink" title="应用配置"></a>应用配置</h2><p>新建一个 <code>1.json</code> 文件，键入如下内容，也可以根据自身需求自行修改。</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">  <span class="attr">&quot;cursor_size&quot;</span><span class="punctuation">:</span> <span class="string">&quot;small&quot;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;command_history_length&quot;</span><span class="punctuation">:</span> <span class="number">500</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;num_history_buffers&quot;</span><span class="punctuation">:</span> <span class="number">4</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;command_history_no_duplication&quot;</span><span class="punctuation">:</span> <span class="keyword">false</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;quick_edit&quot;</span><span class="punctuation">:</span> <span class="keyword">true</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;insert_mode&quot;</span><span class="punctuation">:</span> <span class="keyword">true</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;load_console_IME&quot;</span><span class="punctuation">:</span> <span class="keyword">true</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;font_face&quot;</span><span class="punctuation">:</span> <span class="string">&quot;Sarasa Term SC&quot;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;font_true_type&quot;</span><span class="punctuation">:</span> <span class="keyword">true</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;font_size&quot;</span><span class="punctuation">:</span> <span class="string">&quot;0x18&quot;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;font_weight&quot;</span><span class="punctuation">:</span> <span class="number">0</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;screen_buffer_size&quot;</span><span class="punctuation">:</span> <span class="string">&quot;120x30000&quot;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;window_size&quot;</span><span class="punctuation">:</span> <span class="string">&quot;120x30&quot;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;fullscreen&quot;</span><span class="punctuation">:</span> <span class="keyword">false</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;popup_colors&quot;</span><span class="punctuation">:</span> <span class="string">&quot;cyan,white&quot;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;screen_colors&quot;</span><span class="punctuation">:</span> <span class="string">&quot;white,black&quot;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;black&quot;</span><span class="punctuation">:</span> <span class="string">&quot;#1E1E1E&quot;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;dark_blue&quot;</span><span class="punctuation">:</span> <span class="string">&quot;#2472C8&quot;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;dark_green&quot;</span><span class="punctuation">:</span> <span class="string">&quot;#0DBC79&quot;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;dark_cyan&quot;</span><span class="punctuation">:</span> <span class="string">&quot;#11A8CD&quot;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;dark_red&quot;</span><span class="punctuation">:</span> <span class="string">&quot;#CD3131&quot;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;dark_magenta&quot;</span><span class="punctuation">:</span> <span class="string">&quot;#BC3FBC&quot;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;dark_yellow&quot;</span><span class="punctuation">:</span> <span class="string">&quot;#E5E510&quot;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;gray&quot;</span><span class="punctuation">:</span> <span class="string">&quot;#E5E5E5&quot;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;dark_gray&quot;</span><span class="punctuation">:</span> <span class="string">&quot;#666666&quot;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;blue&quot;</span><span class="punctuation">:</span> <span class="string">&quot;#3B8EEA&quot;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;green&quot;</span><span class="punctuation">:</span> <span class="string">&quot;#23D18B&quot;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;cyan&quot;</span><span class="punctuation">:</span> <span class="string">&quot;#29B8DB&quot;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;red&quot;</span><span class="punctuation">:</span> <span class="string">&quot;#F14C4C&quot;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;magenta&quot;</span><span class="punctuation">:</span> <span class="string">&quot;#D670D6&quot;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;yellow&quot;</span><span class="punctuation">:</span> <span class="string">&quot;#F5F543&quot;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;white&quot;</span><span class="punctuation">:</span> <span class="string">&quot;#E5E5E5&quot;</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+
+<p>在所在文件夹处打开 <code>PowerShell</code>，输入 <code>concfg import 1.json -n</code> 后开启新 <code>PowerShell</code> 窗口可以看到显示效果已经改变。</p>
+<p><strong>注：</strong>使用过程中发现，更新<code>git</code>后，字体会出现问题，不知道是什么原因。出现这个问题也不用担心，只需要重新执行一遍上面这个应用配置的过程即可。</p>
+<h2 id="启用oh-my-posh"><a href="#启用oh-my-posh" class="headerlink" title="启用oh-my-posh"></a>启用<code>oh-my-posh</code></h2><p>启用<code>oh-my-posh</code></p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">Import-Module</span> <span class="built_in">oh</span><span class="literal">-my-posh</span></span><br></pre></td></tr></table></figure>
+
+<p>但这还只是手动启用，所以我们需要设置<code>profile</code>文件让它自动启用。</p>
+<p>敲<code>$profile</code>可以让 PowerShell 告诉我们这个文件的路径是什么。</p>
+<p>编辑该文件，如果不存在则手动创建，再其中输入</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">Import-Module</span> <span class="built_in">oh</span><span class="literal">-my-posh</span></span><br></pre></td></tr></table></figure>
+
+<p>以后，都将会自动启用 <code>oh-my-posh</code>。</p>
+<h3 id="设置主题"><a href="#设置主题" class="headerlink" title="设置主题"></a>设置主题</h3><p>我选择了 <code>Agnoster</code> 主题。</p>
+<p>输入如下命令</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">Set-Theme</span> Agnoster</span><br></pre></td></tr></table></figure>
+
+<p>显示效果如下，我认为是十分美观的。</p>
+<p><img src="https://img.iszy.xyz/20190318211904.png"></p>
+<p>其他可选主题有 <code>Agnoster</code>、<code>Avit</code>、<code>Darkblood</code>、<code>Fish</code>、<code>Honukai</code>、<code>Paradox</code>、<code>Sorin</code>、<code>tehrob</code>，可自行选择。</p>
+<p>不知为何，这个主题设置并没有自动保存。</p>
+<p>可以通过把<code>Set-Theme Agnoster</code>这样的命令添加到之前的<code>profile</code>最后来永久保留。</p>
+<h2 id="后话"><a href="#后话" class="headerlink" title="后话"></a>后话</h2><p>至此，美化完成，相比之前的蓝底 PowerShell，我自认为已经好看了很多。我在 WSL 里也安装了 oh-my-zsh 可以说是完美衔接了。</p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="mailto:undefined">jpruby</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="https://jpruby888.github.io/post/2b5c0a78.html">https://jpruby888.github.io/post/2b5c0a78.html</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://jpruby888.github.io" target="_blank">jpruby的blog</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/Scoop/">Scoop</a><a class="post-meta__tags" href="/tags/PowerShell/">PowerShell</a></div><div class="post_share"><div class="social-share" data-image="/images/featureimages/9.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/social-share.js/dist/js/social-share.min.js" defer></script></div></div><div class="post-reward"><div class="reward-button"><i class="fas fa-qrcode"></i> 打赏</div><div class="reward-main"><ul class="reward-all"><li class="reward-item"><a href="/img/wechat.png" target="_blank"><img class="post-qr-code-img" src="/img/wechat.png" alt="wechat"/></a><div class="post-qr-code-desc">wechat</div></li><li class="reward-item"><a href="/img/alipay.jpg" target="_blank"><img class="post-qr-code-img" src="/img/alipay.jpg" alt="alipay"/></a><div class="post-qr-code-desc">alipay</div></li></ul></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/post/3ebd4c26.html"><img class="prev-cover" src="/images/featureimages/6.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">Google 中国竟然在 B 站发视频了</div></div></a></div><div class="next-post pull-right"><a href="/post/dba5d77e.html"><img class="next-cover" src="/images/featureimages/13.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">体验 Windows 10 内置 Linux 子系统</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><div><a href="/post/5fa2f280.html" title="用Scoop包管理器管理你的Windows软件"><img class="cover" src="/images/featureimages/14.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2019-06-12</div><div class="title">用Scoop包管理器管理你的Windows软件</div></div></a></div></div></div><hr/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div></div><div class="comment-wrap"><div><div class="vcomment" id="vcomment"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="/images/favicon.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">jpruby</div><div class="author-info__description">宁静致远</div></div><div class="card-info-data is-center"><div class="card-info-data-item"><a href="/archives/"><div class="headline">文章</div><div class="length-num">247</div></a></div><div class="card-info-data-item"><a href="/tags/"><div class="headline">标签</div><div class="length-num">220</div></a></div><div class="card-info-data-item"><a href="/categories/"><div class="headline">分类</div><div class="length-num">33</div></a></div></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://gitee.com/jpruby"><i class="fab fa-github"></i><span>追随我吧</span></a></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">一个放笔记的地方，如果你喜欢请评论</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%89%E8%A3%85%E5%8C%85%E7%AE%A1%E7%90%86%E5%99%A8scoop"><span class="toc-number">1.</span> <span class="toc-text">安装包管理器scoop</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9B%B4%E6%94%B9%E8%84%9A%E6%9C%AC%E6%89%A7%E8%A1%8C%E7%AD%96%E7%95%A5"><span class="toc-number">1.1.</span> <span class="toc-text">更改脚本执行策略</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%89%E8%A3%85scoop"><span class="toc-number">1.2.</span> <span class="toc-text">安装scoop</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%89%E8%A3%85%E9%9C%80%E8%A6%81%E7%9A%84%E8%BD%AF%E4%BB%B6"><span class="toc-number">2.</span> <span class="toc-text">安装需要的软件</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%89%E8%A3%85concfg"><span class="toc-number">2.1.</span> <span class="toc-text">安装concfg</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%89%E8%A3%85git"><span class="toc-number">2.2.</span> <span class="toc-text">安装git</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%89%E8%A3%85posh-git"><span class="toc-number">2.3.</span> <span class="toc-text">安装posh-git</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%89%E8%A3%85oh-my-posh"><span class="toc-number">2.4.</span> <span class="toc-text">安装oh-my-posh</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%B7%BB%E5%8A%A0%E5%AD%97%E4%BD%93"><span class="toc-number">3.</span> <span class="toc-text">添加字体</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%8B%E8%BD%BD%E5%B9%B6%E5%AE%89%E8%A3%85%E5%AD%97%E4%BD%93"><span class="toc-number">3.1.</span> <span class="toc-text">下载并安装字体</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BF%AE%E6%94%B9%E6%B3%A8%E5%86%8C%E8%A1%A8"><span class="toc-number">3.2.</span> <span class="toc-text">修改注册表</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BA%94%E7%94%A8%E9%85%8D%E7%BD%AE"><span class="toc-number">4.</span> <span class="toc-text">应用配置</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%90%AF%E7%94%A8oh-my-posh"><span class="toc-number">5.</span> <span class="toc-text">启用oh-my-posh</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%AE%BE%E7%BD%AE%E4%B8%BB%E9%A2%98"><span class="toc-number">5.1.</span> <span class="toc-text">设置主题</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%90%8E%E8%AF%9D"><span class="toc-number">6.</span> <span class="toc-text">后话</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/post/a9c4edf1.html" title="反射工具包JOOR、Hutool与原生反射对比">反射工具包JOOR、Hutool与原生反射对比</a><time datetime="2021-08-16T02:34:45.000Z" title="发表于 2021-08-16 10:34:45">2021-08-16</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/post/d232be0e.html" title="使用CODEX为你的项目编制一套代码库目录/索引">使用CODEX为你的项目编制一套代码库目录/索引</a><time datetime="2021-08-16T02:33:53.000Z" title="发表于 2021-08-16 10:33:53">2021-08-16</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/post/9e3b75c0.html" title="screw 一颗螺丝钉的使命">screw 一颗螺丝钉的使命</a><time datetime="2021-08-16T02:32:21.000Z" title="发表于 2021-08-16 10:32:21">2021-08-16</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/post/1a3a1ad3.html" title="如何优化代码中的if-else/switch">如何优化代码中的if-else/switch</a><time datetime="2021-08-16T02:30:27.000Z" title="发表于 2021-08-16 10:30:27">2021-08-16</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/post/f3355887.html" title="ESB的体系结构">ESB的体系结构</a><time datetime="2021-08-16T02:28:40.000Z" title="发表于 2021-08-16 10:28:40">2021-08-16</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2021 - 2022 By jpruby</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div><div class="footer_custom_text">一看就会，一写就废？反复,重复,反反复复就能成功。<a target="_blank" rel="noopener" href="https://gitee.com/jpruby">My Gitee</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><a id="to_comment" href="#post-comment" title="直达评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">本地搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="is-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据库加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div><hr/><div id="local-search-results"></div></div></div><div id="search-mask"></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.umd.js"></script><script src="https://cdn.jsdelivr.net/npm/vanilla-lazyload/dist/lazyload.iife.min.js"></script><script src="/js/search/local-search.js"></script><script>var preloader = {
+  endLoading: () => {
+    document.body.style.overflow = 'auto';
+    document.getElementById('loading-box').classList.add("loaded")
+  },
+  initLoading: () => {
+    document.body.style.overflow = '';
+    document.getElementById('loading-box').classList.remove("loaded")
+
+  }
+}
+window.addEventListener('load',preloader.endLoading())</script><div class="js-pjax"><script>function loadValine () {
+  function initValine () {
+    const valine = new Valine(Object.assign({
+      el: '#vcomment',
+      appId: 'iJzt0X9OdhFCcdn4N0dJ86fY-gzGzoHsz',
+      appKey: '8vtaRafgQSvU5ntYgszJfRW5',
+      avatar: 'monsterid',
+      serverURLs: '',
+      emojiMaps: "",
+      path: window.location.pathname,
+      visitor: false
+    }, null))
+  }
+
+  if (typeof Valine === 'function') initValine() 
+  else getScript('https://cdn.jsdelivr.net/npm/valine/dist/Valine.min.js').then(initValine)
+}
+
+if ('Valine' === 'Valine' || !true) {
+  if (true) btf.loadComment(document.getElementById('vcomment'),loadValine)
+  else setTimeout(loadValine, 0)
+} else {
+  function loadOtherComment () {
+    loadValine()
+  }
+}</script></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
