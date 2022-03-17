@@ -9,6 +9,13 @@
 
 
     <url>
+        <loc>https://jpruby888.github.io/categories/%25E9%259A%258F%25E7%25AC%2594/</loc>
+        <lastmod>2022-03-17T06:56:16.295Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
         <loc>https://jpruby888.github.io/categories/Java%25E5%259F%25BA%25E7%25A1%2580/%25E5%25B9%25B6%25E5%258F%2591%25E7%25BC%2596%25E7%25A8%258B/</loc>
         <lastmod>2022-03-16T14:38:42.365Z</lastmod>
         <changefreq>weekly</changefreq>
@@ -46,13 +53,6 @@
     <url>
         <loc>https://jpruby888.github.io/categories/Java%25E5%259F%25BA%25E7%25A1%2580/%25E8%25AE%25BE%25E8%25AE%25A1%25E6%25A8%25A1%25E5%25BC%258F/</loc>
         <lastmod>2022-03-16T14:38:42.055Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.2</priority>
-    </url>
-
-    <url>
-        <loc>https://jpruby888.github.io/categories/%25E9%259A%258F%25E7%25AC%2594/</loc>
-        <lastmod>2022-03-16T14:38:42.048Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>

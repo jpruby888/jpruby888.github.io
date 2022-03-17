@@ -3,6 +3,13 @@
 
 
     <url>
+        <loc>https://jpruby888.github.io/tags/%E9%9A%8F%E7%AC%94/</loc>
+        <lastmod>2022-03-17T06:56:16.295Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
         <loc>https://jpruby888.github.io/tags/Java/</loc>
         <lastmod>2022-03-17T03:33:34.417Z</lastmod>
         <changefreq>weekly</changefreq>
@@ -215,13 +222,6 @@
     <url>
         <loc>https://jpruby888.github.io/tags/%E7%A8%8B%E5%BA%8F%E4%BA%BA%E7%94%9F/</loc>
         <lastmod>2022-03-16T14:38:42.059Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.2</priority>
-    </url>
-
-    <url>
-        <loc>https://jpruby888.github.io/tags/%E9%9A%8F%E7%AC%94/</loc>
-        <lastmod>2022-03-16T14:38:42.057Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>
@@ -1410,14 +1410,14 @@
     </url>
 
     <url>
-        <loc>https://jpruby888.github.io/tags/Mailgun/</loc>
+        <loc>https://jpruby888.github.io/tags/Google/</loc>
         <lastmod>2018-07-06T04:00:00.000Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>
 
     <url>
-        <loc>https://jpruby888.github.io/tags/Google/</loc>
+        <loc>https://jpruby888.github.io/tags/Mailgun/</loc>
         <lastmod>2018-07-06T04:00:00.000Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
